@@ -1,0 +1,23 @@
+{
+  "artboards": [
+    { "file": "Main.dc.html", "title": "Home page — desktop (1440)", "x": 0, "y": 0, "w": 1440, "h": 5820 },
+    { "file": "HomeMobile.dc.html", "title": "Home page — mobile (390)", "x": 1560, "y": 0, "w": 390, "h": 6120 }
+  ],
+  "annotations": [
+    {
+      "id": "images",
+      "x": 0,
+      "y": -470,
+      "w": 1440,
+      "text": "THE TEN IMAGE POSITIONS ARE THE ASK. Everything else on this page is finished.\n\nNo photographs are embedded, and not for want of trying: EF's Instagram is blocked by this network's policy, every open image host is blocked too, and the Drive archive turned out to hold personal family photos rather than EF events — so nothing there could go on a public page.\n\nEach position is therefore a designed slot rather than a grey box: brand duotone, the mark as texture, a caption naming the photograph it wants, and a chip giving the crop (landscape, square, wide). Drop real photographs in and the page needs no other change.\n\nWhat to send, and roughly in this order of value:\n  1. Three for the hero collage — a cultural evening, a cricket match, a seminar room.\n  2. Four for the gallery — one strong landscape, two squares, one wide.\n  3. Three for the programme pillars — engineering, sport, arts.\n  Plus one member portrait for the quote.\n\nLandscape, at least 1600px on the long edge, and please confirm EF holds the right to publish each one — the brief requires usage rights recorded against every image (BR-059)."
+    },
+    {
+      "id": "brand-and-copy",
+      "x": 1560,
+      "y": -470,
+      "w": 390,
+      "text": "Composition takes EF's guideline at its word: maroon panels with the mark oversized, a green figures band lifted over the hero edge, green as the energetic accent. Quicksand for the brand voice, Nunito Sans for reading copy. Mark, lockup and icon set are shared with the console design.\n\nGreen carries the primary action with dark text at 5.3:1, because white on the brand green is 2.6:1 and fails.\n\nThe headline uses the guideline's own positioning — the apex body of engineers of Kerala origin working in Qatar. The eligibility line was made to match, but the Secretary must confirm the wording against the criteria actually applied (BR-011).\n\nDashed chips elsewhere are facts still outstanding: three of the four figures, venues, officer names, the affiliation mark, contact details. Announcement, event and pillar copy is drafted and needs EF's content owners.\n\nThe member quote is deliberately left as instructions rather than an invented testimonial."
+    }
+  ],
+  "launch": { "view": "canvas" }
+}

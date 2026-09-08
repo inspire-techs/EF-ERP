@@ -1,0 +1,24 @@
+{
+  "artboards": [
+    { "file": "Main.dc.html", "title": "Home — visitor not signed in (1440)", "x": 0, "y": 0, "w": 1440, "h": 3300 },
+    { "file": "MyEF.dc.html", "title": "My EF — member page, desktop (1440)", "x": 1560, "y": 0, "w": 1440, "h": 2520 },
+    { "file": "MyEFMobile.dc.html", "title": "My EF — member page, mobile (390)", "x": 3120, "y": 0, "w": 390, "h": 2300 }
+  ],
+  "annotations": [
+    {
+      "id": "brief-basis",
+      "x": 0,
+      "y": -300,
+      "w": 1440,
+      "text": "Home page — zones 1-10 of the Design Brief (INSP-EFQatar-DESIGN-HomeAndMember-v0.1), visitor-not-signed-in state.\n\nBrand: accent #4B1527, sampled from Logo.jpeg in the project folder. The EF mark here is a typeset stand-in — production needs EF's vector artwork (DQ-01).\n\nEvery dashed grey chip is a fact EF has not supplied yet, left visible rather than invented: the four proof figures (DQ-04), officer names, venues, contact details, the affiliation mark (DQ-07). Announcement, event and benefit copy is sample text pending content owners (DQ-08, DQ-11)."
+    },
+    {
+      "id": "member-state",
+      "x": 1560,
+      "y": -300,
+      "w": 1830,
+      "text": "My EF — zones 1-9 of the brief, shown in the EXPIRING SOON state on both widths, so the two agree.\n\nThat state was chosen over Active because it exercises the whole hierarchy: status card, one 'needs attention' item with money attached, and a single primary action (Renew membership) that everything else drops below.\n\nFour states remain to be designed — pending approval, active, lapsed, suspended (brief §7.3). Mobile resolves at 390px with the section rail as a visible list, 48px hit targets, and no fake status bar. Member data is sample."
+    }
+  ],
+  "launch": { "view": "canvas" }
+}

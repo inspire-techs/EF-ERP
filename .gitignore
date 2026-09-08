@@ -1,0 +1,4 @@
+# Seeded design canvases — large generated payloads, rebuilt from the artboards
+design/*/ef-qatar-*.html
+__pycache__/
+*.pyc

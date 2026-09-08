@@ -1,0 +1,239 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Quicksand:wght@500;600;700&family=Nunito+Sans:opsz,wght@6..12,400;6..12,600;6..12,700;6..12,800&family=IBM+Plex+Mono:wght@400;500&display=swap">
+  <style>
+    body { margin: 0; font-family: 'Nunito Sans', system-ui, sans-serif; background: #E9F1FA;
+           color: #4A4045; -webkit-font-smoothing: antialiased; }
+    * { box-sizing: border-box; }
+    a { color: #4B1728; text-decoration: none; }
+    a:hover { color: #6B3040; }
+    h1, h2, h3 { font-family: Quicksand, system-ui, sans-serif; color: #241017; margin: 0;
+                 font-weight: 600; letter-spacing: -0.01em; }
+    p { margin: 0; }
+    table { border-collapse: collapse; width: 100%; }
+    .side-a { display: flex; align-items: center; gap: 12px; height: 42px; padding: 0 14px;
+              margin: 0 12px; border-radius: 7px; color: #CFB9C1; font-size: 14px;
+              font-family: Quicksand, sans-serif; font-weight: 600; }
+    .side-a:hover { color: #FFFFFF; }
+    .side-a.on { background: #FFFFFF; color: #4B1728; }
+    .side-g { font-size: 10px; letter-spacing: 0.15em; color: #9A7883; font-weight: 700;
+              padding: 0 26px 7px; margin-top: 20px; }
+    .card { background: #FFFFFF; border: 1px solid #DCE3EC; border-radius: 10px; }
+    .card-h { display: flex; align-items: center; justify-content: space-between; gap: 16px;
+              padding: 17px 22px; border-bottom: 1px solid #EEF3F8; }
+    .card-t { font-family: Quicksand, sans-serif; font-size: 15.5px; font-weight: 700; color: #241017; }
+    .btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+           height: 38px; padding: 0 16px; border-radius: 7px; font-size: 14px; font-weight: 700;
+           font-family: 'Nunito Sans', sans-serif; border: 1px solid transparent;
+           white-space: nowrap; }
+    .btn-p { background: #4B1728; color: #FFFFFF; }
+    .btn-p:hover { background: #642034; color: #FFFFFF; }
+    .btn-g { background: #4BB148; color: #23361F; }
+    .btn-g:hover { background: #43A340; color: #23361F; }
+    .btn-s { background: #FFFFFF; color: #4B1728; border-color: #D3DCE6; }
+    .btn-s:hover { border-color: #4B1728; color: #4B1728; }
+    .chip { display: inline-flex; align-items: center; gap: 6px; height: 25px; padding: 0 10px;
+            border-radius: 100px; font-size: 12.5px; font-weight: 700; white-space: nowrap; }
+    .th { font-size: 11px; letter-spacing: 0.07em; color: #7D7278; font-weight: 800;
+          text-transform: uppercase; text-align: left; padding: 0 0 0 0; }
+    .mono { font-family: 'IBM Plex Mono', monospace; font-variant-numeric: tabular-nums; }
+    .av { border-radius: 50%; display: flex; align-items: center; justify-content: center;
+          font-family: Quicksand, sans-serif; font-weight: 700; flex-shrink: 0; }
+    .field { height: 38px; border: 1px solid #D3DCE6; border-radius: 7px; background: #FFFFFF;
+             display: flex; align-items: center; gap: 9px; padding: 0 12px; font-size: 14px;
+             color: #4A4045; white-space: nowrap; overflow: hidden; }
+  </style>
+</helmet>
+
+<div style="width: 1440px; height: 1200px; display: grid; grid-template-columns: 252px minmax(0, 1fr); background: #E9F1FA; overflow: hidden;">
+  <div style="background: #4B1728; display: flex; flex-direction: column;">
+      <div style="padding: 22px 24px 4px;"><div style="display: flex; align-items: center; gap: 10px;"><svg viewBox="0 0 120 120" width="34" height="34" style="flex-shrink: 0;" aria-label="Engineers Forum Qatar"><path d="M 98.96 86.28 A 47.00 47.00 0 1 1 102.24 39.40" fill="none" stroke="#FFFFFF" stroke-width="11" stroke-linecap="round"/><path d="M 51.35 57.52 L 51.31 57.27 L 51.28 57.02 L 51.26 56.76 L 51.25 56.51 L 51.24 56.25 L 51.24 55.98 L 51.25 55.72 L 51.27 55.45 L 51.29 55.18 L 51.33 54.91 L 51.37 54.64 L 51.42 54.37 L 51.47 54.09 L 51.54 53.82 L 51.61 53.54 L 51.70 53.27 L 51.79 52.99 L 51.89 52.72 L 52.00 52.44 L 52.12 52.17 L 52.24 51.90 L 52.38 51.63 L 52.52 51.36 L 52.67 51.09 L 52.83 50.83 L 53.00 50.57 L 53.18 50.31 L 53.37 50.05 L 53.57 49.80 L 53.77 49.55 L 53.98 49.30 L 54.20 49.06 L 54.43 48.83 L 54.67 48.59 L 54.92 48.37 L 55.17 48.15 L 55.43 47.93 L 55.70 47.72 L 55.98 47.51 L 56.27 47.32 L 56.56 47.12 L 56.86 46.94 L 57.17 46.76 L 57.48 46.59 L 57.80 46.43 L 58.13 46.27 L 58.46 46.12 L 58.80 45.98 L 59.15 45.85 L 59.50 45.73 L 59.86 45.62 L 60.22 45.51 L 60.59 45.42 L 60.96 45.33 L 61.34 45.26 L 61.72 45.19 L 62.11 45.13 L 62.50 45.09 L 62.90 45.05 L 63.29 45.02 L 63.69 45.01 L 64.10 45.01 L 64.50 45.01 L 64.91 45.03 L 65.32 45.06 L 65.73 45.10 L 66.15 45.15 L 66.56 45.21 L 66.97 45.29 L 67.39 45.37 L 67.80 45.47 L 68.22 45.58 L 68.63 45.70 L 69.05 45.83 L 69.46 45.98 L 69.87 46.13 L 70.28 46.30 L 70.69 46.48 L 71.09 46.67 L 71.49 46.87 L 71.89 47.09 L 72.28 47.32 L 72.67 47.56 L 73.06 47.81 L 73.44 48.07 L 73.82 48.34 L 74.19 48.63 L 74.55 48.92 L 74.91 49.23 L 75.26 49.55 L 75.61 49.88 L 75.95 50.22 L 76.28 50.57 L 76.61 50.93 L 76.92 51.30 L 77.23 51.68 L 77.53 52.08 L 77.82 52.48 L 78.10 52.89 L 78.38 53.31 L 78.64 53.74 L 78.89 54.18 L 79.13 54.63 L 79.36 55.09 L 79.58 55.55 L 79.79 56.02 L 79.99 56.50 L 80.18 56.99 L 80.35 57.49 L 80.51 57.99 L 80.66 58.50 L 80.80 59.01 L 80.92 59.53 L 81.03 60.06 L 81.13 60.59 L 81.21 61.13 L 81.28 61.67 L 81.34 62.21 L 81.38 62.76 L 81.41 63.31 L 81.43 63.87 L 81.42 64.43 L 81.41 64.99 L 81.38 65.55 L 81.33 66.12 L 81.27 66.68 L 81.20 67.25 L 81.11 67.82 L 81.01 68.38 L 80.88 68.95 L 80.75 69.52 L 80.60 70.08 L 80.43 70.65 L 80.25 71.21 L 80.05 71.77 L 79.84 72.32 L 79.61 72.87 L 79.37 73.42 L 79.11 73.97 L 78.84 74.51 L 78.55 75.04 L 78.25 75.57 L 77.93 76.10 L 77.59 76.62 L 77.25 77.13 L 76.88 77.63 L 76.51 78.13 L 76.11 78.62 L 75.71 79.10 L 75.29 79.57 L 74.86 80.03 L 74.41 80.49 L 73.95 80.93 L 73.47 81.36 L 72.99 81.78 L 72.49 82.20 L 71.97 82.60 L 71.45 82.98 L 70.91 83.36 L 70.36 83.72 L 69.80 84.07 L 69.23 84.41 L 68.65 84.74 L 68.06 85.05 L 67.46 85.34 L 66.85 85.62 L 66.23 85.89 L 65.59 86.14 L 64.96 86.38 L 64.31 86.60 L 63.65 86.80 L 62.99 86.99 L 62.32 87.16 L 61.64 87.32 L 60.96 87.46 L 60.27 87.58 L 59.57 87.68 L 58.88 87.77 L 58.17 87.83 L 57.46 87.88" fill="none" stroke="#FFFFFF" stroke-width="11" stroke-linecap="round"/><path d="M 22 78 C 37 94, 61 93, 80 74 C 91 63, 100 54, 113 46 C 98 53, 86 63, 74 72 C 57 85, 40 87, 22 78 Z" fill="#4BB148"/></svg><div style="display: flex; flex-direction: column; line-height: 0.94;"><span style="font-family: Quicksand, sans-serif; font-size: 17px; font-weight: 700; color: #FFFFFF; letter-spacing: -0.01em;">engineers</span><span style="font-family: Quicksand, sans-serif; font-size: 17px; font-weight: 700; letter-spacing: -0.01em;"><span style="color: #FFFFFF;">forum</span><span style="color: #4BB148;">qatar</span></span></div></div></div>
+      <div style="flex-grow: 1; padding-bottom: 20px;"><div class="side-g">OVERVIEW</div><div style="display: flex; flex-direction: column; gap: 2px;"><a href="#" class="side-a"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#B79AA4" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink: 0;"><rect x="3" y="3" width="7.5" height="7.5" rx="1.6"/><rect x="13.5" y="3" width="7.5" height="7.5" rx="1.6"/><rect x="3" y="13.5" width="7.5" height="7.5" rx="1.6"/><rect x="13.5" y="13.5" width="7.5" height="7.5" rx="1.6"/></svg><span>Dashboard</span></a></div><div class="side-g">MEMBERSHIP</div><div style="display: flex; flex-direction: column; gap: 2px;"><a href="#" class="side-a on"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#4B1728" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink: 0;"><circle cx="9" cy="8" r="3.3"/><path d="M2.6 19.6c.9-3.1 3.3-4.6 6.4-4.6s5.5 1.5 6.4 4.6"/><path d="M16.6 5.2a3.3 3.3 0 0 1 0 5.6M18.5 15.3c2 .7 3.3 2 3.9 4.3"/></svg><span>Members</span></a><a href="#" class="side-a"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#B79AA4" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink: 0;"><path d="M20.5 11.3V6.2a1.7 1.7 0 0 0-1.7-1.7H5.2a1.7 1.7 0 0 0-1.7 1.7v11.6a1.7 1.7 0 0 0 1.7 1.7h6"/><path d="M7.5 9h9M7.5 13h4"/><path d="m14.5 17.5 2.2 2.2 4.3-4.6"/></svg><span>Approvals</span></a><a href="#" class="side-a"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#B79AA4" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink: 0;"><rect x="2.5" y="5" width="19" height="14" rx="2.2"/><circle cx="8.6" cy="11" r="2.2"/><path d="M5.1 16.3c.7-1.4 2-2.1 3.5-2.1s2.8.7 3.5 2.1M15 10h4.2M15 13.6h4.2"/></svg><span>Digital IDs</span></a></div><div class="side-g">FINANCE</div><div style="display: flex; flex-direction: column; gap: 2px;"><a href="#" class="side-a"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#B79AA4" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink: 0;"><path d="M14 2.6H7a2 2 0 0 0-2 2v14.8a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7.6Z"/><path d="M14 2.6v5h5M8.6 13h6.8M8.6 16.6h4.4"/></svg><span>Invoices and receipts</span></a><a href="#" class="side-a"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#B79AA4" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink: 0;"><path d="M12 3.5v17M5 7.5h14"/><path d="M8.5 7.5 5.5 14h6ZM15.5 7.5 12.5 14h6Z"/></svg><span>Reconciliation</span></a></div><div class="side-g">PROGRAMMES</div><div style="display: flex; flex-direction: column; gap: 2px;"><a href="#" class="side-a"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#B79AA4" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink: 0;"><rect x="3" y="4.6" width="18" height="16" rx="2.2"/><path d="M3 9.6h18M8 2.6v4M16 2.6v4"/></svg><span>Events</span></a><a href="#" class="side-a"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#B79AA4" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink: 0;"><path d="M3.5 10v4l3 .6 2.6 4.4 2.2-1.2-1.8-3.1 8.6 1.7V6.6L3.5 10Z"/><path d="M19.5 9.4a2.8 2.8 0 0 1 0 5.2"/></svg><span>Announcements</span></a></div><div class="side-g">COMMUNITY</div><div style="display: flex; flex-direction: column; gap: 2px;"><a href="#" class="side-a"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#B79AA4" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink: 0;"><circle cx="10.5" cy="10.5" r="6.6"/><path d="m21 21-5.8-5.8"/></svg><span>Directory</span></a><a href="#" class="side-a"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#B79AA4" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink: 0;"><path d="M20.5 12.5 12.8 20.2a2 2 0 0 1-2.9 0l-6.4-6.4a2 2 0 0 1-.5-1.9l1.4-5.6a2 2 0 0 1 1.5-1.5l5.6-1.4a2 2 0 0 1 1.9.5l6.4 6.4a2 2 0 0 1 0 2.9Z"/><circle cx="8.6" cy="8.6" r="1.5"/></svg><span>Marketplace</span></a><a href="#" class="side-a"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#B79AA4" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink: 0;"><rect x="2.5" y="7" width="19" height="13" rx="2.2"/><path d="M8.6 7V5.5a2 2 0 0 1 2-2h2.8a2 2 0 0 1 2 2V7M2.5 12h19"/></svg><span>Jobs</span></a></div><div class="side-g">ADMINISTRATION</div><div style="display: flex; flex-direction: column; gap: 2px;"><a href="#" class="side-a"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#B79AA4" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink: 0;"><path d="M12 2.6 3.6 6v6c0 5 3.6 8.4 8.4 9.4 4.8-1 8.4-4.4 8.4-9.4V6Z"/><path d="m9 12 2 2 4-4"/></svg><span>Roles and access</span></a><a href="#" class="side-a"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#B79AA4" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink: 0;"><circle cx="12" cy="12" r="9"/><path d="M12 7.2V12l3.2 2"/></svg><span>Audit log</span></a></div></div>
+      <div style="border-top: 1px solid #642A3C; padding: 14px 20px; display: flex;
+                  align-items: center; gap: 11px;">
+        <div class="av" style="width: 36px; height: 36px; background: #642A3C; color: #FFFFFF; font-size: 13.7px;">RM</div>
+        <div style="display: flex; flex-direction: column; gap: 2px; flex-grow: 1; min-width: 0;">
+          <span style="font-size: 13.5px; font-weight: 700; color: #FFFFFF;">Rajesh Menon</span>
+          <span style="font-size: 11.5px; color: #B79AA4;">Technical Secretary</span>
+        </div>
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#B79AA4" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink: 0;"><circle cx="12" cy="5.5" r="1.6"/><circle cx="12" cy="12" r="1.6"/><circle cx="12" cy="18.5" r="1.6"/></svg>
+      </div>
+    </div>
+  <div style="display: flex; flex-direction: column; min-width: 0;">
+    <div style="height: 68px; background: #FFFFFF; border-bottom: 1px solid #DCE3EC;
+                display: flex; align-items: center; gap: 24px; padding: 0 30px; flex-shrink: 0;">
+      <div style="display: flex; flex-direction: column; gap: 3px;"><span style="font-size: 11.5px; color: #7D7278; font-weight: 600;">Members</span><h1 style="font-size: 19px;">Anand Krishnan</h1></div>
+      <div style="flex-grow: 1;"></div>
+      <div class="field" style="width: 232px; color: #7D7278;"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#9A9096" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink: 0;"><circle cx="10.5" cy="10.5" r="6.6"/><path d="m21 21-5.8-5.8"/></svg>
+        <span>Search members</span></div>
+      <a href="#" style="position: relative; display: flex;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#4A4045" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink: 0;"><path d="M18 8.6a6 6 0 1 0-12 0c0 6-2.5 7.5-2.5 7.5h17S18 14.6 18 8.6"/><path d="M13.7 20a2 2 0 0 1-3.4 0"/></svg>
+        <span style="position: absolute; top: -2px; right: -2px; width: 8px; height: 8px;
+              border-radius: 50%; background: #4BB148; border: 1.5px solid #FFFFFF;"></span></a>
+      
+    </div>
+    <div style="flex-grow: 1; overflow: hidden; padding: 26px 30px;">
+      <div style="display: flex; flex-direction: column; gap: 18px; height: 100%;">
+        <div class="card" style="padding: 20px 22px; display: flex; align-items: center;
+         gap: 18px;">
+      <div class="av" style="width: 58px; height: 58px; background: #F3E3E8; color: #4B1728; font-size: 21px;">AK</div>
+      <div style="display: flex; flex-direction: column; gap: 6px; min-width: 0;">
+        <div style="display: flex; align-items: center; gap: 11px;">
+          <h2 style="font-size: 21px;">Anand Krishnan</h2><span class="chip" style="background: #FBF2E2; color: #7A4E12; border: 1px solid #EEDCBC;">Expiring soon</span>
+        </div>
+        <span style="font-size: 13.5px; color: #7D7278;">
+          <span class="mono">EF/2019/0412</span> &nbsp;·&nbsp; Ordinary Member
+          &nbsp;·&nbsp; Member since 14 August 2019</span>
+      </div>
+      <div style="flex-grow: 1;"></div>
+      <a href="#" class="btn btn-s">Message</a>
+      <a href="#" class="btn btn-s">Suspend</a>
+      <a href="#" class="btn btn-p"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink: 0;"><rect x="2.5" y="5.5" width="19" height="13" rx="2.2"/><path d="M2.5 10h19"/></svg>Record a renewal</a>
+      <a href="#" style="display: flex;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#7D7278" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink: 0;"><circle cx="12" cy="5.5" r="1.6"/><circle cx="12" cy="12" r="1.6"/><circle cx="12" cy="18.5" r="1.6"/></svg></a>
+    </div>
+        <div style="display: flex; gap: 26px; border-bottom: 1px solid #DCE3EC;
+             margin-top: -2px;"><a href="#" style="padding: 0 2px 12px; font-size: 14px; font-family: Quicksand, sans-serif; font-weight: 700; color: #4B1728; border-bottom: 2.5px solid #4B1728;">Overview</a><a href="#" style="padding: 0 2px 12px; font-size: 14px; font-family: Quicksand, sans-serif; font-weight: 700; color: #7D7278; border-bottom: 2.5px solid transparent;">Documents</a><a href="#" style="padding: 0 2px 12px; font-size: 14px; font-family: Quicksand, sans-serif; font-weight: 700; color: #7D7278; border-bottom: 2.5px solid transparent;">Payments</a><a href="#" style="padding: 0 2px 12px; font-size: 14px; font-family: Quicksand, sans-serif; font-weight: 700; color: #7D7278; border-bottom: 2.5px solid transparent;">Events</a><a href="#" style="padding: 0 2px 12px; font-size: 14px; font-family: Quicksand, sans-serif; font-weight: 700; color: #7D7278; border-bottom: 2.5px solid transparent;">Audit</a></div>
+        <div style="display: grid; grid-template-columns: minmax(0, 1.55fr) minmax(0, 1fr);
+             gap: 20px; flex-grow: 1; min-height: 0;">
+          <div style="display: flex; flex-direction: column; gap: 20px; min-height: 0;">
+            <div class="card" style="display: flex; flex-direction: column; overflow: hidden; "><div class="card-h"><span class="card-t">Membership</span></div><div style="padding: 0; flex-grow: 1; min-height: 0; overflow: hidden;"><div style="padding: 20px; display: grid;
+         grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px 16px;">
+      <div style="display: flex; flex-direction: column; gap: 4px;"><span style="font-size: 11.5px; color: #7D7278; font-weight: 700;">Category</span><span class="" style="font-size: 14px; color: #241017; font-weight: 600;">Ordinary Member</span></div>
+      <div style="display: flex; flex-direction: column; gap: 4px;"><span style="font-size: 11.5px; color: #7D7278; font-weight: 700;">Member number</span><span class="mono" style="font-size: 14px; color: #241017; font-weight: 500;">EF/2019/0412</span></div>
+      <div style="display: flex; flex-direction: column; gap: 4px;"><span style="font-size: 11.5px; color: #7D7278; font-weight: 700;">Status</span><span class="" style="font-size: 14px; color: #241017; font-weight: 600;">Expiring soon</span></div>
+      <div style="display: flex; flex-direction: column; gap: 4px;"><span style="font-size: 11.5px; color: #7D7278; font-weight: 700;">Expires</span><span class="" style="font-size: 14px; color: #241017; font-weight: 600;">31 March 2027</span></div>
+      <div style="display: flex; flex-direction: column; gap: 4px;"><span style="font-size: 11.5px; color: #7D7278; font-weight: 700;">Renewal opened</span><span class="" style="font-size: 14px; color: #241017; font-weight: 600;">1 March 2027</span></div>
+      <div style="display: flex; flex-direction: column; gap: 4px;"><span style="font-size: 11.5px; color: #7D7278; font-weight: 700;">Dues</span><span class="" style="font-size: 14px; color: #241017; font-weight: 600;">QAR 500 outstanding</span></div>
+      <div style="display: flex; flex-direction: column; gap: 4px;"><span style="font-size: 11.5px; color: #7D7278; font-weight: 700;">College</span><span class="" style="font-size: 14px; color: #241017; font-weight: 600;">Mechanical</span></div>
+      <div style="display: flex; flex-direction: column; gap: 4px;"><span style="font-size: 11.5px; color: #7D7278; font-weight: 700;">Verified by</span><span class="" style="font-size: 14px; color: #241017; font-weight: 600;">Rajesh Menon</span></div>
+      <div style="display: flex; flex-direction: column; gap: 4px;"><span style="font-size: 11.5px; color: #7D7278; font-weight: 700;">Digital ID</span><span class="" style="font-size: 14px; color: #241017; font-weight: 600;">Active, offline copy 8 min old</span></div>
+    </div></div></div>
+            <div class="card" style="display: flex; flex-direction: column; overflow: hidden; "><div class="card-h"><span class="card-t">Profile and who can see it</span><a href="#" style="font-size: 13px; font-weight: 700;">Open the profile</a></div><div style="padding: 0; flex-grow: 1; min-height: 0; overflow: hidden;"><div style="display: flex; align-items: center;
+         justify-content: space-between; gap: 16px; padding: 13px 20px;
+         border-bottom: 1px solid #EEF3F8;">
+      <span style="font-size: 14px; font-weight: 600; color: #241017;">Employment</span>
+      <span class="chip" style="background: #F4F7FA; color: #4A4045; border: 1px solid #DCE3EC;">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#7D7278"
+             stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3.6-6.5 10-6.5S22 12 22 12s-3.6 6.5-10 6.5S2 12 2 12Z"/><circle cx="12" cy="12" r="2.6"/></svg>
+        All members</span></div><div style="display: flex; align-items: center;
+         justify-content: space-between; gap: 16px; padding: 13px 20px;
+         border-bottom: 1px solid #EEF3F8;">
+      <span style="font-size: 14px; font-weight: 600; color: #241017;">Education</span>
+      <span class="chip" style="background: #F4F7FA; color: #4A4045; border: 1px solid #DCE3EC;">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#7D7278"
+             stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3.6-6.5 10-6.5S22 12 22 12s-3.6 6.5-10 6.5S2 12 2 12Z"/><circle cx="12" cy="12" r="2.6"/></svg>
+        All members</span></div><div style="display: flex; align-items: center;
+         justify-content: space-between; gap: 16px; padding: 13px 20px;
+         border-bottom: 1px solid #EEF3F8;">
+      <span style="font-size: 14px; font-weight: 600; color: #241017;">Skills</span>
+      <span class="chip" style="background: #F4F7FA; color: #4A4045; border: 1px solid #DCE3EC;">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#7D7278"
+             stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3.6-6.5 10-6.5S22 12 22 12s-3.6 6.5-10 6.5S2 12 2 12Z"/><circle cx="12" cy="12" r="2.6"/></svg>
+        All members</span></div><div style="display: flex; align-items: center;
+         justify-content: space-between; gap: 16px; padding: 13px 20px;
+         border-bottom: 1px solid #EEF3F8;">
+      <span style="font-size: 14px; font-weight: 600; color: #241017;">Contact details</span>
+      <span class="chip" style="background: #F4F7FA; color: #4A4045; border: 1px solid #DCE3EC;">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#7D7278"
+             stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="10.5" width="16" height="10.5" rx="2"/><path d="M8 10.5V7a4 4 0 0 1 8 0v3.5"/></svg>
+        Administrators only</span></div><div style="display: flex; align-items: center;
+         justify-content: space-between; gap: 16px; padding: 13px 20px;
+         ">
+      <span style="font-size: 14px; font-weight: 600; color: #241017;">Professional summary</span>
+      <span class="chip" style="background: #F4F7FA; color: #4A4045; border: 1px solid #DCE3EC;">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#7D7278"
+             stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3l18 18M10.6 10.7a2.6 2.6 0 0 0 3.6 3.6"/><path d="M6.6 6.8C4 8.4 2 12 2 12s3.6 6.5 10 6.5c1.9 0 3.5-.6 4.8-1.4M9.5 5.8A9.9 9.9 0 0 1 12 5.5c6.4 0 10 6.5 10 6.5a19 19 0 0 1-2.7 3.5"/></svg>
+        Hidden</span></div></div></div>
+            <div class="card" style="display: flex; flex-direction: column; overflow: hidden; flex-grow: 1;"><div class="card-h"><span class="card-t">Payments and documents</span><a href="#" style="font-size: 13px; font-weight: 700;">All payments</a></div><div style="padding: 0; flex-grow: 1; min-height: 0; overflow: hidden;"><div style="display: grid; grid-template-columns: 150px minmax(0, 1fr) 104px 92px; gap: 14px; align-items: center; padding: 11px 20px; border-bottom: 1px solid #EEF3F8; background: #FAFCFE;"><div style="min-width: 0;"><span class="th">Document</span></div><div style="min-width: 0;"><span class="th">What it is for</span></div><div style="min-width: 0;"><span class="th">Amount</span></div><div style="min-width: 0;"><span class="th">Date</span></div></div><div style="display: grid; grid-template-columns: 150px minmax(0, 1fr) 104px 92px; gap: 14px; align-items: center; padding: 11px 20px; border-bottom: 1px solid #EEF3F8; background: #FFFFFF;"><div style="min-width: 0;"><div style="display: flex; flex-direction: column; gap: 2px;"><span style="font-size: 13.5px; font-weight: 700; color: #241017;">Invoice</span><span class="mono" style="font-size: 11.5px; color: #9A9096;">INV-2027-00214</span></div></div><div style="min-width: 0;"><span style="font-size: 13.5px; color: #4A4045;">Annual membership, 2027</span></div><div style="min-width: 0;"><span class="mono" style="font-size: 13px; color: #241017;">QAR 500.00</span></div><div style="min-width: 0;"><span style="font-size: 12.5px; color: #7D7278;">1 Mar 2027</span></div></div><div style="display: grid; grid-template-columns: 150px minmax(0, 1fr) 104px 92px; gap: 14px; align-items: center; padding: 11px 20px; border-bottom: 1px solid #EEF3F8; background: #FFFFFF;"><div style="min-width: 0;"><div style="display: flex; flex-direction: column; gap: 2px;"><span style="font-size: 13.5px; font-weight: 700; color: #241017;">Receipt</span><span class="mono" style="font-size: 11.5px; color: #9A9096;">RCT-2026-00873</span></div></div><div style="min-width: 0;"><span style="font-size: 13.5px; color: #4A4045;">Annual membership, 2026</span></div><div style="min-width: 0;"><span class="mono" style="font-size: 13px; color: #241017;">QAR 500.00</span></div><div style="min-width: 0;"><span style="font-size: 12.5px; color: #7D7278;">9 Mar 2026</span></div></div><div style="display: grid; grid-template-columns: 150px minmax(0, 1fr) 104px 92px; gap: 14px; align-items: center; padding: 11px 20px;  background: #FFFFFF;"><div style="min-width: 0;"><div style="display: flex; flex-direction: column; gap: 2px;"><span style="font-size: 13.5px; font-weight: 700; color: #241017;">Credit note</span><span class="mono" style="font-size: 11.5px; color: #9A9096;">CRN-2026-00031</span></div></div><div style="min-width: 0;"><span style="font-size: 13.5px; color: #4A4045;">Cricket tournament, cancelled</span></div><div style="min-width: 0;"><span class="mono" style="font-size: 13px; color: #241017;">QAR 75.00</span></div><div style="min-width: 0;"><span style="font-size: 12.5px; color: #7D7278;">22 Nov 2026</span></div></div></div></div>
+          </div>
+          <div style="display: flex; flex-direction: column; gap: 20px; min-height: 0;">
+            <div class="card" style="display: flex; flex-direction: column; overflow: hidden; "><div class="card-h"><span class="card-t">Documents</span></div><div style="padding: 0; flex-grow: 1; min-height: 0; overflow: hidden;"><div style="display: flex; align-items: center; gap: 12px; padding: 13px 20px;
+         border-bottom: 1px solid #EEF3F8;">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#7D7278" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink: 0;"><path d="M14 2.6H7a2 2 0 0 0-2 2v14.8a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7.6Z"/><path d="M14 2.6v5h5M8.6 13h6.8M8.6 16.6h4.4"/></svg>
+      <div style="display: flex; flex-direction: column; gap: 2px; flex-grow: 1; min-width: 0;">
+        <span style="font-size: 13.5px; font-weight: 600; color: #241017;">Degree certificate</span>
+        <span style="font-size: 12px; color: #7D7278;">Verified 16 August 2019</span>
+      </div>
+      <a href="#" style="font-size: 13px; font-weight: 700;">View</a></div><div style="display: flex; align-items: center; gap: 12px; padding: 13px 20px;
+         border-bottom: 1px solid #EEF3F8;">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#7D7278" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink: 0;"><path d="M14 2.6H7a2 2 0 0 0-2 2v14.8a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7.6Z"/><path d="M14 2.6v5h5M8.6 13h6.8M8.6 16.6h4.4"/></svg>
+      <div style="display: flex; flex-direction: column; gap: 2px; flex-grow: 1; min-width: 0;">
+        <span style="font-size: 13.5px; font-weight: 600; color: #241017;">Qatar ID</span>
+        <span style="font-size: 12px; color: #7D7278;">Verified 2 March 2026</span>
+      </div>
+      <a href="#" style="font-size: 13px; font-weight: 700;">View</a></div><div style="display: flex; align-items: center; gap: 12px; padding: 13px 20px;
+         ">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#7D7278" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink: 0;"><path d="M14 2.6H7a2 2 0 0 0-2 2v14.8a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7.6Z"/><path d="M14 2.6v5h5M8.6 13h6.8M8.6 16.6h4.4"/></svg>
+      <div style="display: flex; flex-direction: column; gap: 2px; flex-grow: 1; min-width: 0;">
+        <span style="font-size: 13.5px; font-weight: 600; color: #241017;">Engineering qualification</span>
+        <span style="font-size: 12px; color: #7A4E12;">Expires 30 June 2027</span>
+      </div>
+      <a href="#" style="font-size: 13px; font-weight: 700;">View</a></div></div></div>
+            <div class="card" style="display: flex; flex-direction: column; overflow: hidden; flex-grow: 1;"><div class="card-h"><span class="card-t">Audit trail</span><a href="#" style="font-size: 13px; font-weight: 700;">Full trail</a></div><div style="padding: 0; flex-grow: 1; min-height: 0; overflow: hidden;"><div style="display: flex; gap: 12px; padding: 12px 20px;
+         border-bottom: 1px solid #EEF3F8;">
+      <div style="width: 7px; height: 7px; border-radius: 50%; background: #4BB148;
+           margin-top: 6px; flex-shrink: 0;"></div>
+      <div style="display: flex; flex-direction: column; gap: 3px; min-width: 0;">
+        <span style="font-size: 13px; color: #241017; line-height: 1.45;">Invoice <span class="mono">INV-2027-00214</span> issued</span>
+        <span style="font-size: 11.5px; color: #7D7278;">Rajesh Menon · 1 Mar 2027</span>
+      </div></div><div style="display: flex; gap: 12px; padding: 12px 20px;
+         border-bottom: 1px solid #EEF3F8;">
+      <div style="width: 7px; height: 7px; border-radius: 50%; background: #B79AA4;
+           margin-top: 6px; flex-shrink: 0;"></div>
+      <div style="display: flex; flex-direction: column; gap: 3px; min-width: 0;">
+        <span style="font-size: 13px; color: #241017; line-height: 1.45;">Profile visibility changed on Contact details</span>
+        <span style="font-size: 11.5px; color: #7D7278;">The member · 12 Feb 2027</span>
+      </div></div><div style="display: flex; gap: 12px; padding: 12px 20px;
+         border-bottom: 1px solid #EEF3F8;">
+      <div style="width: 7px; height: 7px; border-radius: 50%; background: #4BB148;
+           margin-top: 6px; flex-shrink: 0;"></div>
+      <div style="display: flex; flex-direction: column; gap: 3px; min-width: 0;">
+        <span style="font-size: 13px; color: #241017; line-height: 1.45;">Receipt <span class="mono">RCT-2026-00873</span> issued</span>
+        <span style="font-size: 11.5px; color: #7D7278;">Priya Thomas · 9 Mar 2026</span>
+      </div></div><div style="display: flex; gap: 12px; padding: 12px 20px;
+         border-bottom: 1px solid #EEF3F8;">
+      <div style="width: 7px; height: 7px; border-radius: 50%; background: #B79AA4;
+           margin-top: 6px; flex-shrink: 0;"></div>
+      <div style="display: flex; flex-direction: column; gap: 3px; min-width: 0;">
+        <span style="font-size: 13px; color: #241017; line-height: 1.45;">Qatar ID re-verified</span>
+        <span style="font-size: 11.5px; color: #7D7278;">Rajesh Menon · 2 Mar 2026</span>
+      </div></div><div style="display: flex; gap: 12px; padding: 12px 20px;
+         border-bottom: 1px solid #EEF3F8;">
+      <div style="width: 7px; height: 7px; border-radius: 50%; background: #B79AA4;
+           margin-top: 6px; flex-shrink: 0;"></div>
+      <div style="display: flex; flex-direction: column; gap: 3px; min-width: 0;">
+        <span style="font-size: 13px; color: #241017; line-height: 1.45;">Registered for the structural engineering seminar</span>
+        <span style="font-size: 11.5px; color: #7D7278;">The member · 2 Feb 2027</span>
+      </div></div><div style="display: flex; gap: 12px; padding: 12px 20px;
+         border-bottom: 1px solid #EEF3F8;">
+      <div style="width: 7px; height: 7px; border-radius: 50%; background: #B79AA4;
+           margin-top: 6px; flex-shrink: 0;"></div>
+      <div style="display: flex; flex-direction: column; gap: 3px; min-width: 0;">
+        <span style="font-size: 13px; color: #241017; line-height: 1.45;">Digital ID reissued after a device change</span>
+        <span style="font-size: 11.5px; color: #7D7278;">The member · 18 Jan 2027</span>
+      </div></div><div style="display: flex; gap: 12px; padding: 12px 20px;
+         ">
+      <div style="width: 7px; height: 7px; border-radius: 50%; background: #B79AA4;
+           margin-top: 6px; flex-shrink: 0;"></div>
+      <div style="display: flex; flex-direction: column; gap: 3px; min-width: 0;">
+        <span style="font-size: 13px; color: #241017; line-height: 1.45;">Employment updated to Aamal Industrial</span>
+        <span style="font-size: 11.5px; color: #7D7278;">The member · 4 Nov 2026</span>
+      </div></div></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</x-dc>
+<script data-dc-script data-props='{"$preview":{"width":1440,"height":1200}}'>
+class Component extends DCLogic {}
+</script>
+</body>
+</html>

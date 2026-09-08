@@ -1,0 +1,224 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>EF Qatar — My EF, mobile</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;450;500;600&family=IBM+Plex+Mono:wght@400;500&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&display=swap">
+<style>
+body { margin: 0; font-family: 'IBM Plex Sans', system-ui, sans-serif; background: #FBF9F8; color: #4B4247; -webkit-font-smoothing: antialiased; }
+    * { box-sizing: border-box; }
+    a { color: #4B1527; text-decoration: none; }
+    a:hover { color: #63203A; text-decoration: underline; }
+    h1, h2, h3 { font-family: 'Source Serif 4', Georgia, serif; color: #1B1417; margin: 0; font-weight: 600; letter-spacing: -0.01em; }
+    p { margin: 0; }
+    .card { background: #FFFFFF; border: 1px solid #E6DEE1; border-radius: 6px; }
+    .sect-h { font-size: 17px; }
+    .mono { font-family: 'IBM Plex Mono', monospace; font-variant-numeric: tabular-nums; }
+    .rail-row { display: flex; align-items: center; gap: 14px; padding: 0 18px; height: 56px; border-bottom: 1px solid #EFE8EA; font-size: 15.5px; color: #1B1417; }
+    body { margin: 0; background: #EDE7E8; }
+</style>
+</head>
+<body>
+<!-- 390px — no status bar or keyboard drawn: the device renders its own on top -->
+<div style="width: 390px; margin: 0 auto; min-height: 100vh; border-left: 1px solid #E1D9DB; border-right: 1px solid #E1D9DB; background: #FBF9F8;">
+
+  <!-- Header -->
+  <div style="height: 60px; background: #FFFFFF; border-bottom: 1px solid #E6DEE1; display: flex; align-items: center; justify-content: space-between; padding: 0 18px;">
+    <div style="display: flex; align-items: center; gap: 10px;">
+      <div style="width: 34px; height: 34px; border-radius: 4px; background: #4B1527; display: flex; align-items: center; justify-content: center; font-family: 'Source Serif 4', Georgia, serif; font-weight: 700; font-size: 15px; color: #FFFFFF;">EF</div>
+      <div style="display: flex; flex-direction: column; gap: 2px;">
+        <div style="font-family: 'Source Serif 4', Georgia, serif; font-size: 14px; font-weight: 600; color: #1B1417; line-height: 1;">Engineers Forum</div>
+        <div style="font-size: 9px; font-weight: 500; color: #7C7076; letter-spacing: 0.16em; line-height: 1;">QATAR</div>
+      </div>
+    </div>
+    <div style="display: flex; align-items: center; gap: 6px;">
+      <a href="#" style="width: 44px; height: 44px; display: flex; align-items: center; justify-content: center; position: relative;">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#4B4247" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8.5a6 6 0 1 0-12 0c0 6-2.5 7.5-2.5 7.5h17S18 14.5 18 8.5"></path><path d="M13.7 20a2 2 0 0 1-3.4 0"></path></svg>
+        <span style="position: absolute; top: 10px; right: 11px; width: 7px; height: 7px; border-radius: 50%; background: #4B1527; border: 1.5px solid #FFFFFF;"></span>
+      </a>
+      <a href="#" style="width: 36px; height: 36px; border-radius: 50%; background: #F0E7EA; border: 1px solid #E1D3D8; display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 600; color: #4B1527;">AK</a>
+    </div>
+  </div>
+
+  <div style="padding: 22px 18px 28px; display: flex; flex-direction: column; gap: 24px;">
+
+    <div style="display: flex; flex-direction: column; gap: 4px;">
+      <h1 style="font-size: 24px;">My EF</h1>
+      <p style="font-size: 14px; color: #7C7076;">Anand Krishnan</p>
+    </div>
+
+    <!-- ZONE 3 — Membership status card, first thing below the header -->
+    <div class="card" style="padding: 22px 20px; display: flex; flex-direction: column; gap: 18px;">
+      <div style="display: flex; flex-direction: column; gap: 10px;">
+        <div style="font-size: 11.5px; color: #7C7076; letter-spacing: 0.06em;">MEMBERSHIP STATUS</div>
+        <h2 style="font-size: 26px;">Expiring soon</h2>
+        <span style="align-self: flex-start; display: inline-flex; align-items: center; gap: 7px; font-size: 12.5px; font-weight: 500; color: #7A4E12; background: #FBF2E2; border: 1px solid #EEDCBC; border-radius: 100px; padding: 5px 12px;">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#7A4E12" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"></circle><path d="M12 7.5V12l3 2"></path></svg>
+          42 days remaining
+        </span>
+        <p style="font-size: 14px; color: #4B4247; line-height: 1.55;">Your membership runs to 31 March 2027. Renewal opened on 1 March 2027.</p>
+      </div>
+
+      <div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; border-top: 1px solid #EFE8EA; padding-top: 16px;">
+        <div style="display: flex; flex-direction: column; gap: 5px;">
+          <div style="font-size: 11.5px; color: #7C7076;">Category</div>
+          <div style="font-size: 14.5px; font-weight: 500; color: #1B1417;">Ordinary Member</div>
+        </div>
+        <div style="display: flex; flex-direction: column; gap: 5px;">
+          <div style="font-size: 11.5px; color: #7C7076;">Member number</div>
+          <div class="mono" style="font-size: 14.5px; font-weight: 500; color: #1B1417;">EF/2019/0412</div>
+        </div>
+      </div>
+
+      <a href="#" style="height: 48px; display: flex; align-items: center; justify-content: center; gap: 9px; font-size: 15px; font-weight: 500; color: #4B1527; border: 1px solid #D9CDD2; border-radius: 4px;">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#4B1527" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="2.5" y="5" width="19" height="14" rx="2"></rect><circle cx="8.5" cy="11" r="2.2"></circle><path d="M5 16.2c.7-1.4 2-2.1 3.5-2.1s2.8.7 3.5 2.1M15 10h4M15 13.5h4"></path></svg>
+        View my card
+      </a>
+    </div>
+
+    <!-- ZONE 4 — Needs attention -->
+    <div style="display: flex; flex-direction: column; gap: 12px;">
+      <h2 class="sect-h">Needs your attention</h2>
+
+      <div class="card" style="padding: 20px; display: flex; flex-direction: column; gap: 14px;">
+        <div style="display: flex; gap: 14px;">
+          <div style="width: 38px; height: 38px; border-radius: 4px; background: #F0E7EA; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#4B1527" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="2.5" y="5.5" width="19" height="13" rx="2"></rect><path d="M2.5 10h19"></path></svg>
+          </div>
+          <div style="display: flex; flex-direction: column; gap: 4px;">
+            <div style="font-size: 15px; font-weight: 500; color: #1B1417; line-height: 1.4;">QAR 500 — annual membership, 2027</div>
+            <div style="font-size: 13px; color: #7C7076; line-height: 1.5;">Due by 31 March 2027. A receipt is issued as soon as the payment clears.</div>
+          </div>
+        </div>
+        <a href="#" style="height: 48px; display: flex; align-items: center; justify-content: center; font-size: 15px; font-weight: 500; color: #FFFFFF; background: #4B1527; border-radius: 4px;">Renew membership</a>
+      </div>
+
+      <div class="card" style="padding: 20px; display: flex; flex-direction: column; gap: 14px;">
+        <div style="display: flex; gap: 14px;">
+          <div style="width: 38px; height: 38px; border-radius: 4px; background: #F5F1F2; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#7C7076" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2.5H7a2 2 0 0 0-2 2v15a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7.5Z"></path><path d="M14 2.5v5h5"></path></svg>
+          </div>
+          <div style="display: flex; flex-direction: column; gap: 4px;">
+            <div style="font-size: 15px; font-weight: 500; color: #1B1417; line-height: 1.4;">Your engineering qualification expires on 30 June 2027</div>
+            <div style="font-size: 13px; color: #7C7076; line-height: 1.5;">Upload a current copy so your membership category is not affected.</div>
+          </div>
+        </div>
+        <a href="#" style="height: 48px; display: flex; align-items: center; justify-content: center; font-size: 15px; font-weight: 500; color: #4B1527; border: 1px solid #D9CDD2; border-radius: 4px;">Replace document</a>
+      </div>
+    </div>
+
+    <!-- ZONE 5 — My next events -->
+    <div style="display: flex; flex-direction: column; gap: 12px;">
+      <div style="display: flex; align-items: baseline; justify-content: space-between;">
+        <h2 class="sect-h">My next events</h2>
+        <a href="#" style="font-size: 13.5px; font-weight: 500;">All</a>
+      </div>
+
+      <div class="card" style="padding: 20px; display: flex; flex-direction: column; gap: 16px;">
+        <div style="display: flex; gap: 16px;">
+          <div style="flex-shrink: 0; width: 56px; border: 1px solid #E6DEE1; border-radius: 5px; overflow: hidden; text-align: center;">
+            <div style="background: #4B1527; color: #FFFFFF; font-size: 10px; font-weight: 600; letter-spacing: 0.1em; padding: 4px 0;">MAR</div>
+            <div style="font-family: 'Source Serif 4', Georgia, serif; font-size: 22px; font-weight: 600; color: #1B1417; padding: 6px 0 8px;">14</div>
+          </div>
+          <div style="display: flex; flex-direction: column; gap: 6px;">
+            <div style="font-size: 15px; font-weight: 500; color: #1B1417; line-height: 1.4;">Structural engineering seminar</div>
+            <div style="font-size: 13px; color: #7C7076; line-height: 1.5;">18:30 · Venue to be confirmed</div>
+            <span style="align-self: flex-start; display: inline-flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 500; color: #2E5B47; background: #EDF4F0; border: 1px solid #CFE3D9; border-radius: 100px; padding: 4px 10px;">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#2E5B47" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 7.5"></path></svg>
+              Registered
+            </span>
+          </div>
+        </div>
+        <a href="#" style="height: 48px; display: flex; align-items: center; justify-content: center; font-size: 15px; font-weight: 500; color: #4B1527; border: 1px solid #D9CDD2; border-radius: 4px;">View ticket</a>
+      </div>
+    </div>
+
+    <!-- ZONE 6 — Profile completeness -->
+    <div class="card" style="padding: 20px; display: flex; flex-direction: column; gap: 14px;">
+      <div style="display: flex; flex-direction: column; gap: 10px;">
+        <div style="font-size: 15px; font-weight: 500; color: #1B1417;">Your profile is 70% complete</div>
+        <div style="height: 6px; border-radius: 100px; background: #EFE8EA; overflow: hidden;">
+          <div style="width: 70%; height: 6px; background: #4B1527;"></div>
+        </div>
+        <div style="font-size: 13px; color: #7C7076;">Add your education to finish it. Members search the directory by qualification.</div>
+      </div>
+      <a href="#" style="height: 48px; display: flex; align-items: center; justify-content: center; font-size: 15px; font-weight: 500; color: #4B1527; border: 1px solid #D9CDD2; border-radius: 4px;">Add education</a>
+    </div>
+
+    <!-- ZONE 2 on mobile — the section rail as a visible list, not a hidden menu -->
+    <div style="display: flex; flex-direction: column; gap: 12px;">
+      <h2 class="sect-h">Everything in My EF</h2>
+
+      <div class="card" style="overflow: hidden;">
+        <div class="rail-row">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#7C7076" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2.5 3.5 6v6c0 5 3.6 8.4 8.5 9.5 4.9-1.1 8.5-4.5 8.5-9.5V6Z"></path><path d="m9 12 2 2 4-4"></path></svg>
+          <span style="flex-grow: 1;">My membership</span>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#BCADB3" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 6 6 6-6 6"></path></svg>
+        </div>
+        <div class="rail-row">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#7C7076" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="2.5" y="5" width="19" height="14" rx="2"></rect><circle cx="8.5" cy="11" r="2.2"></circle><path d="M5 16.2c.7-1.4 2-2.1 3.5-2.1s2.8.7 3.5 2.1M15 10h4M15 13.5h4"></path></svg>
+          <span style="flex-grow: 1;">My digital ID</span>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#BCADB3" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 6 6 6-6 6"></path></svg>
+        </div>
+        <div class="rail-row">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#7C7076" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"></circle><path d="M4.5 20.5c1-3.8 4-5.5 7.5-5.5s6.5 1.7 7.5 5.5"></path></svg>
+          <span style="flex-grow: 1;">My profile</span>
+          <span style="font-size: 12.5px; color: #7C7076;">70%</span>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#BCADB3" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 6 6 6-6 6"></path></svg>
+        </div>
+        <div class="rail-row">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#7C7076" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4.5" width="18" height="16" rx="2"></rect><path d="M3 9.5h18M8 2.5v4M16 2.5v4"></path></svg>
+          <span style="flex-grow: 1;">My events</span>
+          <span style="font-size: 12.5px; color: #7C7076;">1</span>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#BCADB3" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 6 6 6-6 6"></path></svg>
+        </div>
+        <div class="rail-row">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#7C7076" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M20.5 12.5 12.8 20.2a2 2 0 0 1-2.9 0l-6.4-6.4a2 2 0 0 1-.5-1.9l1.4-5.6a2 2 0 0 1 1.5-1.5l5.6-1.4a2 2 0 0 1 1.9.5l6.4 6.4a2 2 0 0 1 0 2.9Z"></path><circle cx="8.6" cy="8.6" r="1.4"></circle></svg>
+          <span style="flex-grow: 1;">My listings</span>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#BCADB3" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 6 6 6-6 6"></path></svg>
+        </div>
+        <div class="rail-row">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#7C7076" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="2.5" y="7" width="19" height="13" rx="2"></rect><path d="M8.5 7V5.5a2 2 0 0 1 2-2h3a2 2 0 0 1 2 2V7M2.5 12h19"></path></svg>
+          <span style="flex-grow: 1;">My jobs</span>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#BCADB3" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 6 6 6-6 6"></path></svg>
+        </div>
+        <div class="rail-row">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#7C7076" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3.2"></circle><path d="M2.8 19.5c.8-3 3.2-4.4 6.2-4.4s5.4 1.4 6.2 4.4"></path><path d="M16.5 5.2a3.2 3.2 0 0 1 0 5.6M18.4 15.4c2 .6 3.3 1.9 3.8 4.1"></path></svg>
+          <span style="flex-grow: 1;">My network</span>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#BCADB3" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 6 6 6-6 6"></path></svg>
+        </div>
+        <div class="rail-row">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#7C7076" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2.5H7a2 2 0 0 0-2 2v15a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7.5Z"></path><path d="M14 2.5v5h5M8.5 13h7M8.5 16.5h4.5"></path></svg>
+          <span style="flex-grow: 1;">Payments and documents</span>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#BCADB3" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 6 6 6-6 6"></path></svg>
+        </div>
+        <div class="rail-row">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#7C7076" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8.5a6 6 0 1 0-12 0c0 6-2.5 7.5-2.5 7.5h17S18 14.5 18 8.5"></path><path d="M13.7 20a2 2 0 0 1-3.4 0"></path></svg>
+          <span style="flex-grow: 1;">Notifications</span>
+          <span style="width: 20px; height: 20px; border-radius: 50%; background: #4B1527; color: #FFFFFF; font-size: 11.5px; font-weight: 500; display: flex; align-items: center; justify-content: center;">3</span>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#BCADB3" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 6 6 6-6 6"></path></svg>
+        </div>
+        <div class="rail-row" style="border-bottom: none;">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#7C7076" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="10.5" width="16" height="10.5" rx="2"></rect><path d="M8 10.5V7a4 4 0 0 1 8 0v3.5"></path></svg>
+          <span style="flex-grow: 1;">Privacy settings</span>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#BCADB3" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 6 6 6-6 6"></path></svg>
+        </div>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <div style="display: flex; flex-direction: column; gap: 14px; padding-top: 6px; border-top: 1px solid #EFE8EA;">
+      <div style="display: flex; flex-wrap: wrap; gap: 8px 20px; padding-top: 16px;">
+        <a href="#" style="font-size: 13.5px;">Contact EF</a>
+        <a href="#" style="font-size: 13.5px;">Bylaws and policies</a>
+        <a href="#" style="font-size: 13.5px;">Privacy notice</a>
+        <a href="#" style="font-size: 13.5px;">Sign out</a>
+      </div>
+      <p style="font-size: 12px; color: #9A8D93; line-height: 1.5;">Engineers Forum Qatar · Personal data held in the State of Qatar.</p>
+    </div>
+
+  </div>
+</div>
+</body>
+</html>

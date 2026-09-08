@@ -1,0 +1,25 @@
+{
+  "artboards": [
+    { "file": "Main.dc.html", "title": "Dashboard", "x": 0, "y": 0, "w": 1440, "h": 1120 },
+    { "file": "Members.dc.html", "title": "Members", "x": 1560, "y": 0, "w": 1440, "h": 1120 },
+    { "file": "MemberRecord.dc.html", "title": "Member record", "x": 3120, "y": 0, "w": 1440, "h": 1200 },
+    { "file": "Approvals.dc.html", "title": "Approvals queue", "x": 4680, "y": 0, "w": 1440, "h": 1120 }
+  ],
+  "annotations": [
+    {
+      "id": "brand",
+      "x": 0,
+      "y": -330,
+      "w": 1440,
+      "text": "EF QATAR CONSOLE — the committee side of the platform, in EF's own brand.\n\nColour and type are taken from the supplied guideline: maroon #4B1728, green #4BB148, pale #E9F1FA. Quicksand carries the brand voice and headings, Nunito Sans the interface text, IBM Plex Mono the member numbers, document references and amounts.\n\nThe roundel is redrawn as SVG from the supplied logo so it scales and reverses cleanly on the maroon sidebar. Drop EF's own vector artwork in before build.\n\nOne accessibility decision worth knowing: white on the brand green is only 2.6:1 and fails. So maroon carries the primary actions (white on maroon is 13:1) and green stays the accent — and where a green action is right, as on Approve membership, it carries dark text at 5.3:1."
+    },
+    {
+      "id": "scope",
+      "x": 1560,
+      "y": -330,
+      "w": 3000,
+      "text": "STATIC MOCKUPS FOR SIGN-OFF — not a clickable prototype.\n\nStructure and content follow the BRD (INSP-EFQatar-BRD-DigitalPlatform-v0.1): one approvals queue with time limits and escalation, sequential invoices, receipts and credit notes, a tamper-evident record of privileged action, and per-section profile visibility enforced on every route. The dashboard figures track the BRD's own objectives — 70% self-service renewal (OBJ-02) and 80% of dues collected electronically (OBJ-03).\n\nMember names, employers, numbers, dates and amounts are sample data. Membership state always carries a text label, never colour alone.\n\nStill to design: the member-facing portal in this brand (the earlier home and My EF pages predate the guideline and use the old palette), and the remaining console areas — finance, events, marketplace, directory, jobs, roles and access."
+    }
+  ],
+  "launch": { "view": "canvas" }
+}
