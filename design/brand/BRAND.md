@@ -35,14 +35,36 @@ Membership state always carries a text label, never colour alone.
 
 ## Type
 
+The console and the public site diverge here, deliberately, and the
+divergence needs EF's approval.
+
+### Console
+
 | Face | Role |
 | --- | --- |
 | Quicksand 500/600/700 | Brand voice — logo wordmark, headings, navigation, figures |
 | Nunito Sans 400/600/700/800 | Interface and reading copy |
 | IBM Plex Mono 400/500 | Member numbers, document references, amounts |
 
-All three from Google Fonts. Quicksand is the closest widely available
-match to the logo's rounded geometric wordmark.
+### Public site — a proposed extension
+
+| Face | Role |
+| --- | --- |
+| Newsreader 400/500/600 | Editorial headlines |
+| Public Sans 400/500/600/700 | Interface and reading copy |
+| Quicksand 600/700 | **The logo lockup only** |
+
+The guideline's rounded geometric is a friendly face. At headline size on
+a public page it reads promotional, which is the wrong register for the
+apex body of a profession — a serif is what gives an institution its
+authority. Newsreader is an editorial serif built for news setting.
+
+**This extends the guideline; it does not depart from the identity.** The
+logo is untouched and Quicksand still sets it. If EF would rather hold
+Quicksand across headlines too, that is a one-line change in
+`site/site.py`.
+
+All faces from Google Fonts.
 
 **Measuring frames:** Quicksand is wider than most fallbacks. A sandbox
 without Google Fonts access under-measures every frame — proxy the real

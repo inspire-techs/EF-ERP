@@ -101,23 +101,25 @@ def make(kind, w, h, seed):
         d.ellipse([gx - gr, gy - gr, gx + gr, gy + gr], fill=pal[3] + (72,))
 
     img = img.filter(ImageFilter.GaussianBlur(min(w, h) * cfg['blur']))
-    img = vignette(img)
+    # pull most of the saturation out and warm what is left, so these read as
+    # photographs rather than as brand-coloured panels
+    img = Image.blend(img, img.convert('L').convert('RGB'), 0.58)
+    warm = Image.new('RGB', img.size, (214, 200, 190))
+    img = Image.blend(img, ImageChops.multiply(img, warm), 0.45)
+    img = vignette(img, 0.34)
     img = grain(img)
     return img
 
 
+# named for the editorial position each fills, with the crop that position wants
 SPEC = [
-    ('hero-cultural',      'cultural', 720, 940,  11),
-    ('hero-cricket',       'cricket',  620, 620,  22),
-    ('hero-seminar',       'seminar',  740, 660,  33),
-    ('pillar-engineering', 'seminar',  860, 400,  44),
-    ('pillar-sport',       'cricket',  860, 400,  55),
-    ('pillar-arts',        'cultural', 860, 400,  66),
-    ('gallery-cultural',   'cultural', 940, 700,  77),
-    ('gallery-cricket',    'cricket',  640, 470,  88),
-    ('gallery-seminar',    'seminar',  640, 470,  99),
-    ('gallery-meeting',    'meeting', 1040, 380, 110),
-    ('member-portrait',    'portrait', 440, 440, 121),
+    ('lead-agm',        'meeting',  1280, 720, 110),   # 16:9 lead story
+    ('brief-renewal',   'seminar',   320, 320,  33),   # square briefs
+    ('brief-seminar',   'seminar',   320, 320,  44),
+    ('brief-register',  'meeting',   320, 320,  55),
+    ('news-committee',  'meeting',   840, 560,  11),   # 3:2 news
+    ('news-tournament', 'cricket',   840, 560,  88),
+    ('news-arts',       'cultural',  840, 560,  66),
 ]
 
 if __name__ == '__main__':

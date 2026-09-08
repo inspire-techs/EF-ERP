@@ -7,7 +7,7 @@ not implementation.
 | Folder | Deliverable | Screens |
 | --- | --- | --- |
 | [`console/`](console/) | Committee-side application | Dashboard · Members · Member record · Approvals queue |
-| [`site/`](site/) | Public home page | Desktop · Mobile |
+| [`site/`](site/) | Public home page, designed as a learned society publishes | Desktop · Mobile |
 | [`brand/`](brand/) | The mark and the design tokens | — |
 | [`archive/pre-brand/`](archive/pre-brand/) | Superseded first drafts | Home · My EF (desktop and mobile) |
 
@@ -38,6 +38,11 @@ replace it before build.
 Maroon carries the primary actions instead (13:1), green stays the
 accent, and where a green action is right it carries dark text at 5.3:1.
 See [`brand/BRAND.md`](brand/BRAND.md).
+
+**The public site sets headlines in a serif.** Newsreader, with Quicksand
+held back for the logo lockup alone. That is a proposed extension to the
+guideline and needs EF's approval — the reasoning is in
+[`brand/BRAND.md`](brand/BRAND.md).
 
 ## Still to do
 

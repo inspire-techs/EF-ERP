@@ -1,84 +1,98 @@
 # EF Qatar — public home page
 
-The public front of the platform. Zones follow section 6.2 of the Design
-Brief, visitor-not-signed-in state, with three programme pillars, a
-gallery and a member quote added on top of it.
+Designed as a learned society publishes, not as a product landing page.
 
 | Artboard | Screen | Frame |
 | --- | --- | --- |
-| `Main.dc.html` | Home page, desktop | 1440 x 5820 |
-| `HomeMobile.dc.html` | Home page, mobile | 390 x 6120 |
+| `Main.dc.html` | Home page, desktop | 1440 x 4420 |
+| `HomeMobile.dc.html` | Home page, mobile | 390 x 6560 |
 
 Static mockups for sign-off, not a clickable prototype.
 
+## What the page does, in order
+
+1. **Utility strip** — affiliation, contact, accessibility, member sign in
+2. **Masthead** — lockup, site search, apply
+3. **Navigation** — eight sections; the nav is itself the value on an
+   institutional site, so it is populated rather than reduced to five items
+4. **Lead story** — a notice, with a sidebar of four dated briefs
+5. **Members' notice band** — the renewal window, stated once
+6. **News** — three items, each with a kicker, a standfirst and a date
+7. **Events** — a listing with date blocks, venue, category, capacity, booking
+8. **Membership** — the categories with their dues, and the four steps of
+   admission. Information, not persuasion.
+9. **The register** — what it holds, who may search it, and a verification
+   panel for partners and employers
+10. **The committee** and **published documents** — offices with terms,
+    documents with version numbers
+11. **Footer** — a full sitemap
+
+## Deliberately absent
+
+The previous draft carried a centred value proposition with paired buttons,
+a floating image collage, a statistics band, an icon trio of "pillars", a
+member testimonial and a closing call-to-action banner. Those six blocks
+are what made it read as marketing. They are gone and should not come back.
+
+Hairline rules instead of shadowed cards. Square corners. A kicker and a
+date on everything. Colour used structurally, not decoratively.
+
+The genre was worked from first principles — royalsociety.org and
+istructe.org are both blocked by the network's egress policy, and neither
+society's design is reproduced here in any case.
+
+## Type
+
+Newsreader for editorial headlines, Public Sans for interface and reading
+copy, Quicksand for the logo lockup alone. The serif is a **proposed
+extension to the guideline** — see [`../brand/BRAND.md`](../brand/BRAND.md).
+
 ## Photographs — the one outstanding item
 
-`images/` holds **eleven generated placeholders**, not photographs.
-They are defocused compositions in the brand palette, produced by
-`make-placeholders.py`, and each is labelled `placeholder` in the layout.
+`images/` holds **seven generated placeholders**, not photographs:
+defocused, desaturated compositions produced by `make-placeholders.py`, so
+they read as photography rather than as brand-coloured panels. Each is
+badged `placeholder` on the page.
 
-They exist because real imagery could not be reached from the build
-environment: EF's Instagram is blocked by the network's egress policy,
-every open image host is blocked too, and the Drive archive turned out to
-hold personal family snapshots rather than EF events — nothing there
-belongs on a public page.
+Real imagery could not be reached from the build environment: EF's
+Instagram is blocked by the network's egress policy, every open image host
+is blocked too, and the Drive archive holds personal family snapshots
+rather than EF events.
 
-**Replacing one is a file swap.** Same filename, same rough aspect, then:
+**Replacing one is a file swap.** Same filename, same rough crop, then
+`python3 site.py`.
 
-    python3 make-placeholders.py    # only if regenerating placeholders
-    python3 site.py                 # rewrites the artboards
-
-| File | Position | Aspect |
+| File | Position | Crop |
 | --- | --- | --- |
-| `hero-cultural.jpg` | Hero collage, tall left tile | portrait 3:4 |
-| `hero-cricket.jpg` | Hero collage, top right | square |
-| `hero-seminar.jpg` | Hero collage, lower right | landscape ~10:9 |
-| `pillar-engineering.jpg` | Engineering pillar | landscape ~2:1 |
-| `pillar-sport.jpg` | Sport pillar | landscape ~2:1 |
-| `pillar-arts.jpg` | Arts and culture pillar | landscape ~2:1 |
-| `gallery-cultural.jpg` | Gallery, large tile | landscape 4:3 |
-| `gallery-cricket.jpg` | Gallery, square | square-ish |
-| `gallery-seminar.jpg` | Gallery, square | square-ish |
-| `gallery-meeting.jpg` | Gallery, wide bottom tile | wide ~3:1 |
-| `member-portrait.jpg` | The member quote | square |
+| `lead-agm.jpg` | Lead story | 16:9 |
+| `brief-renewal.jpg` | Sidebar brief | square |
+| `brief-seminar.jpg` | Sidebar brief | square |
+| `brief-register.jpg` | Sidebar brief | square |
+| `news-committee.jpg` | News, and the fourth brief | 3:2 |
+| `news-tournament.jpg` | News | 3:2 |
+| `news-arts.jpg` | News | 3:2 |
 
 At least 1600px on the long edge. **Usage rights must be recorded against
-every image** (BR-059), and the member in the portrait has to have agreed
-to appear.
-
-Each slot keeps its brand duotone behind the photograph, so a missing
-image degrades to a coloured panel rather than a broken box.
+every image** (BR-059).
 
 ## Structure
 
-`site.py` imports the mark, lockup and icon set from
-`../console/build.py` rather than copying them, so the public site and the
-committee console cannot drift apart.
+`site.py` imports the logo lockup from `../console/build.py` rather than
+copying it, so the public site and the committee console cannot drift apart.
 
     python3 site.py
 
-Tokens and the green-contrast rule: [`../brand/BRAND.md`](../brand/BRAND.md).
-
-## Composition
-
-From EF's guideline: maroon panels carrying the mark oversized, a green
-figures band lifted over the hero edge, green as the energetic accent, a
-pale ground with white cards between. Four duotones drive the image slots
-so no two adjacent gallery panels share a colour.
-
 ## Copy that needs confirming
 
-The guideline states EF is "the apex body of Engineers of Kerala origin
-who work in Qatar". The headline and the eligibility line both say so —
-but **the Secretary must confirm the eligibility wording against the
-admission criteria actually applied (BR-011)**, or applicants are
-encouraged and then refused.
+The guideline states EF is "the apex body of Engineers of Kerala origin who
+work in Qatar", and the membership section says so. **The Secretary must
+confirm the eligibility wording against the criteria actually applied
+(BR-011)**, or applicants are encouraged and then refused.
 
-The member quote is left as instructions, not an invented testimonial.
-Announcement, event and pillar copy is drafted and needs EF's content
-owners (DQ-08, DQ-11). Dashed chips elsewhere are facts still outstanding:
-three of the four figures (only the 800 members is known), venues, officer
-names, the affiliation mark, contact details.
+Dashed chips are facts still outstanding: three of the four membership dues,
+venues, officer names, adoption dates for the bylaws and policies, the
+annual report year, and the contact details. News, briefs and event copy is
+drafted and needs EF's content owners (DQ-08, DQ-11).
 
 ## Rebuilding the canvas
 
@@ -87,3 +101,7 @@ names, the affiliation mark, contact details.
       --out ef-qatar-home-page.html --title "EF Qatar Home Page" \
       --artboard Main.dc.html --artboard HomeMobile.dc.html \
       --canvas canvas.json $(for f in images/*.jpg; do echo --image $f; done)
+
+Measure frames against the real Google Fonts faces before publishing — the
+sandbox browser cannot fetch them and under-measures. That caught 928px of
+overflow on the mobile frame in this redesign.
