@@ -19,26 +19,30 @@
     p { margin: 0; }
     img { display: block; }
     .wrap { max-width: 1240px; margin: 0 auto; padding: 0 40px; }
-    /* the category label an institution sets above every headline */
     .kick { font-family: 'Public Sans', sans-serif; font-size: 11px; font-weight: 700;
             letter-spacing: 0.14em; color: #4B1728; text-transform: uppercase; }
     .kick-g { color: #2A7F26; }
+    .kick-w { color: #7FCB7C; }
     .date { font-size: 12.5px; color: #6E6569; font-variant-numeric: tabular-nums; }
     .std { font-size: 15px; line-height: 1.62; color: #3F383B; }
-    /* a section head: maroon rule, title, and the route to the full listing */
     .sec { border-top: 3px solid #4B1728; padding-top: 14px; display: flex;
            align-items: baseline; justify-content: space-between; gap: 24px;
            margin-bottom: 26px; }
-    .sec h2 { font-size: 27px; }
+    .sec h2 { font-size: 28px; }
     .more { font-size: 14px; font-weight: 600; white-space: nowrap; }
     .btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px;
-           height: 44px; padding: 0 22px; font-size: 14.5px; font-weight: 600;
+           height: 46px; padding: 0 24px; font-size: 15px; font-weight: 600;
            font-family: 'Public Sans', sans-serif; border: 1px solid transparent;
            white-space: nowrap; }
     .btn-m { background: #4B1728; color: #FFFFFF; }
     .btn-m:hover { background: #63203A; color: #FFFFFF; text-decoration: none; }
+    .btn-g { background: #4BB148; color: #16290F; }
+    .btn-g:hover { background: #43A340; color: #16290F; text-decoration: none; }
     .btn-o { background: #FFFFFF; color: #4B1728; border-color: #B9A3AC; }
     .btn-o:hover { border-color: #4B1728; color: #4B1728; text-decoration: none; }
+    .btn-w { background: transparent; color: #FFFFFF; border-color: rgba(255,255,255,0.55); }
+    .btn-w:hover { background: rgba(255,255,255,0.12); color: #FFFFFF;
+                   border-color: #FFFFFF; text-decoration: none; }
     .nav-a { font-size: 14.5px; font-weight: 600; color: #191013; padding: 15px 0;
              border-bottom: 3px solid transparent; }
     .nav-a:hover { color: #4B1728; border-bottom-color: #4BB148; text-decoration: none; }
@@ -50,10 +54,39 @@
     .ph { position: absolute; right: 8px; bottom: 8px; font-family: 'Public Sans', sans-serif;
           font-size: 9.5px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase;
           color: #FFFFFF; background: rgba(25, 16, 19, 0.72); padding: 3px 6px; }
+
+    /* the hero slideshow: four layers crossfading on one 32s cycle, no script */
+    .slide { position: absolute; inset: 0; opacity: 0; animation: shot 32s linear infinite; }
+    @keyframes shot { 0% { opacity: 0; } 2% { opacity: 1; } 23% { opacity: 1; }
+                      27% { opacity: 0; } 100% { opacity: 0; } }
+    .slide-img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;
+                 animation: drift 32s linear infinite; }
+    @keyframes drift { 0% { transform: scale(1.06); } 27% { transform: scale(1.12); }
+                       100% { transform: scale(1.12); } }
+    /* the progress bars share the slides' timing */
+    .bar { position: relative; width: 54px; height: 3px; background: rgba(255,255,255,0.32);
+           overflow: hidden; }
+    .bar span { position: absolute; inset: 0; background: #FFFFFF; transform-origin: left;
+                transform: scaleX(0); animation: fill 32s linear infinite; }
+    @keyframes fill { 0% { transform: scaleX(0); } 25% { transform: scaleX(1); }
+                      25.6% { transform: scaleX(0); } 100% { transform: scaleX(0); } }
+    /* the four routes below the hero */
+    .route { display: flex; flex-direction: column; gap: 9px; padding: 26px 28px;
+             border-left: 1px solid rgba(255,255,255,0.16); }
+    .route:hover { background: rgba(255,255,255,0.07); text-decoration: none; }
+    .route-t { font-family: Newsreader, serif; font-size: 20px; color: #FFFFFF; }
+    .route-s { font-size: 13px; color: #C9B2BB; line-height: 1.45; }
+    /* calendar */
+    .cal-h { font-size: 11px; font-weight: 700; letter-spacing: 0.1em; color: #6E6569;
+             text-transform: uppercase; text-align: center; padding-bottom: 8px; }
+    .cal-d { aspect-ratio: 1 / 1; border: 1px solid #E7EBF0; display: flex;
+             flex-direction: column; align-items: center; justify-content: center; gap: 5px;
+             font-size: 14px; color: #3F383B; font-variant-numeric: tabular-nums; }
+    .cal-dot { width: 6px; height: 6px; border-radius: 50%; }
   </style>
 </helmet>
 
-<div style="width: 1440px; background: #FFFFFF;"><div style="background: #4B1728;">
+<div style="width: 1440px; background: #FFFFFF;"><div style="background: #2E0C19;">
       <div class="wrap" style="height: 36px; display: flex; align-items: center;
            justify-content: space-between; gap: 24px; font-size: 12.5px;">
         <span style="color: #C9B2BB;">Affiliated to the Indian Business and Professional
@@ -68,387 +101,509 @@
          justify-content: space-between; gap: 40px;">
       <div style="display: flex; align-items: center; gap: 10px;"><svg viewBox="0 0 120 120" width="34" height="34" style="flex-shrink: 0;" aria-label="Engineers Forum Qatar"><path d="M 98.96 86.28 A 47.00 47.00 0 1 1 102.24 39.40" fill="none" stroke="#4B1728" stroke-width="11" stroke-linecap="round"/><path d="M 51.35 57.52 L 51.31 57.27 L 51.28 57.02 L 51.26 56.76 L 51.25 56.51 L 51.24 56.25 L 51.24 55.98 L 51.25 55.72 L 51.27 55.45 L 51.29 55.18 L 51.33 54.91 L 51.37 54.64 L 51.42 54.37 L 51.47 54.09 L 51.54 53.82 L 51.61 53.54 L 51.70 53.27 L 51.79 52.99 L 51.89 52.72 L 52.00 52.44 L 52.12 52.17 L 52.24 51.90 L 52.38 51.63 L 52.52 51.36 L 52.67 51.09 L 52.83 50.83 L 53.00 50.57 L 53.18 50.31 L 53.37 50.05 L 53.57 49.80 L 53.77 49.55 L 53.98 49.30 L 54.20 49.06 L 54.43 48.83 L 54.67 48.59 L 54.92 48.37 L 55.17 48.15 L 55.43 47.93 L 55.70 47.72 L 55.98 47.51 L 56.27 47.32 L 56.56 47.12 L 56.86 46.94 L 57.17 46.76 L 57.48 46.59 L 57.80 46.43 L 58.13 46.27 L 58.46 46.12 L 58.80 45.98 L 59.15 45.85 L 59.50 45.73 L 59.86 45.62 L 60.22 45.51 L 60.59 45.42 L 60.96 45.33 L 61.34 45.26 L 61.72 45.19 L 62.11 45.13 L 62.50 45.09 L 62.90 45.05 L 63.29 45.02 L 63.69 45.01 L 64.10 45.01 L 64.50 45.01 L 64.91 45.03 L 65.32 45.06 L 65.73 45.10 L 66.15 45.15 L 66.56 45.21 L 66.97 45.29 L 67.39 45.37 L 67.80 45.47 L 68.22 45.58 L 68.63 45.70 L 69.05 45.83 L 69.46 45.98 L 69.87 46.13 L 70.28 46.30 L 70.69 46.48 L 71.09 46.67 L 71.49 46.87 L 71.89 47.09 L 72.28 47.32 L 72.67 47.56 L 73.06 47.81 L 73.44 48.07 L 73.82 48.34 L 74.19 48.63 L 74.55 48.92 L 74.91 49.23 L 75.26 49.55 L 75.61 49.88 L 75.95 50.22 L 76.28 50.57 L 76.61 50.93 L 76.92 51.30 L 77.23 51.68 L 77.53 52.08 L 77.82 52.48 L 78.10 52.89 L 78.38 53.31 L 78.64 53.74 L 78.89 54.18 L 79.13 54.63 L 79.36 55.09 L 79.58 55.55 L 79.79 56.02 L 79.99 56.50 L 80.18 56.99 L 80.35 57.49 L 80.51 57.99 L 80.66 58.50 L 80.80 59.01 L 80.92 59.53 L 81.03 60.06 L 81.13 60.59 L 81.21 61.13 L 81.28 61.67 L 81.34 62.21 L 81.38 62.76 L 81.41 63.31 L 81.43 63.87 L 81.42 64.43 L 81.41 64.99 L 81.38 65.55 L 81.33 66.12 L 81.27 66.68 L 81.20 67.25 L 81.11 67.82 L 81.01 68.38 L 80.88 68.95 L 80.75 69.52 L 80.60 70.08 L 80.43 70.65 L 80.25 71.21 L 80.05 71.77 L 79.84 72.32 L 79.61 72.87 L 79.37 73.42 L 79.11 73.97 L 78.84 74.51 L 78.55 75.04 L 78.25 75.57 L 77.93 76.10 L 77.59 76.62 L 77.25 77.13 L 76.88 77.63 L 76.51 78.13 L 76.11 78.62 L 75.71 79.10 L 75.29 79.57 L 74.86 80.03 L 74.41 80.49 L 73.95 80.93 L 73.47 81.36 L 72.99 81.78 L 72.49 82.20 L 71.97 82.60 L 71.45 82.98 L 70.91 83.36 L 70.36 83.72 L 69.80 84.07 L 69.23 84.41 L 68.65 84.74 L 68.06 85.05 L 67.46 85.34 L 66.85 85.62 L 66.23 85.89 L 65.59 86.14 L 64.96 86.38 L 64.31 86.60 L 63.65 86.80 L 62.99 86.99 L 62.32 87.16 L 61.64 87.32 L 60.96 87.46 L 60.27 87.58 L 59.57 87.68 L 58.88 87.77 L 58.17 87.83 L 57.46 87.88" fill="none" stroke="#4B1728" stroke-width="11" stroke-linecap="round"/><path d="M 22 78 C 37 94, 61 93, 80 74 C 91 63, 100 54, 113 46 C 98 53, 86 63, 74 72 C 57 85, 40 87, 22 78 Z" fill="#4BB148"/></svg><div style="display: flex; flex-direction: column; line-height: 0.94;"><span style="font-family: Quicksand, sans-serif; font-size: 17px; font-weight: 700; color: #4BB148; letter-spacing: -0.01em;">engineers</span><span style="font-family: Quicksand, sans-serif; font-size: 17px; font-weight: 700; letter-spacing: -0.01em;"><span style="color: #4BB148;">forum</span><span style="color: #4B1728;">qatar</span></span></div></div>
       <div style="display: flex; align-items: center; gap: 14px;">
-        <div class="field" style="width: 252px;"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#8A8288" stroke-width="2" stroke-linecap="round" style="flex-shrink: 0;"><circle cx="10.5" cy="10.5" r="6.6"/><path d="m21 21-5.8-5.8"/></svg><span>Search this site</span></div>
+        <div class="field" style="width: 244px;"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#8A8288" stroke-width="2" stroke-linecap="round" style="flex-shrink: 0;"><circle cx="10.5" cy="10.5" r="6.6"/><path d="m21 21-5.8-5.8"/></svg><span>Search this site</span></div>
         <a href="#" class="btn btn-m">Apply for membership</a>
       </div>
     </div>
-    <div style="border-top: 1px solid #D7DCE3; border-bottom: 1px solid #D7DCE3;">
+    <div style="border-top: 1px solid #D7DCE3;">
       <div class="wrap" style="display: flex; align-items: center; gap: 30px;"><a href="#" class="nav-a">About EF</a><a href="#" class="nav-a">Membership</a><a href="#" class="nav-a">Register of members</a><a href="#" class="nav-a">Events</a><a href="#" class="nav-a">Learning</a><a href="#" class="nav-a">Publications</a><a href="#" class="nav-a">Governance</a><a href="#" class="nav-a">Jobs</a></div>
-    </div><div class="wrap" style="padding-top: 38px;">
-      <div style="display: grid; grid-template-columns: minmax(0, 1.92fr) minmax(0, 1fr);
-           gap: 44px;">
-        <div style="display: flex; flex-direction: column; gap: 18px;">
-          <div style="position: relative; background: #F2F5F8;"><img src="lead-agm.jpg" alt="" style="width: 100%; aspect-ratio: 16 / 9; object-fit: cover;"><span class="ph">placeholder</span></div>
-          <div style="display: flex; flex-direction: column; gap: 12px;">
-            <span class="kick">Notice</span>
-            <h1 style="font-size: 40px; line-height: 1.16; max-width: 24ch;">Notice of the
-              Annual General Meeting, 14 March 2027</h1>
-            <p class="std" style="font-size: 17px; max-width: 56ch;">The agenda, the
-              Treasurer's statement and the papers for the meeting are published for members.
-              Nominations for the 2027 committee close on 28 February.</p>
-            <div style="display: flex; align-items: center; gap: 18px; padding-top: 2px;">
-              <a href="#" class="more" style="display: inline-flex; align-items: center; gap: 7px;">Read the notice <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#2A7F26" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink: 0;"><path d="M4 12h15M13 6l6 6-6 6"/></svg></a>
-              <span class="date">Published 12 February 2027 · The Secretary</span>
+    </div><div style="position: relative; height: 624px; overflow: hidden;
+         background: #2E0C19;">
+      <div class="slide" style="animation-delay: 0s;">
+          <img class="slide-img" src="hero-onam.jpg" alt="" style="animation-delay: 0s;">
+          <div style="position: absolute; inset: 0; background:
+               linear-gradient(180deg, rgba(24,10,16,0.34) 0%, rgba(24,10,16,0.04) 34%,
+               rgba(24,10,16,0.10) 52%, rgba(24,10,16,0.78) 100%);"></div>
+          <div style="position: absolute; inset: 0; background:
+               linear-gradient(96deg, rgba(24,10,16,0.70) 0%, rgba(24,10,16,0.34) 40%,
+               rgba(24,10,16,0) 66%);"></div>
+          <div style="position: absolute; inset: 0; display: flex; flex-direction: column;
+               justify-content: flex-end;">
+            <div class="wrap" style="width: 100%; padding-bottom: 68px; display: flex;
+                 flex-direction: column; gap: 14px;">
+              <span class="kick kick-w">Arts and culture</span>
+              <h1 style="font-size: 46px; line-height: 1.1; color: #FFFFFF;
+                   max-width: 20ch;">The evenings that make a register into a community</h1>
+              <p style="font-size: 16.5px; line-height: 1.6; color: #E6D8DD; max-width: 46ch;">Music, performance and the festivals the community keeps — families welcome.</p>
+            </div>
+          </div>
+        </div><div class="slide" style="animation-delay: 8s;">
+          <img class="slide-img" src="hero-cricket.jpg" alt="" style="animation-delay: 8s;">
+          <div style="position: absolute; inset: 0; background:
+               linear-gradient(180deg, rgba(24,10,16,0.34) 0%, rgba(24,10,16,0.04) 34%,
+               rgba(24,10,16,0.10) 52%, rgba(24,10,16,0.78) 100%);"></div>
+          <div style="position: absolute; inset: 0; background:
+               linear-gradient(96deg, rgba(24,10,16,0.70) 0%, rgba(24,10,16,0.34) 40%,
+               rgba(24,10,16,0) 66%);"></div>
+          <div style="position: absolute; inset: 0; display: flex; flex-direction: column;
+               justify-content: flex-end;">
+            <div class="wrap" style="width: 100%; padding-bottom: 68px; display: flex;
+                 flex-direction: column; gap: 14px;">
+              <span class="kick kick-w">Sport</span>
+              <h1 style="font-size: 46px; line-height: 1.1; color: #FFFFFF;
+                   max-width: 20ch;">Twelve teams, one season, every fixture recorded</h1>
+              <p style="font-size: 16.5px; line-height: 1.6; color: #E6D8DD; max-width: 46ch;">Tournaments through the year, with squads, waivers and emergency contacts held for every player.</p>
+            </div>
+          </div>
+        </div><div class="slide" style="animation-delay: 16s;">
+          <img class="slide-img" src="hero-seminar.jpg" alt="" style="animation-delay: 16s;">
+          <div style="position: absolute; inset: 0; background:
+               linear-gradient(180deg, rgba(24,10,16,0.34) 0%, rgba(24,10,16,0.04) 34%,
+               rgba(24,10,16,0.10) 52%, rgba(24,10,16,0.78) 100%);"></div>
+          <div style="position: absolute; inset: 0; background:
+               linear-gradient(96deg, rgba(24,10,16,0.70) 0%, rgba(24,10,16,0.34) 40%,
+               rgba(24,10,16,0) 66%);"></div>
+          <div style="position: absolute; inset: 0; display: flex; flex-direction: column;
+               justify-content: flex-end;">
+            <div class="wrap" style="width: 100%; padding-bottom: 68px; display: flex;
+                 flex-direction: column; gap: 14px;">
+              <span class="kick kick-w">Learning</span>
+              <h1 style="font-size: 46px; line-height: 1.1; color: #FFFFFF;
+                   max-width: 20ch;">Seminars run by members, for members</h1>
+              <p style="font-size: 16.5px; line-height: 1.6; color: #E6D8DD; max-width: 46ch;">Technical sessions across the disciplines, recorded against your professional profile.</p>
+            </div>
+          </div>
+        </div><div class="slide" style="animation-delay: 24s;">
+          <img class="slide-img" src="hero-agm.jpg" alt="" style="animation-delay: 24s;">
+          <div style="position: absolute; inset: 0; background:
+               linear-gradient(180deg, rgba(24,10,16,0.34) 0%, rgba(24,10,16,0.04) 34%,
+               rgba(24,10,16,0.10) 52%, rgba(24,10,16,0.78) 100%);"></div>
+          <div style="position: absolute; inset: 0; background:
+               linear-gradient(96deg, rgba(24,10,16,0.70) 0%, rgba(24,10,16,0.34) 40%,
+               rgba(24,10,16,0) 66%);"></div>
+          <div style="position: absolute; inset: 0; display: flex; flex-direction: column;
+               justify-content: flex-end;">
+            <div class="wrap" style="width: 100%; padding-bottom: 68px; display: flex;
+                 flex-direction: column; gap: 14px;">
+              <span class="kick kick-w">Governance</span>
+              <h1 style="font-size: 46px; line-height: 1.1; color: #FFFFFF;
+                   max-width: 20ch;">Eight hundred engineers, one elected committee</h1>
+              <p style="font-size: 16.5px; line-height: 1.6; color: #E6D8DD; max-width: 46ch;">Every approval, every payment and every decision recorded against the officer who made it.</p>
             </div>
           </div>
         </div>
-        <div style="display: flex; flex-direction: column;">
-          <div style="border-top: 3px solid #4B1728; padding-top: 13px; padding-bottom: 4px;">
-            <h2 style="font-size: 19px;">Also this month</h2>
-          </div>
-          <a href="#" style="display: grid;
-         grid-template-columns: 78px minmax(0, 1fr); gap: 15px; padding: 15px 0;
-         border-top: 1px solid #E7EBF0; align-items: start;">
-      <div style="position: relative; background: #F2F5F8;"><img src="brief-renewal.jpg" alt="" style="width: 100%; aspect-ratio: 1 / 1; object-fit: cover;"></div>
-      <div style="display: flex; flex-direction: column; gap: 5px;">
-        <span class="kick">News</span>
-        <h4 style="font-size: 16.5px; line-height: 1.32;">Renewal for 2027 opens on 1 March</h4>
-        <span class="date">5 February 2027</span>
+      <span class="ph" style="right: 16px; top: 16px; bottom: auto;">placeholder</span>
+      <div style="position: absolute; left: 0; right: 0; bottom: 42px;">
+        <div class="wrap" style="display: flex; align-items: center; gap: 9px;"><div class="bar"><span style="animation-delay: 0s;"></span></div><div class="bar"><span style="animation-delay: 8s;"></span></div><div class="bar"><span style="animation-delay: 16s;"></span></div><div class="bar"><span style="animation-delay: 24s;"></span></div></div>
       </div>
-    </a><a href="#" style="display: grid;
-         grid-template-columns: 78px minmax(0, 1fr); gap: 15px; padding: 15px 0;
-         border-top: 1px solid #E7EBF0; align-items: start;">
-      <div style="position: relative; background: #F2F5F8;"><img src="brief-seminar.jpg" alt="" style="width: 100%; aspect-ratio: 1 / 1; object-fit: cover;"></div>
-      <div style="display: flex; flex-direction: column; gap: 5px;">
-        <span class="kick">Event</span>
-        <h4 style="font-size: 16.5px; line-height: 1.32;">Structural engineering seminar, 14 March</h4>
-        <span class="date">4 February 2027</span>
+    </div><div style="background: #4B1728;">
+      <div class="wrap" style="padding: 0 40px; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr));">
+        <a href="#" class="route"
+         style="">
+      <div style="display: flex; align-items: center; justify-content: space-between; gap: 12px;">
+        <span class="route-t">Apply for membership</span><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#7FCB7C" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink: 0;"><path d="M4 12h15M13 6l6 6-6 6"/></svg>
       </div>
-    </a><a href="#" style="display: grid;
-         grid-template-columns: 78px minmax(0, 1fr); gap: 15px; padding: 15px 0;
-         border-top: 1px solid #E7EBF0; align-items: start;">
-      <div style="position: relative; background: #F2F5F8;"><img src="brief-register.jpg" alt="" style="width: 100%; aspect-ratio: 1 / 1; object-fit: cover;"></div>
-      <div style="display: flex; flex-direction: column; gap: 5px;">
-        <span class="kick">Register</span>
-        <h4 style="font-size: 16.5px; line-height: 1.32;">The register moves to member-managed visibility</h4>
-        <span class="date">28 January 2027</span>
+      <span class="route-s">Open to qualified engineers of Kerala origin in Qatar</span>
+    </a><a href="#" class="route"
+         style="">
+      <div style="display: flex; align-items: center; justify-content: space-between; gap: 12px;">
+        <span class="route-t">Register of members</span><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#7FCB7C" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink: 0;"><path d="M4 12h15M13 6l6 6-6 6"/></svg>
       </div>
-    </a><a href="#" style="display: grid;
-         grid-template-columns: 78px minmax(0, 1fr); gap: 15px; padding: 15px 0;
-         border-top: 1px solid #E7EBF0; align-items: start;">
-      <div style="position: relative; background: #F2F5F8;"><img src="news-committee.jpg" alt="" style="width: 100%; aspect-ratio: 1 / 1; object-fit: cover;"></div>
-      <div style="display: flex; flex-direction: column; gap: 5px;">
-        <span class="kick">Governance</span>
-        <h4 style="font-size: 16.5px; line-height: 1.32;">Annual report and accounts for 2026 published</h4>
-        <span class="date">21 January 2027</span>
+      <span class="route-s">Search 800 engineers by name, employer or discipline</span>
+    </a><a href="#" class="route"
+         style="">
+      <div style="display: flex; align-items: center; justify-content: space-between; gap: 12px;">
+        <span class="route-t">Marketplace</span><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#7FCB7C" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink: 0;"><path d="M4 12h15M13 6l6 6-6 6"/></svg>
       </div>
+      <span class="route-s">Partner offers and member-to-member listings</span>
+    </a><a href="#" class="route"
+         style="">
+      <div style="display: flex; align-items: center; justify-content: space-between; gap: 12px;">
+        <span class="route-t">Activities</span><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#7FCB7C" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink: 0;"><path d="M4 12h15M13 6l6 6-6 6"/></svg>
+      </div>
+      <span class="route-s">Seminars, sport, arts and the annual programme</span>
     </a>
-          <div style="border-top: 1px solid #E7EBF0; padding-top: 15px; margin-top: 4px;">
-            <a href="#" class="more" style="display: inline-flex; align-items: center; gap: 7px;">All announcements <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#2A7F26" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink: 0;"><path d="M4 12h15M13 6l6 6-6 6"/></svg></a>
-          </div>
-        </div>
       </div>
-    </div><div style="background: #F2F5F8; border-top: 1px solid #D7DCE3;
-         border-bottom: 1px solid #D7DCE3; margin-top: 44px;">
-      <div class="wrap" style="padding: 18px 40px; display: flex; align-items: center;
+    </div><div style="background: #F2F5F8; border-bottom: 1px solid #D7DCE3;">
+      <div class="wrap" style="padding: 17px 40px; display: flex; align-items: center;
            justify-content: space-between; gap: 28px;">
         <div style="display: flex; align-items: center; gap: 14px;">
-          <span class="kick kick-g">Members</span>
+          <span class="kick kick-g">Notice</span>
           <span style="width: 1px; height: 16px; background: #D7DCE3;"></span>
           <span style="font-size: 15px; color: #191013;">Renewal for 2027 is open until
-            <strong style="font-weight: 600;">31 March</strong>. Dues are QAR 500 for the year
-            and a receipt is issued on payment.</span>
+            <strong style="font-weight: 600;">31 March</strong>. Nominations for the committee
+            close on 28 February.</span>
         </div>
-        <a href="#" class="more" style="display: inline-flex; align-items: center; gap: 7px;">Renew your membership <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#2A7F26" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink: 0;"><path d="M4 12h15M13 6l6 6-6 6"/></svg></a>
+        <a href="#" class="more" style="display: inline-flex; align-items: center; gap: 7px;">All notices <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#2A7F26" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink: 0;"><path d="M4 12h15M13 6l6 6-6 6"/></svg></a>
       </div>
-    </div><div class="wrap" style="padding-top: 62px;">
+    </div><div class="wrap" style="padding-top: 58px;">
       <div class="sec"><h2>News</h2><a href="#" class="more" style="display: inline-flex; align-items: center; gap: 7px;">All news <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#2A7F26" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink: 0;"><path d="M4 12h15M13 6l6 6-6 6"/></svg></a></div>
-      <div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr));
-           gap: 34px;"><a href="#" style="display: flex; flex-direction: column; gap: 13px;">
-      <div style="position: relative; background: #F2F5F8;"><img src="news-committee.jpg" alt="" style="width: 100%; aspect-ratio: 3 / 2; object-fit: cover;"><span class="ph">placeholder</span></div>
-      <span class="kick">News</span>
-      <h3 style="font-size: 21px; line-height: 1.26;">Committee elected for the 2027 term</h3>
-      <p class="std" style="font-size: 14.5px;">The officers returned at the general meeting, and the portfolio each of them holds for the year.</p>
-      <span class="date">28 January 2027</span>
-    </a><a href="#" style="display: flex; flex-direction: column; gap: 13px;">
-      <div style="position: relative; background: #F2F5F8;"><img src="news-tournament.jpg" alt="" style="width: 100%; aspect-ratio: 3 / 2; object-fit: cover;"><span class="ph">placeholder</span></div>
-      <span class="kick">Sport</span>
-      <h3 style="font-size: 21px; line-height: 1.26;">Cricket tournament returns on 27 March</h3>
-      <p class="std" style="font-size: 14.5px;">Twelve teams are entered. Fixtures, waivers and emergency contacts are held against each squad.</p>
-      <span class="date">22 January 2027</span>
-    </a><a href="#" style="display: flex; flex-direction: column; gap: 13px;">
-      <div style="position: relative; background: #F2F5F8;"><img src="news-arts.jpg" alt="" style="width: 100%; aspect-ratio: 3 / 2; object-fit: cover;"><span class="ph">placeholder</span></div>
-      <span class="kick">Arts</span>
-      <h3 style="font-size: 21px; line-height: 1.26;">Arts evening to be held on 10 April</h3>
-      <p class="std" style="font-size: 14.5px;">The programme is being assembled by the Arts Secretary. Members may bring their families.</p>
-      <span class="date">18 January 2027</span>
+      <div style="display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr);
+           gap: 44px;">
+        <a href="#" style="display: flex; flex-direction: column; gap: 15px;">
+          <div style="position: relative; background: #F2F5F8;"><img src="news-lead.jpg" alt="" style="width: 100%; aspect-ratio: 3 / 2; object-fit: cover;"><span class="ph">placeholder</span></div>
+          <span class="kick">News</span>
+          <h3 style="font-size: 30px; line-height: 1.18;">Committee elected for the 2027 term</h3>
+          <p class="std" style="font-size: 16px;">The officers returned at the general meeting, and the portfolio each of them holds for the year. The Treasurer has published the accounts alongside the result.</p>
+          <span class="date">28 January 2027</span>
+        </a>
+        <div style="display: flex; flex-direction: column;"><a href="#" style="display: grid;
+         grid-template-columns: 118px minmax(0, 1fr); gap: 16px; padding: 16px 0;
+         border-top: 1px solid #E7EBF0; align-items: start;">
+      <div style="position: relative; background: #F2F5F8;"><img src="news-1.jpg" alt="" style="width: 100%; aspect-ratio: 3 / 2; object-fit: cover;"></div>
+      <div style="display: flex; flex-direction: column; gap: 6px;">
+        <span class="kick">Sport</span>
+        <h4 style="font-size: 17px; line-height: 1.3;">Cricket tournament returns on 27 March</h4>
+        <span class="date">22 January 2027</span>
+      </div>
+    </a><a href="#" style="display: grid;
+         grid-template-columns: 118px minmax(0, 1fr); gap: 16px; padding: 16px 0;
+         border-top: 1px solid #E7EBF0; align-items: start;">
+      <div style="position: relative; background: #F2F5F8;"><img src="news-2.jpg" alt="" style="width: 100%; aspect-ratio: 3 / 2; object-fit: cover;"></div>
+      <div style="display: flex; flex-direction: column; gap: 6px;">
+        <span class="kick">Arts</span>
+        <h4 style="font-size: 17px; line-height: 1.3;">Arts evening to be held on 10 April</h4>
+        <span class="date">18 January 2027</span>
+      </div>
+    </a><a href="#" style="display: grid;
+         grid-template-columns: 118px minmax(0, 1fr); gap: 16px; padding: 16px 0;
+         border-top: 1px solid #E7EBF0; align-items: start;">
+      <div style="position: relative; background: #F2F5F8;"><img src="news-3.jpg" alt="" style="width: 100%; aspect-ratio: 3 / 2; object-fit: cover;"></div>
+      <div style="display: flex; flex-direction: column; gap: 6px;">
+        <span class="kick">Learning</span>
+        <h4 style="font-size: 17px; line-height: 1.3;">Workshop programme set for the second quarter</h4>
+        <span class="date">11 January 2027</span>
+      </div>
     </a></div>
-    </div><div class="wrap" style="padding-top: 62px;">
-      <div class="sec"><h2>Events</h2><a href="#" class="more" style="display: inline-flex; align-items: center; gap: 7px;">All events and the calendar <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#2A7F26" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink: 0;"><path d="M4 12h15M13 6l6 6-6 6"/></svg></a></div>
-      <div style="border-bottom: 1px solid #E7EBF0;"><div style="display: grid;
-         grid-template-columns: 74px minmax(0, 1fr) 210px 104px; gap: 26px;
-         align-items: center; padding: 19px 0; border-top: 1px solid #E7EBF0;">
-      <div style="border-left: 3px solid #4B1728; padding-left: 13px;">
-        <div style="font-family: Newsreader, serif; font-size: 25px; font-weight: 500;
-             color: #191013; line-height: 1;">14</div>
-        <div class="kick" style="font-size: 10.5px; padding-top: 3px;">MAR</div>
       </div>
-      <div style="display: flex; flex-direction: column; gap: 5px; min-width: 0;">
-        <h3 style="font-size: 19px; line-height: 1.3;">Structural engineering seminar</h3>
-        <span style="font-size: 13.5px; color: #6E6569;">18:30 · <span class="tbc">Venue</span> · Seminar</span>
-      </div>
-      <span style="font-size: 13.5px; color: #6E6569;">182 registered · 18 on the waiting list</span>
-      <a href="#" class="btn btn-o" style="height: 38px; padding: 0 18px; font-size: 13.5px;">
-        Book</a>
-    </div><div style="display: grid;
-         grid-template-columns: 74px minmax(0, 1fr) 210px 104px; gap: 26px;
-         align-items: center; padding: 19px 0; border-top: 1px solid #E7EBF0;">
-      <div style="border-left: 3px solid #4B1728; padding-left: 13px;">
-        <div style="font-family: Newsreader, serif; font-size: 25px; font-weight: 500;
-             color: #191013; line-height: 1;">27</div>
-        <div class="kick" style="font-size: 10.5px; padding-top: 3px;">MAR</div>
-      </div>
-      <div style="display: flex; flex-direction: column; gap: 5px; min-width: 0;">
-        <h3 style="font-size: 19px; line-height: 1.3;">EF cricket tournament 2027</h3>
-        <span style="font-size: 13.5px; color: #6E6569;">07:00 · <span class="tbc">Venue</span> · Sport</span>
-      </div>
-      <span style="font-size: 13.5px; color: #6E6569;">12 teams entered</span>
-      <a href="#" class="btn btn-o" style="height: 38px; padding: 0 18px; font-size: 13.5px;">
-        Book</a>
-    </div><div style="display: grid;
-         grid-template-columns: 74px minmax(0, 1fr) 210px 104px; gap: 26px;
-         align-items: center; padding: 19px 0; border-top: 1px solid #E7EBF0;">
-      <div style="border-left: 3px solid #4B1728; padding-left: 13px;">
-        <div style="font-family: Newsreader, serif; font-size: 25px; font-weight: 500;
-             color: #191013; line-height: 1;">10</div>
-        <div class="kick" style="font-size: 10.5px; padding-top: 3px;">APR</div>
-      </div>
-      <div style="display: flex; flex-direction: column; gap: 5px; min-width: 0;">
-        <h3 style="font-size: 19px; line-height: 1.3;">Arts evening</h3>
-        <span style="font-size: 13.5px; color: #6E6569;">19:00 · <span class="tbc">Venue</span> · Arts</span>
-      </div>
-      <span style="font-size: 13.5px; color: #6E6569;">Families welcome</span>
-      <a href="#" class="btn btn-o" style="height: 38px; padding: 0 18px; font-size: 13.5px;">
-        Book</a>
-    </div><div style="display: grid;
-         grid-template-columns: 74px minmax(0, 1fr) 210px 104px; gap: 26px;
-         align-items: center; padding: 19px 0; border-top: 1px solid #E7EBF0;">
-      <div style="border-left: 3px solid #4B1728; padding-left: 13px;">
-        <div style="font-family: Newsreader, serif; font-size: 25px; font-weight: 500;
-             color: #191013; line-height: 1;">24</div>
-        <div class="kick" style="font-size: 10.5px; padding-top: 3px;">APR</div>
-      </div>
-      <div style="display: flex; flex-direction: column; gap: 5px; min-width: 0;">
-        <h3 style="font-size: 19px; line-height: 1.3;">Workshop: reinforced concrete detailing</h3>
-        <span style="font-size: 13.5px; color: #6E6569;">18:00 · <span class="tbc">Venue</span> · Workshop</span>
-      </div>
-      <span style="font-size: 13.5px; color: #6E6569;">Places limited to 40</span>
-      <a href="#" class="btn btn-o" style="height: 38px; padding: 0 18px; font-size: 13.5px;">
-        Book</a>
-    </div></div>
     </div><div style="background: #F2F5F8; border-top: 1px solid #D7DCE3;
-         margin-top: 62px;">
-      <div class="wrap" style="padding-top: 54px; padding-bottom: 58px;">
-        <div class="sec"><h2>Membership</h2><a href="#" class="more" style="display: inline-flex; align-items: center; gap: 7px;">Membership in full <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#2A7F26" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink: 0;"><path d="M4 12h15M13 6l6 6-6 6"/></svg></a></div>
-        <div style="display: grid; grid-template-columns: minmax(0, 1.62fr) minmax(0, 1fr);
-             gap: 56px; align-items: start;">
-          <div style="display: flex; flex-direction: column; gap: 18px;">
-            <p class="std" style="font-size: 16px; max-width: 62ch;">EF admits qualified
-              engineers of Kerala origin resident in Qatar. Admission is decided by the elected
-              committee against published criteria, and every decision is recorded against the
-              officer who made it.</p>
-            <div>
-              <div style="display: grid; grid-template-columns: 176px minmax(0, 1fr) 168px;
-                   gap: 22px; padding-bottom: 9px;">
-                <span class="kick">Category</span><span class="kick">Who it is for</span>
-                <span class="kick">Dues</span>
+         margin-top: 60px;">
+      <div class="wrap" style="padding-top: 52px; padding-bottom: 56px;">
+        <div class="sec"><h2>March at EF</h2><a href="#" class="more" style="display: inline-flex; align-items: center; gap: 7px;">The full calendar <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#2A7F26" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink: 0;"><path d="M4 12h15M13 6l6 6-6 6"/></svg></a></div>
+        <div style="display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.28fr);
+             gap: 52px; align-items: start;">
+          <div style="display: flex; flex-direction: column; gap: 16px;">
+            <div style="display: flex; align-items: baseline; justify-content: space-between;">
+              <h3 style="font-size: 21px;">March 2027</h3>
+              <div style="display: flex; align-items: center; gap: 8px;">
+                <a href="#" class="btn btn-o" style="height: 32px; width: 32px; padding: 0;">
+                  &lsaquo;</a>
+                <a href="#" class="btn btn-o" style="height: 32px; width: 32px; padding: 0;">
+                  &rsaquo;</a>
               </div>
-              <div style="border-bottom: 1px solid #D7DCE3;"><div style="display: grid;
-         grid-template-columns: 176px minmax(0, 1fr) 168px; gap: 22px; padding: 15px 0;
-         border-top: 1px solid #D7DCE3; align-items: baseline;">
-      <span style="font-size: 15px; font-weight: 600; color: #191013;">Ordinary Member</span>
-      <span style="font-size: 14.5px; color: #3F383B; line-height: 1.5;">Qualified engineers of Kerala origin resident in Qatar</span>
-      <span style="font-size: 15px; font-weight: 600; color: #191013;">QAR 500 a year</span>
+            </div>
+            <div style="display: flex; flex-direction: column; gap: 14px;">
+      <div style="display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 0;">
+        <div class="cal-h">Mon</div><div class="cal-h">Tue</div><div class="cal-h">Wed</div><div class="cal-h">Thu</div><div class="cal-h">Fri</div><div class="cal-h">Sat</div><div class="cal-h">Sun</div>
+      </div>
+      <div style="display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 0;
+           margin-top: -8px;"><div class="cal-d" style="background: #FFFFFF; font-size: 14px;"><span>1</span><span style="width: 6px; height: 6px;"></span></div><div class="cal-d" style="background: #FFFFFF; font-size: 14px;"><span>2</span><span style="width: 6px; height: 6px;"></span></div><div class="cal-d" style="background: #FFFFFF; font-size: 14px;"><span>3</span><span style="width: 6px; height: 6px;"></span></div><div class="cal-d" style="background: #FFFFFF; font-size: 14px;"><span>4</span><span style="width: 6px; height: 6px;"></span></div><div class="cal-d" style="background: #FFFFFF; font-weight: 600; color: #191013; font-size: 14px;"><span>5</span><span class="cal-dot" style="background: #4B1728;"></span></div><div class="cal-d" style="background: #FFFFFF; font-size: 14px;"><span>6</span><span style="width: 6px; height: 6px;"></span></div><div class="cal-d" style="background: #FFFFFF; font-size: 14px;"><span>7</span><span style="width: 6px; height: 6px;"></span></div><div class="cal-d" style="background: #FFFFFF; font-size: 14px;"><span>8</span><span style="width: 6px; height: 6px;"></span></div><div class="cal-d" style="background: #4B1728; border-color: #4B1728; color: #FFFFFF; font-weight: 700; font-size: 14px;"><span>9</span><span style="width: 6px; height: 6px;"></span></div><div class="cal-d" style="background: #FFFFFF; font-size: 14px;"><span>10</span><span style="width: 6px; height: 6px;"></span></div><div class="cal-d" style="background: #FFFFFF; font-size: 14px;"><span>11</span><span style="width: 6px; height: 6px;"></span></div><div class="cal-d" style="background: #FFFFFF; font-size: 14px;"><span>12</span><span style="width: 6px; height: 6px;"></span></div><div class="cal-d" style="background: #FFFFFF; font-size: 14px;"><span>13</span><span style="width: 6px; height: 6px;"></span></div><div class="cal-d" style="background: #FFFFFF; font-weight: 600; color: #191013; font-size: 14px;"><span>14</span><span class="cal-dot" style="background: #2A7F26;"></span></div><div class="cal-d" style="background: #FFFFFF; font-size: 14px;"><span>15</span><span style="width: 6px; height: 6px;"></span></div><div class="cal-d" style="background: #FFFFFF; font-size: 14px;"><span>16</span><span style="width: 6px; height: 6px;"></span></div><div class="cal-d" style="background: #FFFFFF; font-size: 14px;"><span>17</span><span style="width: 6px; height: 6px;"></span></div><div class="cal-d" style="background: #FFFFFF; font-size: 14px;"><span>18</span><span style="width: 6px; height: 6px;"></span></div><div class="cal-d" style="background: #FFFFFF; font-size: 14px;"><span>19</span><span style="width: 6px; height: 6px;"></span></div><div class="cal-d" style="background: #FFFFFF; font-weight: 600; color: #191013; font-size: 14px;"><span>20</span><span class="cal-dot" style="background: #2A7F26;"></span></div><div class="cal-d" style="background: #FFFFFF; font-size: 14px;"><span>21</span><span style="width: 6px; height: 6px;"></span></div><div class="cal-d" style="background: #FFFFFF; font-size: 14px;"><span>22</span><span style="width: 6px; height: 6px;"></span></div><div class="cal-d" style="background: #FFFFFF; font-size: 14px;"><span>23</span><span style="width: 6px; height: 6px;"></span></div><div class="cal-d" style="background: #FFFFFF; font-size: 14px;"><span>24</span><span style="width: 6px; height: 6px;"></span></div><div class="cal-d" style="background: #FFFFFF; font-size: 14px;"><span>25</span><span style="width: 6px; height: 6px;"></span></div><div class="cal-d" style="background: #FFFFFF; font-size: 14px;"><span>26</span><span style="width: 6px; height: 6px;"></span></div><div class="cal-d" style="background: #FFFFFF; font-weight: 600; color: #191013; font-size: 14px;"><span>27</span><span class="cal-dot" style="background: #B0762A;"></span></div><div class="cal-d" style="background: #FFFFFF; font-size: 14px;"><span>28</span><span style="width: 6px; height: 6px;"></span></div><div class="cal-d" style="background: #FFFFFF; font-size: 14px;"><span>29</span><span style="width: 6px; height: 6px;"></span></div><div class="cal-d" style="background: #FFFFFF; font-size: 14px;"><span>30</span><span style="width: 6px; height: 6px;"></span></div><div class="cal-d" style="background: #FFFFFF; font-weight: 600; color: #191013; font-size: 14px;"><span>31</span><span class="cal-dot" style="background: #4B1728;"></span></div><div class="cal-d" style="border-color: transparent;"></div><div class="cal-d" style="border-color: transparent;"></div><div class="cal-d" style="border-color: transparent;"></div><div class="cal-d" style="border-color: transparent;"></div></div>
+      <div style="display: flex; flex-wrap: wrap; gap: 10px 18px; padding-top: 4px;">
+        <span style="display: inline-flex; align-items: center; gap: 6px;
+         font-size: 12.5px; color: #6E6569;">
+      <span class="cal-dot" style="background: #2A7F26;"></span>Seminar</span><span style="display: inline-flex; align-items: center; gap: 6px;
+         font-size: 12.5px; color: #6E6569;">
+      <span class="cal-dot" style="background: #B0762A;"></span>Sport</span><span style="display: inline-flex; align-items: center; gap: 6px;
+         font-size: 12.5px; color: #6E6569;">
+      <span class="cal-dot" style="background: #8A3A5A;"></span>Arts</span><span style="display: inline-flex; align-items: center; gap: 6px;
+         font-size: 12.5px; color: #6E6569;">
+      <span class="cal-dot" style="background: #4B1728;"></span>Committee</span></div>
+    </div>
+          </div>
+          <div style="display: flex; flex-direction: column; gap: 14px;">
+            <h3 style="font-size: 21px;">This month's programme</h3>
+            <div style="border-bottom: 1px solid #E7EBF0;"><div style="display: grid;
+         grid-template-columns: 34px minmax(0, 1fr) 150px 104px;
+         gap: 20px; align-items: center; padding: 15px 0;
+         border-top: 1px solid #E7EBF0;">
+      <span style="font-family: Newsreader, serif; font-size: 20px; color: #191013;
+            font-variant-numeric: tabular-nums;">5</span>
+      <div style="display: flex; flex-direction: column; gap: 4px; min-width: 0;">
+        <span style="font-size: 15px; font-weight: 600; color: #191013; line-height: 1.35;">Committee meeting</span>
+        <span style="font-size: 12.5px; color: #6E6569;">19:30 · <span class="tbc">Venue</span>
+          <span style="display: inline-flex; align-items: center; gap: 5px; padding-left: 4px;">
+            <span class="cal-dot" style="background: #4B1728;"></span>Committee</span></span>
+      </div>
+      <span style="font-size: 13px; color: #6E6569;">Officers only</span>
+      <a href="#" class="btn btn-o" style="height: 36px; padding: 0 16px; font-size: 13px;">
+        Details</a>
     </div><div style="display: grid;
-         grid-template-columns: 176px minmax(0, 1fr) 168px; gap: 22px; padding: 15px 0;
+         grid-template-columns: 34px minmax(0, 1fr) 150px 104px;
+         gap: 20px; align-items: center; padding: 15px 0;
+         border-top: 1px solid #E7EBF0;">
+      <span style="font-family: Newsreader, serif; font-size: 20px; color: #191013;
+            font-variant-numeric: tabular-nums;">14</span>
+      <div style="display: flex; flex-direction: column; gap: 4px; min-width: 0;">
+        <span style="font-size: 15px; font-weight: 600; color: #191013; line-height: 1.35;">Structural engineering seminar</span>
+        <span style="font-size: 12.5px; color: #6E6569;">18:30 · <span class="tbc">Venue</span>
+          <span style="display: inline-flex; align-items: center; gap: 5px; padding-left: 4px;">
+            <span class="cal-dot" style="background: #2A7F26;"></span>Seminar</span></span>
+      </div>
+      <span style="font-size: 13px; color: #6E6569;">182 registered · 18 waiting</span>
+      <a href="#" class="btn btn-o" style="height: 36px; padding: 0 16px; font-size: 13px;">
+        Details</a>
+    </div><div style="display: grid;
+         grid-template-columns: 34px minmax(0, 1fr) 150px 104px;
+         gap: 20px; align-items: center; padding: 15px 0;
+         border-top: 1px solid #E7EBF0;">
+      <span style="font-family: Newsreader, serif; font-size: 20px; color: #191013;
+            font-variant-numeric: tabular-nums;">20</span>
+      <div style="display: flex; flex-direction: column; gap: 4px; min-width: 0;">
+        <span style="font-size: 15px; font-weight: 600; color: #191013; line-height: 1.35;">Workshop: reinforced concrete detailing</span>
+        <span style="font-size: 12.5px; color: #6E6569;">18:00 · <span class="tbc">Venue</span>
+          <span style="display: inline-flex; align-items: center; gap: 5px; padding-left: 4px;">
+            <span class="cal-dot" style="background: #2A7F26;"></span>Seminar</span></span>
+      </div>
+      <span style="font-size: 13px; color: #6E6569;">Places limited to 40</span>
+      <a href="#" class="btn btn-o" style="height: 36px; padding: 0 16px; font-size: 13px;">
+        Details</a>
+    </div><div style="display: grid;
+         grid-template-columns: 34px minmax(0, 1fr) 150px 104px;
+         gap: 20px; align-items: center; padding: 15px 0;
+         border-top: 1px solid #E7EBF0;">
+      <span style="font-family: Newsreader, serif; font-size: 20px; color: #191013;
+            font-variant-numeric: tabular-nums;">27</span>
+      <div style="display: flex; flex-direction: column; gap: 4px; min-width: 0;">
+        <span style="font-size: 15px; font-weight: 600; color: #191013; line-height: 1.35;">EF cricket tournament 2027</span>
+        <span style="font-size: 12.5px; color: #6E6569;">07:00 · <span class="tbc">Venue</span>
+          <span style="display: inline-flex; align-items: center; gap: 5px; padding-left: 4px;">
+            <span class="cal-dot" style="background: #B0762A;"></span>Sport</span></span>
+      </div>
+      <span style="font-size: 13px; color: #6E6569;">12 teams entered</span>
+      <a href="#" class="btn btn-o" style="height: 36px; padding: 0 16px; font-size: 13px;">
+        Details</a>
+    </div><div style="display: grid;
+         grid-template-columns: 34px minmax(0, 1fr) 150px 104px;
+         gap: 20px; align-items: center; padding: 15px 0;
+         border-top: 1px solid #E7EBF0;">
+      <span style="font-family: Newsreader, serif; font-size: 20px; color: #191013;
+            font-variant-numeric: tabular-nums;">31</span>
+      <div style="display: flex; flex-direction: column; gap: 4px; min-width: 0;">
+        <span style="font-size: 15px; font-weight: 600; color: #191013; line-height: 1.35;">Renewal window closes</span>
+        <span style="font-size: 12.5px; color: #6E6569;">23:59 · <span class="tbc">Venue</span>
+          <span style="display: inline-flex; align-items: center; gap: 5px; padding-left: 4px;">
+            <span class="cal-dot" style="background: #4B1728;"></span>Committee</span></span>
+      </div>
+      <span style="font-size: 13px; color: #6E6569;">Dues QAR 500</span>
+      <a href="#" class="btn btn-o" style="height: 36px; padding: 0 16px; font-size: 13px;">
+        Details</a>
+    </div></div>
+            <div style="display: flex; align-items: center; gap: 16px; padding-top: 4px;">
+              <a href="#" class="btn btn-m">Book a place</a>
+              <a href="#" class="more" style="display: inline-flex; align-items: center; gap: 7px;">Add the calendar to your diary <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#2A7F26" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink: 0;"><path d="M4 12h15M13 6l6 6-6 6"/></svg></a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div><div class="wrap" style="padding-top: 60px;">
+      <div class="sec"><h2>How to apply</h2><a href="#" class="more" style="display: inline-flex; align-items: center; gap: 7px;">Membership in full <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#2A7F26" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink: 0;"><path d="M4 12h15M13 6l6 6-6 6"/></svg></a></div>
+      <div style="background: #4B1728; display: grid;
+           grid-template-columns: repeat(4, minmax(0, 1fr));"><div style="display: flex; flex-direction: column; gap: 8px;
+         padding: 22px 20px; border-left: 1px solid rgba(255,255,255,0.16);">
+      <span style="font-family: Newsreader, serif; font-size: 27px; color: #4BB148;
+            line-height: 1;">1</span>
+      <span style="font-size: 15px; font-weight: 600; color: #FFFFFF;">Apply</span>
+      <span style="font-size: 13px; line-height: 1.5; color: #C9B2BB;">Your qualification, your employment and a proposer in good standing.</span>
+    </div><div style="display: flex; flex-direction: column; gap: 8px;
+         padding: 22px 20px; border-left: 1px solid rgba(255,255,255,0.16);">
+      <span style="font-family: Newsreader, serif; font-size: 27px; color: #4BB148;
+            line-height: 1;">2</span>
+      <span style="font-size: 15px; font-weight: 600; color: #FFFFFF;">Verification</span>
+      <span style="font-size: 13px; line-height: 1.5; color: #C9B2BB;">EF checks your documents against the originals.</span>
+    </div><div style="display: flex; flex-direction: column; gap: 8px;
+         padding: 22px 20px; border-left: 1px solid rgba(255,255,255,0.16);">
+      <span style="font-family: Newsreader, serif; font-size: 27px; color: #4BB148;
+            line-height: 1;">3</span>
+      <span style="font-size: 15px; font-weight: 600; color: #FFFFFF;">Decision</span>
+      <span style="font-size: 13px; line-height: 1.5; color: #C9B2BB;">The committee decides within five business days, and records it.</span>
+    </div><div style="display: flex; flex-direction: column; gap: 8px;
+         padding: 22px 20px; border-left: 1px solid rgba(255,255,255,0.16);">
+      <span style="font-family: Newsreader, serif; font-size: 27px; color: #4BB148;
+            line-height: 1;">4</span>
+      <span style="font-size: 15px; font-weight: 600; color: #FFFFFF;">Your Digital ID</span>
+      <span style="font-size: 13px; line-height: 1.5; color: #C9B2BB;">Pay your dues, and the credential is issued the same day.</span>
+    </div></div>
+      <div style="display: grid; grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr);
+           gap: 52px; align-items: start; padding-top: 40px;">
+        <div style="display: flex; flex-direction: column; gap: 16px;">
+          <h3 style="font-size: 22px;">Categories and dues</h3>
+          <div>
+            <div style="display: grid; grid-template-columns: 168px minmax(0, 1fr) 158px;
+                 gap: 20px; padding-bottom: 9px;">
+              <span class="kick">Category</span><span class="kick">Who it is for</span>
+              <span class="kick">Dues</span>
+            </div>
+            <div style="border-bottom: 1px solid #D7DCE3;"><div style="display: grid;
+         grid-template-columns: 168px minmax(0, 1fr) 158px; gap: 20px; padding: 14px 0;
          border-top: 1px solid #D7DCE3; align-items: baseline;">
-      <span style="font-size: 15px; font-weight: 600; color: #191013;">Associate Member</span>
-      <span style="font-size: 14.5px; color: #3F383B; line-height: 1.5;">Engineering professionals in related disciplines</span>
+      <span style="font-size: 14.5px; font-weight: 600; color: #191013;">Ordinary Member</span>
+      <span style="font-size: 14px; color: #3F383B; line-height: 1.5;">Qualified engineers of Kerala origin resident in Qatar</span>
+      <span style="font-size: 14.5px; font-weight: 600; color: #191013;">QAR 500 a year</span>
+    </div><div style="display: grid;
+         grid-template-columns: 168px minmax(0, 1fr) 158px; gap: 20px; padding: 14px 0;
+         border-top: 1px solid #D7DCE3; align-items: baseline;">
+      <span style="font-size: 14.5px; font-weight: 600; color: #191013;">Associate Member</span>
+      <span style="font-size: 14px; color: #3F383B; line-height: 1.5;">Engineering professionals in related disciplines</span>
       <span class="tbc">Dues — EF to confirm</span>
     </div><div style="display: grid;
-         grid-template-columns: 176px minmax(0, 1fr) 168px; gap: 22px; padding: 15px 0;
+         grid-template-columns: 168px minmax(0, 1fr) 158px; gap: 20px; padding: 14px 0;
          border-top: 1px solid #D7DCE3; align-items: baseline;">
-      <span style="font-size: 15px; font-weight: 600; color: #191013;">Student Member</span>
-      <span style="font-size: 14.5px; color: #3F383B; line-height: 1.5;">Engineering students enrolled in Qatar</span>
+      <span style="font-size: 14.5px; font-weight: 600; color: #191013;">Student Member</span>
+      <span style="font-size: 14px; color: #3F383B; line-height: 1.5;">Engineering students enrolled in Qatar</span>
       <span class="tbc">Dues — EF to confirm</span>
     </div><div style="display: grid;
-         grid-template-columns: 176px minmax(0, 1fr) 168px; gap: 22px; padding: 15px 0;
+         grid-template-columns: 168px minmax(0, 1fr) 158px; gap: 20px; padding: 14px 0;
          border-top: 1px solid #D7DCE3; align-items: baseline;">
-      <span style="font-size: 15px; font-weight: 600; color: #191013;">Life Member</span>
-      <span style="font-size: 14.5px; color: #3F383B; line-height: 1.5;">By resolution of the committee, for long-standing members</span>
+      <span style="font-size: 14.5px; font-weight: 600; color: #191013;">Life Member</span>
+      <span style="font-size: 14px; color: #3F383B; line-height: 1.5;">By resolution of the committee, for long-standing members</span>
       <span class="tbc">One-off — EF to confirm</span>
     </div></div>
-            </div>
-            <p style="font-size: 13.5px; color: #6E6569; line-height: 1.55;">Dues are set
-              annually by the committee and confirmed at the general meeting. The renewal
-              window runs to 31 March.</p>
           </div>
-          <div style="display: flex; flex-direction: column; gap: 16px;">
-            <h3 style="font-size: 21px;">How to apply</h3>
-            <div style="border-bottom: 1px solid #D7DCE3;"><div style="display: grid;
-         grid-template-columns: 26px minmax(0, 1fr); gap: 14px; padding: 12px 0;
-         border-top: 1px solid #D7DCE3; align-items: start;">
-      <span style="font-family: Newsreader, serif; font-size: 19px; color: #4B1728;
-            line-height: 1.3;">1</span>
-      <span style="font-size: 14.5px; line-height: 1.55; color: #3F383B;">Apply with your qualification, your employment and a proposer in good standing.</span>
-    </div><div style="display: grid;
-         grid-template-columns: 26px minmax(0, 1fr); gap: 14px; padding: 12px 0;
-         border-top: 1px solid #D7DCE3; align-items: start;">
-      <span style="font-family: Newsreader, serif; font-size: 19px; color: #4B1728;
-            line-height: 1.3;">2</span>
-      <span style="font-size: 14.5px; line-height: 1.55; color: #3F383B;">EF verifies your documents against the originals.</span>
-    </div><div style="display: grid;
-         grid-template-columns: 26px minmax(0, 1fr); gap: 14px; padding: 12px 0;
-         border-top: 1px solid #D7DCE3; align-items: start;">
-      <span style="font-family: Newsreader, serif; font-size: 19px; color: #4B1728;
-            line-height: 1.3;">3</span>
-      <span style="font-size: 14.5px; line-height: 1.55; color: #3F383B;">The committee decides within five business days, and the decision is recorded.</span>
-    </div><div style="display: grid;
-         grid-template-columns: 26px minmax(0, 1fr); gap: 14px; padding: 12px 0;
-         border-top: 1px solid #D7DCE3; align-items: start;">
-      <span style="font-family: Newsreader, serif; font-size: 19px; color: #4B1728;
-            line-height: 1.3;">4</span>
-      <span style="font-size: 14.5px; line-height: 1.55; color: #3F383B;">Pay your dues, and your Member Digital ID is issued the same day.</span>
-    </div></div>
-            <div style="display: flex; align-items: center; gap: 14px; padding-top: 4px;">
-              <a href="#" class="btn btn-m">Apply for membership</a>
-              <a href="#" class="more" style="display: inline-flex; align-items: center; gap: 7px;">Download the bylaws <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#2A7F26" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink: 0;"><path d="M4 12h15M13 6l6 6-6 6"/></svg></a>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div><div class="wrap" style="padding-top: 62px;">
-      <div class="sec"><h2>The register of members</h2><a href="#" class="more" style="display: inline-flex; align-items: center; gap: 7px;">About the register <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#2A7F26" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink: 0;"><path d="M4 12h15M13 6l6 6-6 6"/></svg></a></div>
-      <div style="display: grid; grid-template-columns: minmax(0, 1.62fr) minmax(0, 1fr);
-           gap: 56px; align-items: start;">
-        <div style="display: flex; flex-direction: column; gap: 18px;">
-          <p class="std" style="font-size: 16px; max-width: 62ch;">Eight hundred engineers,
-            searchable by name, employer, discipline and membership category. Each member
-            decides, section by section, what the register discloses — and that decision is
-            enforced on every route, including the mobile application.</p>
-          <div style="display: flex; align-items: center; gap: 12px;">
-            <div class="field" style="width: 330px;"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#8A8288" stroke-width="2" stroke-linecap="round" style="flex-shrink: 0;"><circle cx="10.5" cy="10.5" r="6.6"/><path d="m21 21-5.8-5.8"/></svg>
-              <span>Name, employer or discipline</span></div>
-            <a href="#" class="btn btn-o">Search the register</a>
-          </div>
-          <p style="font-size: 13.5px; color: #6E6569;">The register is open to members in good
-            standing. Sign in to search it.</p>
+          <p style="font-size: 13.5px; color: #6E6569; line-height: 1.55;">Dues are set
+            annually by the committee and confirmed at the general meeting.</p>
         </div>
         <div style="border: 1px solid #D7DCE3; padding: 26px; display: flex;
-             flex-direction: column; gap: 14px;">
-          <span class="kick kick-g">For partners and employers</span>
-          <h3 style="font-size: 20px; line-height: 1.28;">Verify a membership</h3>
-          <p style="font-size: 14.5px; line-height: 1.6; color: #3F383B;">Confirm a membership
-            from the member's Digital ID. Only the fields EF has configured for your partner
-            type are returned, and verification fails the day a membership lapses.</p>
-          <div class="field" style="margin-top: 2px;"><span>Membership number</span></div>
-          <a href="#" class="btn btn-o">Verify</a>
+             flex-direction: column; gap: 13px;">
+          <span class="kick kick-g">Registration</span>
+          <h3 style="font-size: 20px; line-height: 1.26;">Start your application</h3>
+          <p style="font-size: 14.5px; line-height: 1.6; color: #3F383B;">You will need your
+            qualification, proof of employment, your Qatar ID and a proposer in good standing.
+            The committee decides within five business days.</p>
+          <a href="#" class="btn btn-m" style="margin-top: 4px;">Register and apply</a>
+          <a href="#" class="btn btn-o">Renew an existing membership</a>
         </div>
       </div>
-    </div><div class="wrap" style="padding-top: 62px; padding-bottom: 68px;">
-      <div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 56px;
+    </div><div class="wrap" style="padding-top: 60px;">
+      <div class="sec"><h2>Notices</h2><a href="#" class="more" style="display: inline-flex; align-items: center; gap: 7px;">The notice board <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#2A7F26" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink: 0;"><path d="M4 12h15M13 6l6 6-6 6"/></svg></a></div>
+      <div style="border-bottom: 1px solid #E7EBF0;"><a href="#" style="display: grid;
+         grid-template-columns: 148px minmax(0, 1fr) 24px; gap: 26px; padding: 20px 0;
+         border-top: 1px solid #E7EBF0; align-items: start;">
+      <span class="date" style="padding-top: 3px;">12 February 2027</span>
+      <div style="display: flex; flex-direction: column; gap: 6px;">
+        <h3 style="font-size: 19px; line-height: 1.3;">Notice of the Annual General Meeting</h3>
+        <p style="font-size: 14px; line-height: 1.6; color: #3F383B;">Agenda, the Treasurer's statement and the papers for the meeting. Nominations for the 2027 committee close on 28 February.</p>
+      </div>
+      <span style="padding-top: 6px;"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#2A7F26" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink: 0;"><path d="M4 12h15M13 6l6 6-6 6"/></svg></span>
+    </a><a href="#" style="display: grid;
+         grid-template-columns: 148px minmax(0, 1fr) 24px; gap: 26px; padding: 20px 0;
+         border-top: 1px solid #E7EBF0; align-items: start;">
+      <span class="date" style="padding-top: 3px;">5 February 2027</span>
+      <div style="display: flex; flex-direction: column; gap: 6px;">
+        <h3 style="font-size: 19px; line-height: 1.3;">Renewal of membership for 2027</h3>
+        <p style="font-size: 14px; line-height: 1.6; color: #3F383B;">The renewal window is open until 31 March. Dues are QAR 500 for the year and a receipt is issued on payment.</p>
+      </div>
+      <span style="padding-top: 6px;"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#2A7F26" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink: 0;"><path d="M4 12h15M13 6l6 6-6 6"/></svg></span>
+    </a><a href="#" style="display: grid;
+         grid-template-columns: 148px minmax(0, 1fr) 24px; gap: 26px; padding: 20px 0;
+         border-top: 1px solid #E7EBF0; align-items: start;">
+      <span class="date" style="padding-top: 3px;">21 January 2027</span>
+      <div style="display: flex; flex-direction: column; gap: 6px;">
+        <h3 style="font-size: 19px; line-height: 1.3;">Amendment to the bylaws, clause 7</h3>
+        <p style="font-size: 14px; line-height: 1.6; color: #3F383B;">Adopted at the general meeting. The consolidated bylaws are republished at v4.1.</p>
+      </div>
+      <span style="padding-top: 6px;"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#2A7F26" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink: 0;"><path d="M4 12h15M13 6l6 6-6 6"/></svg></span>
+    </a></div>
+    </div><div style="background: #F2F5F8; border-top: 1px solid #D7DCE3;
+         margin-top: 60px;">
+      <div class="wrap" style="padding-top: 52px; padding-bottom: 54px;">
+        <div class="sec"><h2>The register of members</h2><a href="#" class="more" style="display: inline-flex; align-items: center; gap: 7px;">About the register <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#2A7F26" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink: 0;"><path d="M4 12h15M13 6l6 6-6 6"/></svg></a></div>
+        <div style="display: grid; grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr);
+             gap: 52px; align-items: start;">
+          <div style="display: flex; flex-direction: column; gap: 16px;">
+            <p class="std" style="font-size: 16px; max-width: 60ch;">Eight hundred engineers,
+              searchable by name, employer, discipline and membership category. Each member
+              decides, section by section, what the register discloses — and that decision is
+              enforced on every route, including the mobile application.</p>
+            <div style="display: flex; align-items: center; gap: 12px;">
+              <div class="field" style="width: 320px;"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#8A8288" stroke-width="2" stroke-linecap="round" style="flex-shrink: 0;"><circle cx="10.5" cy="10.5" r="6.6"/><path d="m21 21-5.8-5.8"/></svg>
+                <span>Name, employer or discipline</span></div>
+              <a href="#" class="btn btn-o">Search the register</a>
+            </div>
+            <p style="font-size: 13.5px; color: #6E6569;">Open to members in good standing.
+              Sign in to search it.</p>
+          </div>
+          <div style="border: 1px solid #D7DCE3; background: #FFFFFF; padding: 26px;
+               display: flex; flex-direction: column; gap: 13px;">
+            <span class="kick kick-g">For partners and employers</span>
+            <h3 style="font-size: 20px; line-height: 1.26;">Verify a membership</h3>
+            <p style="font-size: 14.5px; line-height: 1.6; color: #3F383B;">Confirm a membership
+              from the member's Digital ID. Only the fields EF has configured for your partner
+              type are returned, and verification fails the day a membership lapses.</p>
+            <div class="field"><span>Membership number</span></div>
+            <a href="#" class="btn btn-o">Verify</a>
+          </div>
+        </div>
+      </div>
+    </div><div class="wrap" style="padding-top: 60px; padding-bottom: 66px;">
+      <div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 52px;
            align-items: start;">
         <div>
           <div class="sec"><h2>The committee</h2><a href="#" class="more" style="display: inline-flex; align-items: center; gap: 7px;">Past officers <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#2A7F26" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink: 0;"><path d="M4 12h15M13 6l6 6-6 6"/></svg></a></div>
-          <p class="std" style="font-size: 15px; margin-bottom: 14px;">Officers are elected for
-            a single term and carry out EF's administration alongside full-time employment.</p>
           <div style="border-bottom: 1px solid #D7DCE3;"><div style="display: grid;
-         grid-template-columns: minmax(0, 1fr) 190px 74px; gap: 20px; padding: 13px 0;
+         grid-template-columns: minmax(0, 1fr) 176px 62px; gap: 18px; padding: 12px 0;
          border-top: 1px solid #D7DCE3; align-items: baseline;">
       <span style="font-size: 14.5px; font-weight: 600; color: #191013;">President</span>
       <span class="tbc">Name — EF to supply</span>
-      <span style="font-size: 13.5px; color: #6E6569;">2027</span>
+      <span style="font-size: 13px; color: #6E6569;">2027</span>
     </div><div style="display: grid;
-         grid-template-columns: minmax(0, 1fr) 190px 74px; gap: 20px; padding: 13px 0;
+         grid-template-columns: minmax(0, 1fr) 176px 62px; gap: 18px; padding: 12px 0;
          border-top: 1px solid #D7DCE3; align-items: baseline;">
       <span style="font-size: 14.5px; font-weight: 600; color: #191013;">Secretary</span>
       <span class="tbc">Name — EF to supply</span>
-      <span style="font-size: 13.5px; color: #6E6569;">2027</span>
+      <span style="font-size: 13px; color: #6E6569;">2027</span>
     </div><div style="display: grid;
-         grid-template-columns: minmax(0, 1fr) 190px 74px; gap: 20px; padding: 13px 0;
+         grid-template-columns: minmax(0, 1fr) 176px 62px; gap: 18px; padding: 12px 0;
          border-top: 1px solid #D7DCE3; align-items: baseline;">
       <span style="font-size: 14.5px; font-weight: 600; color: #191013;">Treasurer</span>
       <span class="tbc">Name — EF to supply</span>
-      <span style="font-size: 13.5px; color: #6E6569;">2027</span>
+      <span style="font-size: 13px; color: #6E6569;">2027</span>
     </div><div style="display: grid;
-         grid-template-columns: minmax(0, 1fr) 190px 74px; gap: 20px; padding: 13px 0;
+         grid-template-columns: minmax(0, 1fr) 176px 62px; gap: 18px; padding: 12px 0;
          border-top: 1px solid #D7DCE3; align-items: baseline;">
       <span style="font-size: 14.5px; font-weight: 600; color: #191013;">Technical Secretary</span>
       <span class="tbc">Name — EF to supply</span>
-      <span style="font-size: 13.5px; color: #6E6569;">2027</span>
+      <span style="font-size: 13px; color: #6E6569;">2027</span>
     </div><div style="display: grid;
-         grid-template-columns: minmax(0, 1fr) 190px 74px; gap: 20px; padding: 13px 0;
+         grid-template-columns: minmax(0, 1fr) 176px 62px; gap: 18px; padding: 12px 0;
          border-top: 1px solid #D7DCE3; align-items: baseline;">
       <span style="font-size: 14.5px; font-weight: 600; color: #191013;">Marcoms Secretary</span>
       <span class="tbc">Name — EF to supply</span>
-      <span style="font-size: 13.5px; color: #6E6569;">2027</span>
+      <span style="font-size: 13px; color: #6E6569;">2027</span>
     </div><div style="display: grid;
-         grid-template-columns: minmax(0, 1fr) 190px 74px; gap: 20px; padding: 13px 0;
+         grid-template-columns: minmax(0, 1fr) 176px 62px; gap: 18px; padding: 12px 0;
          border-top: 1px solid #D7DCE3; align-items: baseline;">
       <span style="font-size: 14.5px; font-weight: 600; color: #191013;">Sports Secretary</span>
       <span class="tbc">Name — EF to supply</span>
-      <span style="font-size: 13.5px; color: #6E6569;">2027</span>
+      <span style="font-size: 13px; color: #6E6569;">2027</span>
     </div><div style="display: grid;
-         grid-template-columns: minmax(0, 1fr) 190px 74px; gap: 20px; padding: 13px 0;
+         grid-template-columns: minmax(0, 1fr) 176px 62px; gap: 18px; padding: 12px 0;
          border-top: 1px solid #D7DCE3; align-items: baseline;">
       <span style="font-size: 14.5px; font-weight: 600; color: #191013;">Arts Secretary</span>
       <span class="tbc">Name — EF to supply</span>
-      <span style="font-size: 13.5px; color: #6E6569;">2027</span>
+      <span style="font-size: 13px; color: #6E6569;">2027</span>
     </div></div>
         </div>
         <div>
           <div class="sec"><h2>Published documents</h2><a href="#" class="more" style="display: inline-flex; align-items: center; gap: 7px;">All publications <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#2A7F26" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink: 0;"><path d="M4 12h15M13 6l6 6-6 6"/></svg></a></div>
-          <p class="std" style="font-size: 15px; margin-bottom: 14px;">The rules EF works to,
-            published with their version and the date they were adopted.</p>
-          <div style="border-bottom: 1px solid #D7DCE3;"><div style="display: grid;
-         grid-template-columns: minmax(0, 1fr) 62px; gap: 18px; padding: 13px 0;
-         border-top: 1px solid #D7DCE3; align-items: baseline;">
-      <div style="display: flex; flex-direction: column; gap: 4px;">
-        <a href="#" style="font-size: 14.5px; font-weight: 600;">Bylaws of Engineers Forum Qatar</a>
-        <span style="font-size: 13px; color: #6E6569;">Adopted — EF to supply</span>
-      </div>
-      <span style="font-size: 13px; color: #6E6569;
-            font-variant-numeric: tabular-nums;">v4.1</span>
-    </div><div style="display: grid;
-         grid-template-columns: minmax(0, 1fr) 62px; gap: 18px; padding: 13px 0;
-         border-top: 1px solid #D7DCE3; align-items: baseline;">
-      <div style="display: flex; flex-direction: column; gap: 4px;">
-        <a href="#" style="font-size: 14.5px; font-weight: 600;">Code of conduct and committee policies</a>
-        <span style="font-size: 13px; color: #6E6569;">Adopted — EF to supply</span>
-      </div>
-      <span style="font-size: 13px; color: #6E6569;
-            font-variant-numeric: tabular-nums;">v2.0</span>
-    </div><div style="display: grid;
-         grid-template-columns: minmax(0, 1fr) 62px; gap: 18px; padding: 13px 0;
-         border-top: 1px solid #D7DCE3; align-items: baseline;">
-      <div style="display: flex; flex-direction: column; gap: 4px;">
-        <a href="#" style="font-size: 14.5px; font-weight: 600;">Privacy notice</a>
-        <span style="font-size: 13px; color: #6E6569;">Personal data held in the State of Qatar</span>
-      </div>
-      <span style="font-size: 13px; color: #6E6569;
-            font-variant-numeric: tabular-nums;">v2.0</span>
-    </div><div style="display: grid;
-         grid-template-columns: minmax(0, 1fr) 62px; gap: 18px; padding: 13px 0;
-         border-top: 1px solid #D7DCE3; align-items: baseline;">
-      <div style="display: flex; flex-direction: column; gap: 4px;">
-        <a href="#" style="font-size: 14.5px; font-weight: 600;">Register of past officers</a>
-        <span style="font-size: 13px; color: #6E6569;">Maintained by the Secretary</span>
-      </div>
-      <span style="font-size: 13px; color: #6E6569;
-            font-variant-numeric: tabular-nums;">—</span>
-    </div><div style="display: grid;
-         grid-template-columns: minmax(0, 1fr) 62px; gap: 18px; padding: 13px 0;
-         border-top: 1px solid #D7DCE3; align-items: baseline;">
-      <div style="display: flex; flex-direction: column; gap: 4px;">
-        <a href="#" style="font-size: 14.5px; font-weight: 600;">Annual report and accounts</a>
-        <span style="font-size: 13px; color: #6E6569;">Year — EF to supply</span>
-      </div>
-      <span style="font-size: 13px; color: #6E6569;
-            font-variant-numeric: tabular-nums;">—</span>
+          <div style="border-bottom: 1px solid #D7DCE3;"><div style="display: flex; align-items: baseline;
+         justify-content: space-between; gap: 18px; padding: 12px 0;
+         border-top: 1px solid #D7DCE3;">
+      <a href="#" style="font-size: 14.5px; font-weight: 600;">Bylaws of Engineers Forum Qatar</a>
+      <span style="font-size: 13px; color: #6E6569; font-variant-numeric: tabular-nums;">v4.1</span>
+    </div><div style="display: flex; align-items: baseline;
+         justify-content: space-between; gap: 18px; padding: 12px 0;
+         border-top: 1px solid #D7DCE3;">
+      <a href="#" style="font-size: 14.5px; font-weight: 600;">Code of conduct and committee policies</a>
+      <span style="font-size: 13px; color: #6E6569; font-variant-numeric: tabular-nums;">v2.0</span>
+    </div><div style="display: flex; align-items: baseline;
+         justify-content: space-between; gap: 18px; padding: 12px 0;
+         border-top: 1px solid #D7DCE3;">
+      <a href="#" style="font-size: 14.5px; font-weight: 600;">Privacy notice</a>
+      <span style="font-size: 13px; color: #6E6569; font-variant-numeric: tabular-nums;">v2.0</span>
+    </div><div style="display: flex; align-items: baseline;
+         justify-content: space-between; gap: 18px; padding: 12px 0;
+         border-top: 1px solid #D7DCE3;">
+      <a href="#" style="font-size: 14.5px; font-weight: 600;">Register of past officers</a>
+      <span style="font-size: 13px; color: #6E6569; font-variant-numeric: tabular-nums;">—</span>
+    </div><div style="display: flex; align-items: baseline;
+         justify-content: space-between; gap: 18px; padding: 12px 0;
+         border-top: 1px solid #D7DCE3;">
+      <a href="#" style="font-size: 14.5px; font-weight: 600;">Annual report and accounts</a>
+      <span style="font-size: 13px; color: #6E6569; font-variant-numeric: tabular-nums;">—</span>
     </div></div>
         </div>
       </div>
-    </div><div style="background: #4B1728;">
+    </div><div style="background: #2E0C19;">
       <div class="wrap" style="padding-top: 52px; padding-bottom: 30px;">
         <div style="display: grid; grid-template-columns: repeat(5, minmax(0, 1fr));
              gap: 34px;"><div style="display: flex; flex-direction: column; gap: 11px;">
@@ -459,7 +614,7 @@
           <a href="#" style="font-size: 14px; color: #C9B2BB;">Who may join</a><a href="#" style="font-size: 14px; color: #C9B2BB;">Categories and dues</a><a href="#" style="font-size: 14px; color: #C9B2BB;">Apply</a><a href="#" style="font-size: 14px; color: #C9B2BB;">Renew</a><a href="#" style="font-size: 14px; color: #C9B2BB;">Member Digital ID</a>
         </div><div style="display: flex; flex-direction: column; gap: 11px;">
           <span class="kick" style="color: #E4CFD6;">Activities</span>
-          <a href="#" style="font-size: 14px; color: #C9B2BB;">Events</a><a href="#" style="font-size: 14px; color: #C9B2BB;">Learning</a><a href="#" style="font-size: 14px; color: #C9B2BB;">Publications</a><a href="#" style="font-size: 14px; color: #C9B2BB;">Sport</a><a href="#" style="font-size: 14px; color: #C9B2BB;">Arts</a>
+          <a href="#" style="font-size: 14px; color: #C9B2BB;">Events calendar</a><a href="#" style="font-size: 14px; color: #C9B2BB;">Learning</a><a href="#" style="font-size: 14px; color: #C9B2BB;">Publications</a><a href="#" style="font-size: 14px; color: #C9B2BB;">Sport</a><a href="#" style="font-size: 14px; color: #C9B2BB;">Arts</a>
         </div><div style="display: flex; flex-direction: column; gap: 11px;">
           <span class="kick" style="color: #E4CFD6;">Community</span>
           <a href="#" style="font-size: 14px; color: #C9B2BB;">Register of members</a><a href="#" style="font-size: 14px; color: #C9B2BB;">Jobs</a><a href="#" style="font-size: 14px; color: #C9B2BB;">Marketplace</a><a href="#" style="font-size: 14px; color: #C9B2BB;">Partner offers</a>
@@ -467,7 +622,7 @@
           <span class="kick" style="color: #E4CFD6;">Legal</span>
           <a href="#" style="font-size: 14px; color: #C9B2BB;">Bylaws</a><a href="#" style="font-size: 14px; color: #C9B2BB;">Policies</a><a href="#" style="font-size: 14px; color: #C9B2BB;">Privacy notice</a><a href="#" style="font-size: 14px; color: #C9B2BB;">Accessibility</a>
         </div></div>
-        <div style="border-top: 1px solid #6B3040; margin-top: 44px; padding-top: 26px;
+        <div style="border-top: 1px solid #5A2337; margin-top: 44px; padding-top: 26px;
              display: grid; grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr); gap: 40px;">
           <div style="display: flex; flex-direction: column; gap: 13px;">
             <div style="display: flex; align-items: center; gap: 10px;"><svg viewBox="0 0 120 120" width="34" height="34" style="flex-shrink: 0;" aria-label="Engineers Forum Qatar"><path d="M 98.96 86.28 A 47.00 47.00 0 1 1 102.24 39.40" fill="none" stroke="#FFFFFF" stroke-width="11" stroke-linecap="round"/><path d="M 51.35 57.52 L 51.31 57.27 L 51.28 57.02 L 51.26 56.76 L 51.25 56.51 L 51.24 56.25 L 51.24 55.98 L 51.25 55.72 L 51.27 55.45 L 51.29 55.18 L 51.33 54.91 L 51.37 54.64 L 51.42 54.37 L 51.47 54.09 L 51.54 53.82 L 51.61 53.54 L 51.70 53.27 L 51.79 52.99 L 51.89 52.72 L 52.00 52.44 L 52.12 52.17 L 52.24 51.90 L 52.38 51.63 L 52.52 51.36 L 52.67 51.09 L 52.83 50.83 L 53.00 50.57 L 53.18 50.31 L 53.37 50.05 L 53.57 49.80 L 53.77 49.55 L 53.98 49.30 L 54.20 49.06 L 54.43 48.83 L 54.67 48.59 L 54.92 48.37 L 55.17 48.15 L 55.43 47.93 L 55.70 47.72 L 55.98 47.51 L 56.27 47.32 L 56.56 47.12 L 56.86 46.94 L 57.17 46.76 L 57.48 46.59 L 57.80 46.43 L 58.13 46.27 L 58.46 46.12 L 58.80 45.98 L 59.15 45.85 L 59.50 45.73 L 59.86 45.62 L 60.22 45.51 L 60.59 45.42 L 60.96 45.33 L 61.34 45.26 L 61.72 45.19 L 62.11 45.13 L 62.50 45.09 L 62.90 45.05 L 63.29 45.02 L 63.69 45.01 L 64.10 45.01 L 64.50 45.01 L 64.91 45.03 L 65.32 45.06 L 65.73 45.10 L 66.15 45.15 L 66.56 45.21 L 66.97 45.29 L 67.39 45.37 L 67.80 45.47 L 68.22 45.58 L 68.63 45.70 L 69.05 45.83 L 69.46 45.98 L 69.87 46.13 L 70.28 46.30 L 70.69 46.48 L 71.09 46.67 L 71.49 46.87 L 71.89 47.09 L 72.28 47.32 L 72.67 47.56 L 73.06 47.81 L 73.44 48.07 L 73.82 48.34 L 74.19 48.63 L 74.55 48.92 L 74.91 49.23 L 75.26 49.55 L 75.61 49.88 L 75.95 50.22 L 76.28 50.57 L 76.61 50.93 L 76.92 51.30 L 77.23 51.68 L 77.53 52.08 L 77.82 52.48 L 78.10 52.89 L 78.38 53.31 L 78.64 53.74 L 78.89 54.18 L 79.13 54.63 L 79.36 55.09 L 79.58 55.55 L 79.79 56.02 L 79.99 56.50 L 80.18 56.99 L 80.35 57.49 L 80.51 57.99 L 80.66 58.50 L 80.80 59.01 L 80.92 59.53 L 81.03 60.06 L 81.13 60.59 L 81.21 61.13 L 81.28 61.67 L 81.34 62.21 L 81.38 62.76 L 81.41 63.31 L 81.43 63.87 L 81.42 64.43 L 81.41 64.99 L 81.38 65.55 L 81.33 66.12 L 81.27 66.68 L 81.20 67.25 L 81.11 67.82 L 81.01 68.38 L 80.88 68.95 L 80.75 69.52 L 80.60 70.08 L 80.43 70.65 L 80.25 71.21 L 80.05 71.77 L 79.84 72.32 L 79.61 72.87 L 79.37 73.42 L 79.11 73.97 L 78.84 74.51 L 78.55 75.04 L 78.25 75.57 L 77.93 76.10 L 77.59 76.62 L 77.25 77.13 L 76.88 77.63 L 76.51 78.13 L 76.11 78.62 L 75.71 79.10 L 75.29 79.57 L 74.86 80.03 L 74.41 80.49 L 73.95 80.93 L 73.47 81.36 L 72.99 81.78 L 72.49 82.20 L 71.97 82.60 L 71.45 82.98 L 70.91 83.36 L 70.36 83.72 L 69.80 84.07 L 69.23 84.41 L 68.65 84.74 L 68.06 85.05 L 67.46 85.34 L 66.85 85.62 L 66.23 85.89 L 65.59 86.14 L 64.96 86.38 L 64.31 86.60 L 63.65 86.80 L 62.99 86.99 L 62.32 87.16 L 61.64 87.32 L 60.96 87.46 L 60.27 87.58 L 59.57 87.68 L 58.88 87.77 L 58.17 87.83 L 57.46 87.88" fill="none" stroke="#FFFFFF" stroke-width="11" stroke-linecap="round"/><path d="M 22 78 C 37 94, 61 93, 80 74 C 91 63, 100 54, 113 46 C 98 53, 86 63, 74 72 C 57 85, 40 87, 22 78 Z" fill="#4BB148"/></svg><div style="display: flex; flex-direction: column; line-height: 0.94;"><span style="font-family: Quicksand, sans-serif; font-size: 17px; font-weight: 700; color: #FFFFFF; letter-spacing: -0.01em;">engineers</span><span style="font-family: Quicksand, sans-serif; font-size: 17px; font-weight: 700; letter-spacing: -0.01em;"><span style="color: #FFFFFF;">forum</span><span style="color: #4BB148;">qatar</span></span></div></div>
@@ -484,7 +639,7 @@
               supply</span>
           </div>
         </div>
-        <div style="border-top: 1px solid #6B3040; margin-top: 26px; padding-top: 20px;
+        <div style="border-top: 1px solid #5A2337; margin-top: 26px; padding-top: 20px;
              display: flex; align-items: center; justify-content: space-between; gap: 24px;">
           <span style="font-size: 12.5px; color: #A98D97;">© 2027 Engineers Forum Qatar.</span>
           <span style="font-size: 12.5px; color: #A98D97;">Personal data held in the State of
@@ -493,7 +648,7 @@
       </div>
     </div></div>
 </x-dc>
-<script data-dc-script data-props='{"$preview":{"width":1440,"height":4420}}'>
+<script data-dc-script data-props='{"$preview":{"width":1440,"height":5300}}'>
 class Component extends DCLogic {}
 </script>
 </body>

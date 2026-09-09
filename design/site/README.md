@@ -1,7 +1,5 @@
 # EF Qatar — public home page
 
-Designed as a learned society publishes, not as a product landing page.
-
 | Artboard | Screen | Frame |
 | --- | --- | --- |
 | `Main.dc.html` | Home page, desktop | 1440 x 4420 |
@@ -12,34 +10,39 @@ Static mockups for sign-off, not a clickable prototype.
 ## What the page does, in order
 
 1. **Utility strip** — affiliation, contact, accessibility, member sign in
-2. **Masthead** — lockup, site search, apply
-3. **Navigation** — eight sections; the nav is itself the value on an
-   institutional site, so it is populated rather than reduced to five items
-4. **Lead story** — a notice, with a sidebar of four dated briefs
-5. **Members' notice band** — the renewal window, stated once
-6. **News** — three items, each with a kicker, a standfirst and a date
-7. **Events** — a listing with date blocks, venue, category, capacity, booking
-8. **Membership** — the categories with their dues, and the four steps of
-   admission. Information, not persuasion.
-9. **The register** — what it holds, who may search it, and a verification
-   panel for partners and employers
-10. **The committee** and **published documents** — offices with terms,
-    documents with version numbers
-11. **Footer** — a full sitemap
+2. **Masthead and navigation** — lockup, site search, apply; eight nav sections
+3. **Hero** — full-bleed slideshow, four slides crossfading on an 8-second beat,
+   heading and kicker over them, progress bars on the same timing. CSS
+   keyframes, no script, so it runs live.
+4. **Four routes** — apply, register of members, marketplace, activities, in
+   the maroon band immediately under the hero
+5. **Notice strip** — the live notice, stated once
+6. **News** — a lead story with three beside it
+7. **March at EF** — the month calendar and the monthly programme, side by side
+8. **How to apply** — four numbered steps, then categories and dues, then
+   registration
+9. **Notices** — the formal ones, dated
+10. **The register** — what it holds, who may search it, partner verification
+11. **The committee** and **published documents**
+12. **Footer** — a full sitemap
 
-## Deliberately absent
+### The hero
 
-The previous draft carried a centred value proposition with paired buttons,
-a floating image collage, a statistics band, an icon trio of "pillars", a
-member testimonial and a closing call-to-action banner. Those six blocks
-are what made it read as marketing. They are gone and should not come back.
+Four `.slide` layers, each `animation: shot 32s linear infinite` with an
+8-second delay step, plus a slow `drift` scale on each image. The progress
+bars run the same 32s cycle with matching delays, so they stay in step
+without any script.
 
-Hairline rules instead of shadowed cards. Square corners. A kicker and a
-date on everything. Colour used structurally, not decoratively.
+**Swapping in video** replaces the four slide layers with one `<video>` and
+keeps the scrim and overlay untouched. Everything else on the page is
+unaffected.
 
-The genre was worked from first principles — royalsociety.org and
-istructe.org are both blocked by the network's egress policy, and neither
-society's design is reproduced here in any case.
+### The calendar
+
+Generated from the real month with Python's `calendar` module, so 1 March
+2027 falls on a Monday because it does. `CAL_EVENTS` maps day numbers to
+categories, `CAL_KINDS` maps categories to their dot colour, and `CAL_TODAY`
+marks the current day. Change the month by changing `CAL_YEAR`/`CAL_MONTH`.
 
 ## Type
 
@@ -47,33 +50,40 @@ Newsreader for editorial headlines, Public Sans for interface and reading
 copy, Quicksand for the logo lockup alone. The serif is a **proposed
 extension to the guideline** — see [`../brand/BRAND.md`](../brand/BRAND.md).
 
-## Photographs — the one outstanding item
+## Photographs — the ceiling on this page
 
-`images/` holds **seven generated placeholders**, not photographs:
-defocused, desaturated compositions produced by `make-placeholders.py`, so
-they read as photography rather than as brand-coloured panels. Each is
-badged `placeholder` on the page.
+`images/` holds **eight generated placeholders**, not photographs.
+`make-placeholders.py` composes defocused scenes with standing figures,
+stage light and a full tonal range, which is as close to photography as
+synthetic imagery gets. Each is badged `placeholder` on the page.
 
-Real imagery could not be reached from the build environment: EF's
-Instagram is blocked by the network's egress policy, every open image host
-is blocked too, and the Drive archive holds personal family snapshots
-rather than EF events.
+Real imagery cannot be reached from the build environment: EF's Instagram is
+blocked by the network's egress policy, every open image host is blocked too,
+and the Drive archive holds personal family snapshots rather than EF events.
+
+**On a full-bleed hero this gap shows more than anywhere else on the page.**
+Four real hero photographs would do more for it than any further design
+change.
 
 **Replacing one is a file swap.** Same filename, same rough crop, then
 `python3 site.py`.
 
 | File | Position | Crop |
 | --- | --- | --- |
-| `lead-agm.jpg` | Lead story | 16:9 |
-| `brief-renewal.jpg` | Sidebar brief | square |
-| `brief-seminar.jpg` | Sidebar brief | square |
-| `brief-register.jpg` | Sidebar brief | square |
-| `news-committee.jpg` | News, and the fourth brief | 3:2 |
-| `news-tournament.jpg` | News | 3:2 |
-| `news-arts.jpg` | News | 3:2 |
+| `hero-onam.jpg` | Hero slide 1 — arts and culture | 16:9, 1600px+ |
+| `hero-cricket.jpg` | Hero slide 2 — sport | 16:9, 1600px+ |
+| `hero-seminar.jpg` | Hero slide 3 — learning | 16:9, 1600px+ |
+| `hero-agm.jpg` | Hero slide 4 — governance | 16:9, 1600px+ |
+| `news-lead.jpg` | News lead story | 3:2 |
+| `news-1.jpg` | News, secondary | 3:2 |
+| `news-2.jpg` | News, secondary | 3:2 |
+| `news-3.jpg` | News, secondary | 3:2 |
 
-At least 1600px on the long edge. **Usage rights must be recorded against
-every image** (BR-059).
+Hero slides carry the whole top of the page, so they keep more colour than
+the news images — `make-placeholders.py` takes a per-image desaturation
+figure for that reason.
+
+**Usage rights must be recorded against every image** (BR-059).
 
 ## Structure
 

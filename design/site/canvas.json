@@ -6,7 +6,7 @@
       "x": 0,
       "y": 0,
       "w": 1440,
-      "h": 4420
+      "h": 5300
     },
     {
       "file": "HomeMobile.dc.html",
@@ -14,23 +14,23 @@
       "x": 1560,
       "y": 0,
       "w": 390,
-      "h": 6560
+      "h": 6900
     }
   ],
   "annotations": [
     {
-      "id": "genre",
+      "id": "brief",
       "x": 0,
-      "y": -430,
+      "y": -470,
       "w": 1440,
-      "text": "REDESIGNED AS A LEARNED SOCIETY PUBLISHES, not as a product landing page.\n\nGone, because they were what made the last draft read as marketing: the centred value proposition with paired buttons, the floating image collage, the statistics band, the icon trio of \"pillars\", the member testimonial, and the closing call-to-action banner.\n\nIn their place, the conventions of the genre: a news-led lead story with a sidebar of briefs, a kicker and a date on every item, hairline rules instead of shadowed cards, square corners, a densely populated navigation that is itself the value, and information rather than persuasion \u2014 membership categories with their dues, the four steps of admission, the committee by office, and the published documents with their version numbers.\n\nroyalsociety.org and istructe.org are both blocked by this network's policy, so this is the genre worked from first principles. Neither society's design is reproduced."
+      "text": "BUILT TO YOUR LIST.\n\n1 \u00b7 Full-bleed hero, four slides crossfading on an 8-second beat with the heading over them and progress bars that share the timing. It runs live \u2014 CSS only, no script. Swapping in video later replaces the four slide layers with one <video> and keeps the scrim and overlay exactly as they are.\n5 \u00b7 The four routes sit immediately under the hero, in the maroon band: apply, the register, the marketplace, activities.\n7 \u00b7 A notice strip under that, then a full Notices section further down for the formal ones \u2014 AGM, renewal, the bylaw amendment.\n2 \u00b7 News is its own section: one lead story with three beside it.\n3 + 6 \u00b7 The calendar and the monthly programme share a section. The calendar is generated from the real March 2027, so 1 March falls on a Monday because it does; dots mark event days by category and 9 March is marked as today.\n4 \u00b7 How to apply is four numbered steps in maroon, then the categories and dues, then registration.\n\nThen the register with partner verification, the committee, and the published documents."
     },
     {
-      "id": "type-and-images",
+      "id": "photos",
       "x": 1560,
-      "y": -430,
+      "y": -470,
       "w": 390,
-      "text": "TYPE \u2014 one decision needs your approval. Newsreader, a serif, now carries the editorial headlines; Public Sans carries interface and reading copy; Quicksand is held back for the logo lockup alone.\n\nThe guideline's rounded geometric is a friendly face, and at headline size it reads promotional. A serif is what gives an institution its register. This is a proposed extension to the guideline, not a departure from the identity \u2014 the logo is untouched.\n\nColour is unchanged and now structural rather than decorative: maroon for the utility strip, section rules, kickers and primary actions; the darkened green only on links.\n\nThe eight photographs are still generated placeholders, now desaturated so they read as photographs rather than brand-coloured panels. Each is badged. See the README for what to send."
+      "text": "THE CEILING HERE IS PHOTOGRAPHY, and it is the one thing I cannot get.\n\nEF's Instagram is blocked by your network policy. So is every image host. The Drive archive holds personal family snapshots, not EF events.\n\nSo the eight images are generated \u2014 defocused compositions with figures, stage light and a full tonal range, which is as close to photography as synthetic imagery gets. On a full-bleed hero that gap shows more than anywhere else on the page.\n\nFour hero slides at 1600x900 or wider, one news lead at 3:2 and three news thumbnails at 3:2 would transform this. Drop them in the Engineering Forum folder in Drive \u2014 that channel works from here \u2014 and I will embed them; the layout needs no other change.\n\nUsage rights must be recorded against every image (BR-059)."
     }
   ],
   "launch": {

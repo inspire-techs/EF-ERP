@@ -1,32 +1,33 @@
 #!/usr/bin/env python3
 """EF Qatar public home page — desktop and mobile artboards.
 
-Designed as a learned society publishes, not as a product landing page. The
-conventions it follows — a news-led lead story, a densely populated navigation,
-a kicker and a date on everything, hairline rules instead of shadowed cards, and
-information (categories, dues, officers, published documents) in place of
-persuasion — are the genre's, worked from first principles. royalsociety.org and
-istructe.org were both blocked from this environment, and neither society's
-design is reproduced here in any case.
+Built to a brief from EF: a full-bleed slideshow hero with the heading over it,
+then news, a month calendar, the monthly programme, how to apply, notices, and
+direct routes to registration, the register, the marketplace and activities.
 
-Deliberately absent, because they made the previous draft read as marketing: a
-centred value proposition with paired buttons, a floating image collage, a
-statistics band, an icon trio of "pillars", a testimonial, and a closing
-call-to-action banner.
+The hero cycles four slides on CSS keyframes — no script — with the progress
+bars driven off the same timing, so it runs live in the canvas and in any
+browser. Swapping the slideshow for a video is a later change: replace the four
+slide layers with one <video>, keep the scrim and the overlay.
 
-Type: Newsreader carries editorial headlines, Public Sans the interface and
-reading copy, and Quicksand is held back for the logo lockup alone. The serif is
-a proposed extension to the guideline — see README.
+The calendar is generated from the real March 2027 month, so the weekday
+alignment is correct rather than drawn.
 
-The seven photographs in images/ are generated placeholders — see README.
+Type: Newsreader carries headlines, Public Sans the interface and reading copy,
+Quicksand the logo lockup alone — a proposed extension to the guideline, see
+README. The eight photographs are generated placeholders, also see README.
 """
-import pathlib, sys
+import calendar
+import pathlib
+import sys
 
 HERE = pathlib.Path(__file__).parent
 sys.path.insert(0, str((HERE / '..' / 'console').resolve()))
 from build import lockup  # noqa: E402
 
 MAROON = '#4B1728'
+MAROON_D = '#2E0C19'
+GREEN = '#4BB148'
 GREEN_T = '#2A7F26'        # the brand green darkened until type on white clears 5:1
 INK = '#191013'
 BODY = '#3F383B'
@@ -51,26 +52,30 @@ CSS = """
     p { margin: 0; }
     img { display: block; }
     .wrap { max-width: 1240px; margin: 0 auto; padding: 0 40px; }
-    /* the category label an institution sets above every headline */
     .kick { font-family: 'Public Sans', sans-serif; font-size: 11px; font-weight: 700;
             letter-spacing: 0.14em; color: #4B1728; text-transform: uppercase; }
     .kick-g { color: #2A7F26; }
+    .kick-w { color: #7FCB7C; }
     .date { font-size: 12.5px; color: #6E6569; font-variant-numeric: tabular-nums; }
     .std { font-size: 15px; line-height: 1.62; color: #3F383B; }
-    /* a section head: maroon rule, title, and the route to the full listing */
     .sec { border-top: 3px solid #4B1728; padding-top: 14px; display: flex;
            align-items: baseline; justify-content: space-between; gap: 24px;
            margin-bottom: 26px; }
-    .sec h2 { font-size: 27px; }
+    .sec h2 { font-size: 28px; }
     .more { font-size: 14px; font-weight: 600; white-space: nowrap; }
     .btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px;
-           height: 44px; padding: 0 22px; font-size: 14.5px; font-weight: 600;
+           height: 46px; padding: 0 24px; font-size: 15px; font-weight: 600;
            font-family: 'Public Sans', sans-serif; border: 1px solid transparent;
            white-space: nowrap; }
     .btn-m { background: #4B1728; color: #FFFFFF; }
     .btn-m:hover { background: #63203A; color: #FFFFFF; text-decoration: none; }
+    .btn-g { background: #4BB148; color: #16290F; }
+    .btn-g:hover { background: #43A340; color: #16290F; text-decoration: none; }
     .btn-o { background: #FFFFFF; color: #4B1728; border-color: #B9A3AC; }
     .btn-o:hover { border-color: #4B1728; color: #4B1728; text-decoration: none; }
+    .btn-w { background: transparent; color: #FFFFFF; border-color: rgba(255,255,255,0.55); }
+    .btn-w:hover { background: rgba(255,255,255,0.12); color: #FFFFFF;
+                   border-color: #FFFFFF; text-decoration: none; }
     .nav-a { font-size: 14.5px; font-weight: 600; color: #191013; padding: 15px 0;
              border-bottom: 3px solid transparent; }
     .nav-a:hover { color: #4B1728; border-bottom-color: #4BB148; text-decoration: none; }
@@ -82,39 +87,101 @@ CSS = """
     .ph { position: absolute; right: 8px; bottom: 8px; font-family: 'Public Sans', sans-serif;
           font-size: 9.5px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase;
           color: #FFFFFF; background: rgba(25, 16, 19, 0.72); padding: 3px 6px; }
+
+    /* the hero slideshow: four layers crossfading on one 32s cycle, no script */
+    .slide { position: absolute; inset: 0; opacity: 0; animation: shot 32s linear infinite; }
+    @keyframes shot { 0% { opacity: 0; } 2% { opacity: 1; } 23% { opacity: 1; }
+                      27% { opacity: 0; } 100% { opacity: 0; } }
+    .slide-img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;
+                 animation: drift 32s linear infinite; }
+    @keyframes drift { 0% { transform: scale(1.06); } 27% { transform: scale(1.12); }
+                       100% { transform: scale(1.12); } }
+    /* the progress bars share the slides' timing */
+    .bar { position: relative; width: 54px; height: 3px; background: rgba(255,255,255,0.32);
+           overflow: hidden; }
+    .bar span { position: absolute; inset: 0; background: #FFFFFF; transform-origin: left;
+                transform: scaleX(0); animation: fill 32s linear infinite; }
+    @keyframes fill { 0% { transform: scaleX(0); } 25% { transform: scaleX(1); }
+                      25.6% { transform: scaleX(0); } 100% { transform: scaleX(0); } }
+    /* the four routes below the hero */
+    .route { display: flex; flex-direction: column; gap: 9px; padding: 26px 28px;
+             border-left: 1px solid rgba(255,255,255,0.16); }
+    .route:hover { background: rgba(255,255,255,0.07); text-decoration: none; }
+    .route-t { font-family: Newsreader, serif; font-size: 20px; color: #FFFFFF; }
+    .route-s { font-size: 13px; color: #C9B2BB; line-height: 1.45; }
+    /* calendar */
+    .cal-h { font-size: 11px; font-weight: 700; letter-spacing: 0.1em; color: #6E6569;
+             text-transform: uppercase; text-align: center; padding-bottom: 8px; }
+    .cal-d { aspect-ratio: 1 / 1; border: 1px solid #E7EBF0; display: flex;
+             flex-direction: column; align-items: center; justify-content: center; gap: 5px;
+             font-size: 14px; color: #3F383B; font-variant-numeric: tabular-nums; }
+    .cal-dot { width: 6px; height: 6px; border-radius: 50%; }
 """
 
 NAV = ['About EF', 'Membership', 'Register of members', 'Events', 'Learning',
        'Publications', 'Governance', 'Jobs']
 
-BRIEFS = [
-    ('News', 'brief-renewal.jpg', 'Renewal for 2027 opens on 1 March', '5 February 2027'),
-    ('Event', 'brief-seminar.jpg', 'Structural engineering seminar, 14 March', '4 February 2027'),
-    ('Register', 'brief-register.jpg', 'The register moves to member-managed visibility',
-     '28 January 2027'),
-    ('Governance', 'news-committee.jpg', 'Annual report and accounts for 2026 published',
-     '21 January 2027'),
+# hero slides: image, kicker, heading, one supporting line
+SLIDES = [
+    ('hero-onam.jpg', 'Arts and culture',
+     'The evenings that make a register into a community',
+     'Music, performance and the festivals the community keeps — families welcome.'),
+    ('hero-cricket.jpg', 'Sport',
+     'Twelve teams, one season, every fixture recorded',
+     'Tournaments through the year, with squads, waivers and emergency contacts held for '
+     'every player.'),
+    ('hero-seminar.jpg', 'Learning',
+     'Seminars run by members, for members',
+     'Technical sessions across the disciplines, recorded against your professional profile.'),
+    ('hero-agm.jpg', 'Governance',
+     'Eight hundred engineers, one elected committee',
+     'Every approval, every payment and every decision recorded against the officer who '
+     'made it.'),
 ]
+
+ROUTES = [
+    ('Apply for membership', 'Open to qualified engineers of Kerala origin in Qatar'),
+    ('Register of members', 'Search 800 engineers by name, employer or discipline'),
+    ('Marketplace', 'Partner offers and member-to-member listings'),
+    ('Activities', 'Seminars, sport, arts and the annual programme'),
+]
+
+NEWS_LEAD = ('News', 'news-lead.jpg', 'Committee elected for the 2027 term',
+             'The officers returned at the general meeting, and the portfolio each of them '
+             'holds for the year. The Treasurer has published the accounts alongside the '
+             'result.', '28 January 2027')
 
 NEWS = [
-    ('News', 'news-committee.jpg', 'Committee elected for the 2027 term',
-     'The officers returned at the general meeting, and the portfolio each of them holds '
-     'for the year.', '28 January 2027'),
-    ('Sport', 'news-tournament.jpg', 'Cricket tournament returns on 27 March',
-     'Twelve teams are entered. Fixtures, waivers and emergency contacts are held against '
-     'each squad.', '22 January 2027'),
-    ('Arts', 'news-arts.jpg', 'Arts evening to be held on 10 April',
-     'The programme is being assembled by the Arts Secretary. Members may bring their '
-     'families.', '18 January 2027'),
+    ('Sport', 'news-1.jpg', 'Cricket tournament returns on 27 March', '22 January 2027'),
+    ('Arts', 'news-2.jpg', 'Arts evening to be held on 10 April', '18 January 2027'),
+    ('Learning', 'news-3.jpg', 'Workshop programme set for the second quarter',
+     '11 January 2027'),
 ]
 
-EVENTS = [
-    ('MAR', '14', 'Structural engineering seminar', '18:30', 'Seminar',
-     '182 registered · 18 on the waiting list'),
-    ('MAR', '27', 'EF cricket tournament 2027', '07:00', 'Sport', '12 teams entered'),
-    ('APR', '10', 'Arts evening', '19:00', 'Arts', 'Families welcome'),
-    ('APR', '24', 'Workshop: reinforced concrete detailing', '18:00', 'Workshop',
+# March 2027 — the calendar is generated, so the weekday alignment is real
+CAL_YEAR, CAL_MONTH, CAL_TODAY = 2027, 3, 9
+CAL_KINDS = {'Seminar': GREEN_T, 'Sport': '#B0762A', 'Arts': '#8A3A5A', 'Committee': MAROON}
+CAL_EVENTS = {5: 'Committee', 14: 'Seminar', 20: 'Seminar', 27: 'Sport', 31: 'Committee'}
+
+PROGRAMME = [
+    ('5', 'Committee meeting', 'Committee', '19:30', 'Officers only'),
+    ('14', 'Structural engineering seminar', 'Seminar', '18:30',
+     '182 registered · 18 waiting'),
+    ('20', 'Workshop: reinforced concrete detailing', 'Seminar', '18:00',
      'Places limited to 40'),
+    ('27', 'EF cricket tournament 2027', 'Sport', '07:00', '12 teams entered'),
+    ('31', 'Renewal window closes', 'Committee', '23:59', 'Dues QAR 500'),
+]
+
+NOTICES = [
+    ('Notice of the Annual General Meeting', '12 February 2027',
+     'Agenda, the Treasurer\'s statement and the papers for the meeting. Nominations for the '
+     '2027 committee close on 28 February.'),
+    ('Renewal of membership for 2027', '5 February 2027',
+     'The renewal window is open until 31 March. Dues are QAR 500 for the year and a receipt '
+     'is issued on payment.'),
+    ('Amendment to the bylaws, clause 7', '21 January 2027',
+     'Adopted at the general meeting. The consolidated bylaws are republished at v4.1.'),
 ]
 
 FEES = [
@@ -128,36 +195,36 @@ FEES = [
 ]
 
 STEPS = [
-    'Apply with your qualification, your employment and a proposer in good standing.',
-    'EF verifies your documents against the originals.',
-    'The committee decides within five business days, and the decision is recorded.',
-    'Pay your dues, and your Member Digital ID is issued the same day.',
+    ('Apply', 'Your qualification, your employment and a proposer in good standing.'),
+    ('Verification', 'EF checks your documents against the originals.'),
+    ('Decision', 'The committee decides within five business days, and records it.'),
+    ('Your Digital ID', 'Pay your dues, and the credential is issued the same day.'),
 ]
 
 OFFICERS = ['President', 'Secretary', 'Treasurer', 'Technical Secretary',
             'Marcoms Secretary', 'Sports Secretary', 'Arts Secretary']
 
 DOCS = [
-    ('Bylaws of Engineers Forum Qatar', 'v4.1', 'Adopted — EF to supply'),
-    ('Code of conduct and committee policies', 'v2.0', 'Adopted — EF to supply'),
-    ('Privacy notice', 'v2.0', 'Personal data held in the State of Qatar'),
-    ('Register of past officers', '—', 'Maintained by the Secretary'),
-    ('Annual report and accounts', '—', 'Year — EF to supply'),
+    ('Bylaws of Engineers Forum Qatar', 'v4.1'),
+    ('Code of conduct and committee policies', 'v2.0'),
+    ('Privacy notice', 'v2.0'),
+    ('Register of past officers', '—'),
+    ('Annual report and accounts', '—'),
 ]
 
 FOOT = [
     ('About EF', ['What EF is', 'Governance', 'Officers and terms', 'Affiliation', 'Contact EF']),
     ('Membership', ['Who may join', 'Categories and dues', 'Apply', 'Renew',
                     'Member Digital ID']),
-    ('Activities', ['Events', 'Learning', 'Publications', 'Sport', 'Arts']),
+    ('Activities', ['Events calendar', 'Learning', 'Publications', 'Sport', 'Arts']),
     ('Community', ['Register of members', 'Jobs', 'Marketplace', 'Partner offers']),
     ('Legal', ['Bylaws', 'Policies', 'Privacy notice', 'Accessibility']),
 ]
 
 
-def arrow(c=GREEN_T):
-    return (f'<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="{c}" '
-            f'stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" '
+def arrow(c=GREEN_T, s=13, w=2.6):
+    return (f'<svg width="{s}" height="{s}" viewBox="0 0 24 24" fill="none" stroke="{c}" '
+            f'stroke-width="{w}" stroke-linecap="round" stroke-linejoin="round" '
             f'style="flex-shrink: 0;"><path d="M4 12h15M13 6l6 6-6 6"/></svg>')
 
 
@@ -172,7 +239,6 @@ def tbc(t):
 
 
 def photo(src, ratio, badge=True):
-    """An editorial image: square corners, no shadow, marked as a placeholder."""
     tag = '<span class="ph">placeholder</span>' if badge else ''
     return (f'<div style="position: relative; background: {BAND};">'
             f'<img src="{src}" alt="" style="width: 100%; aspect-ratio: {ratio}; '
@@ -184,11 +250,123 @@ def more(label):
             f'gap: 7px;">{label} {arrow()}</a>')
 
 
+def hero(h, title_px, lede_px, pad, mobile=False):
+    """Four crossfading slide layers plus the progress bars, all on one 32s cycle."""
+    layers = ''
+    for k, (img, kick, head, line) in enumerate(SLIDES):
+        d = f'animation-delay: {k * 8}s;'
+        lede = ('' if mobile else
+                f'<p style="font-size: {lede_px}px; line-height: 1.6; color: #E6D8DD; '
+                f'max-width: 46ch;">{line}</p>')
+        layers += f"""<div class="slide" style="{d}">
+          <img class="slide-img" src="{img}" alt="" style="{d}">
+          <div style="position: absolute; inset: 0; background:
+               linear-gradient(180deg, rgba(24,10,16,0.34) 0%, rgba(24,10,16,0.04) 34%,
+               rgba(24,10,16,0.10) 52%, rgba(24,10,16,0.78) 100%);"></div>
+          <div style="position: absolute; inset: 0; background:
+               linear-gradient(96deg, rgba(24,10,16,0.70) 0%, rgba(24,10,16,0.34) 40%,
+               rgba(24,10,16,0) 66%);"></div>
+          <div style="position: absolute; inset: 0; display: flex; flex-direction: column;
+               justify-content: flex-end;">
+            <div class="wrap" style="width: 100%; padding-bottom: {pad}px; display: flex;
+                 flex-direction: column; gap: 14px;">
+              <span class="kick kick-w">{kick}</span>
+              <h1 style="font-size: {title_px}px; line-height: 1.1; color: #FFFFFF;
+                   max-width: 20ch;">{head}</h1>
+              {lede}
+            </div>
+          </div>
+        </div>"""
+
+    bars = ''.join(f'<div class="bar"><span style="animation-delay: {k * 8}s;"></span></div>'
+                   for k in range(len(SLIDES)))
+
+    return f"""<div style="position: relative; height: {h}px; overflow: hidden;
+         background: {MAROON_D};">
+      {layers}
+      <span class="ph" style="right: 16px; top: 16px; bottom: auto;">placeholder</span>
+      <div style="position: absolute; left: 0; right: 0; bottom: {pad - 26}px;">
+        <div class="wrap" style="display: flex; align-items: center; gap: 9px;">{bars}</div>
+      </div>
+    </div>"""
+
+
+def routes_band(mobile=False):
+    """The four things people come to the site to do, immediately under the hero."""
+    cells = ''.join(f"""<a href="#" class="route"
+         style="{'border-left: none; border-top: 1px solid rgba(255,255,255,0.16);' if mobile else ''}">
+      <div style="display: flex; align-items: center; justify-content: space-between; gap: 12px;">
+        <span class="route-t">{t}</span>{arrow('#7FCB7C', 15, 2.4)}
+      </div>
+      <span class="route-s">{s}</span>
+    </a>""" for t, s in ROUTES)
+    cols = ('1fr' if mobile else 'repeat(4, minmax(0, 1fr))')
+    return f"""<div style="background: {MAROON};">
+      <div class="wrap" style="padding: 0 40px; display: grid; grid-template-columns: {cols};">
+        {cells}
+      </div>
+    </div>"""
+
+
+def calendar_grid(cell_font=14):
+    weeks = calendar.Calendar(firstweekday=0).monthdayscalendar(CAL_YEAR, CAL_MONTH)
+    heads = ''.join(f'<div class="cal-h">{d}</div>'
+                    for d in ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'])
+    cells = ''
+    for wk in weeks:
+        for d in wk:
+            if d == 0:
+                cells += f'<div class="cal-d" style="border-color: transparent;"></div>'
+                continue
+            kind = CAL_EVENTS.get(d)
+            dot = (f'<span class="cal-dot" style="background: {CAL_KINDS[kind]};"></span>'
+                   if kind else '<span style="width: 6px; height: 6px;"></span>')
+            today = d == CAL_TODAY
+            style = (f'background: {MAROON}; border-color: {MAROON}; color: #FFFFFF; '
+                     f'font-weight: 700;' if today else
+                     (f'background: #FFFFFF; font-weight: 600; color: {INK};' if kind
+                      else 'background: #FFFFFF;'))
+            cells += (f'<div class="cal-d" style="{style} font-size: {cell_font}px;">'
+                      f'<span>{d}</span>{dot}</div>')
+    legend = ''.join(f"""<span style="display: inline-flex; align-items: center; gap: 6px;
+         font-size: 12.5px; color: {MUTED};">
+      <span class="cal-dot" style="background: {c};"></span>{k}</span>"""
+                     for k, c in CAL_KINDS.items())
+    return f"""<div style="display: flex; flex-direction: column; gap: 14px;">
+      <div style="display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 0;">
+        {heads}
+      </div>
+      <div style="display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 0;
+           margin-top: -8px;">{cells}</div>
+      <div style="display: flex; flex-wrap: wrap; gap: 10px 18px; padding-top: 4px;">
+        {legend}</div>
+    </div>"""
+
+
+def programme_rows(compact=False):
+    return ''.join(f"""<div style="display: grid;
+         grid-template-columns: 34px minmax(0, 1fr) {'' if compact else '150px '}104px;
+         gap: {14 if compact else 20}px; align-items: center; padding: {13 if compact else 15}px 0;
+         border-top: 1px solid {HAIR};">
+      <span style="font-family: Newsreader, serif; font-size: 20px; color: {INK};
+            font-variant-numeric: tabular-nums;">{d}</span>
+      <div style="display: flex; flex-direction: column; gap: 4px; min-width: 0;">
+        <span style="font-size: 15px; font-weight: 600; color: {INK}; line-height: 1.35;">{t}</span>
+        <span style="font-size: 12.5px; color: {MUTED};">{time} · {tbc('Venue')}
+          <span style="display: inline-flex; align-items: center; gap: 5px; padding-left: 4px;">
+            <span class="cal-dot" style="background: {CAL_KINDS[kind]};"></span>{kind}</span></span>
+      </div>
+      {'' if compact else f'<span style="font-size: 13px; color: {MUTED};">{note}</span>'}
+      <a href="#" class="btn btn-o" style="height: 36px; padding: 0 16px; font-size: 13px;">
+        Details</a>
+    </div>""" for d, t, kind, time, note in PROGRAMME)
+
+
 # ======================================================================= desktop
 def home():
     nav = ''.join(f'<a href="#" class="nav-a">{n}</a>' for n in NAV)
 
-    utility = f"""<div style="background: {MAROON};">
+    utility = f"""<div style="background: {MAROON_D};">
       <div class="wrap" style="height: 36px; display: flex; align-items: center;
            justify-content: space-between; gap: 24px; font-size: 12.5px;">
         <span style="color: #C9B2BB;">Affiliated to the Indian Business and Professional
@@ -205,220 +383,207 @@ def home():
          justify-content: space-between; gap: 40px;">
       {lockup()}
       <div style="display: flex; align-items: center; gap: 14px;">
-        <div class="field" style="width: 252px;">{search_ico()}<span>Search this site</span></div>
+        <div class="field" style="width: 244px;">{search_ico()}<span>Search this site</span></div>
         <a href="#" class="btn btn-m">Apply for membership</a>
       </div>
     </div>
-    <div style="border-top: 1px solid {RULE}; border-bottom: 1px solid {RULE};">
+    <div style="border-top: 1px solid {RULE};">
       <div class="wrap" style="display: flex; align-items: center; gap: 30px;">{nav}</div>
     </div>"""
 
-    briefs = ''.join(f"""<a href="#" style="display: grid;
-         grid-template-columns: 78px minmax(0, 1fr); gap: 15px; padding: 15px 0;
-         border-top: 1px solid {HAIR}; align-items: start;">
-      {photo(img, '1 / 1', badge=False)}
-      <div style="display: flex; flex-direction: column; gap: 5px;">
-        <span class="kick">{kick}</span>
-        <h4 style="font-size: 16.5px; line-height: 1.32;">{title}</h4>
-        <span class="date">{date}</span>
+    notice_bar = f"""<div style="background: {BAND}; border-bottom: 1px solid {RULE};">
+      <div class="wrap" style="padding: 17px 40px; display: flex; align-items: center;
+           justify-content: space-between; gap: 28px;">
+        <div style="display: flex; align-items: center; gap: 14px;">
+          <span class="kick kick-g">Notice</span>
+          <span style="width: 1px; height: 16px; background: {RULE};"></span>
+          <span style="font-size: 15px; color: {INK};">Renewal for 2027 is open until
+            <strong style="font-weight: 600;">31 March</strong>. Nominations for the committee
+            close on 28 February.</span>
+        </div>
+        {more('All notices')}
       </div>
-    </a>""" for kick, img, title, date in BRIEFS)
+    </div>"""
 
-    lead = f"""<div class="wrap" style="padding-top: 38px;">
-      <div style="display: grid; grid-template-columns: minmax(0, 1.92fr) minmax(0, 1fr);
+    kick, img, title, std, date = NEWS_LEAD
+    small = ''.join(f"""<a href="#" style="display: grid;
+         grid-template-columns: 118px minmax(0, 1fr); gap: 16px; padding: 16px 0;
+         border-top: 1px solid {HAIR}; align-items: start;">
+      {photo(i, '3 / 2', badge=False)}
+      <div style="display: flex; flex-direction: column; gap: 6px;">
+        <span class="kick">{k}</span>
+        <h4 style="font-size: 17px; line-height: 1.3;">{t}</h4>
+        <span class="date">{d}</span>
+      </div>
+    </a>""" for k, i, t, d in NEWS)
+
+    news_sec = f"""<div class="wrap" style="padding-top: 58px;">
+      <div class="sec"><h2>News</h2>{more('All news')}</div>
+      <div style="display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr);
            gap: 44px;">
-        <div style="display: flex; flex-direction: column; gap: 18px;">
-          {photo('lead-agm.jpg', '16 / 9')}
-          <div style="display: flex; flex-direction: column; gap: 12px;">
-            <span class="kick">Notice</span>
-            <h1 style="font-size: 40px; line-height: 1.16; max-width: 24ch;">Notice of the
-              Annual General Meeting, 14 March 2027</h1>
-            <p class="std" style="font-size: 17px; max-width: 56ch;">The agenda, the
-              Treasurer's statement and the papers for the meeting are published for members.
-              Nominations for the 2027 committee close on 28 February.</p>
-            <div style="display: flex; align-items: center; gap: 18px; padding-top: 2px;">
-              {more('Read the notice')}
-              <span class="date">Published 12 February 2027 · The Secretary</span>
+        <a href="#" style="display: flex; flex-direction: column; gap: 15px;">
+          {photo(img, '3 / 2')}
+          <span class="kick">{kick}</span>
+          <h3 style="font-size: 30px; line-height: 1.18;">{title}</h3>
+          <p class="std" style="font-size: 16px;">{std}</p>
+          <span class="date">{date}</span>
+        </a>
+        <div style="display: flex; flex-direction: column;">{small}</div>
+      </div>
+    </div>"""
+
+    cal_sec = f"""<div style="background: {BAND}; border-top: 1px solid {RULE};
+         margin-top: 60px;">
+      <div class="wrap" style="padding-top: 52px; padding-bottom: 56px;">
+        <div class="sec"><h2>March at EF</h2>{more('The full calendar')}</div>
+        <div style="display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.28fr);
+             gap: 52px; align-items: start;">
+          <div style="display: flex; flex-direction: column; gap: 16px;">
+            <div style="display: flex; align-items: baseline; justify-content: space-between;">
+              <h3 style="font-size: 21px;">March 2027</h3>
+              <div style="display: flex; align-items: center; gap: 8px;">
+                <a href="#" class="btn btn-o" style="height: 32px; width: 32px; padding: 0;">
+                  &lsaquo;</a>
+                <a href="#" class="btn btn-o" style="height: 32px; width: 32px; padding: 0;">
+                  &rsaquo;</a>
+              </div>
+            </div>
+            {calendar_grid()}
+          </div>
+          <div style="display: flex; flex-direction: column; gap: 14px;">
+            <h3 style="font-size: 21px;">This month's programme</h3>
+            <div style="border-bottom: 1px solid {HAIR};">{programme_rows()}</div>
+            <div style="display: flex; align-items: center; gap: 16px; padding-top: 4px;">
+              <a href="#" class="btn btn-m">Book a place</a>
+              {more('Add the calendar to your diary')}
             </div>
           </div>
         </div>
-        <div style="display: flex; flex-direction: column;">
-          <div style="border-top: 3px solid {MAROON}; padding-top: 13px; padding-bottom: 4px;">
-            <h2 style="font-size: 19px;">Also this month</h2>
-          </div>
-          {briefs}
-          <div style="border-top: 1px solid {HAIR}; padding-top: 15px; margin-top: 4px;">
-            {more('All announcements')}
-          </div>
-        </div>
       </div>
-    </div>"""
-
-    notice = f"""<div style="background: {BAND}; border-top: 1px solid {RULE};
-         border-bottom: 1px solid {RULE}; margin-top: 44px;">
-      <div class="wrap" style="padding: 18px 40px; display: flex; align-items: center;
-           justify-content: space-between; gap: 28px;">
-        <div style="display: flex; align-items: center; gap: 14px;">
-          <span class="kick kick-g">Members</span>
-          <span style="width: 1px; height: 16px; background: {RULE};"></span>
-          <span style="font-size: 15px; color: {INK};">Renewal for 2027 is open until
-            <strong style="font-weight: 600;">31 March</strong>. Dues are QAR 500 for the year
-            and a receipt is issued on payment.</span>
-        </div>
-        {more('Renew your membership')}
-      </div>
-    </div>"""
-
-    news = ''.join(f"""<a href="#" style="display: flex; flex-direction: column; gap: 13px;">
-      {photo(img, '3 / 2')}
-      <span class="kick">{kick}</span>
-      <h3 style="font-size: 21px; line-height: 1.26;">{title}</h3>
-      <p class="std" style="font-size: 14.5px;">{std}</p>
-      <span class="date">{date}</span>
-    </a>""" for kick, img, title, std, date in NEWS)
-
-    news_sec = f"""<div class="wrap" style="padding-top: 62px;">
-      <div class="sec"><h2>News</h2>{more('All news')}</div>
-      <div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr));
-           gap: 34px;">{news}</div>
-    </div>"""
-
-    ev_rows = ''.join(f"""<div style="display: grid;
-         grid-template-columns: 74px minmax(0, 1fr) 210px 104px; gap: 26px;
-         align-items: center; padding: 19px 0; border-top: 1px solid {HAIR};">
-      <div style="border-left: 3px solid {MAROON}; padding-left: 13px;">
-        <div style="font-family: Newsreader, serif; font-size: 25px; font-weight: 500;
-             color: {INK}; line-height: 1;">{day}</div>
-        <div class="kick" style="font-size: 10.5px; padding-top: 3px;">{mon}</div>
-      </div>
-      <div style="display: flex; flex-direction: column; gap: 5px; min-width: 0;">
-        <h3 style="font-size: 19px; line-height: 1.3;">{title}</h3>
-        <span style="font-size: 13.5px; color: {MUTED};">{time} · {tbc('Venue')} · {cat}</span>
-      </div>
-      <span style="font-size: 13.5px; color: {MUTED};">{note}</span>
-      <a href="#" class="btn btn-o" style="height: 38px; padding: 0 18px; font-size: 13.5px;">
-        Book</a>
-    </div>""" for mon, day, title, time, cat, note in EVENTS)
-
-    events_sec = f"""<div class="wrap" style="padding-top: 62px;">
-      <div class="sec"><h2>Events</h2>{more('All events and the calendar')}</div>
-      <div style="border-bottom: 1px solid {HAIR};">{ev_rows}</div>
     </div>"""
 
     fee_rows = ''.join(f"""<div style="display: grid;
-         grid-template-columns: 176px minmax(0, 1fr) 168px; gap: 22px; padding: 15px 0;
+         grid-template-columns: 168px minmax(0, 1fr) 158px; gap: 20px; padding: 14px 0;
          border-top: 1px solid {RULE}; align-items: baseline;">
-      <span style="font-size: 15px; font-weight: 600; color: {INK};">{cat}</span>
-      <span style="font-size: 14.5px; color: {BODY}; line-height: 1.5;">{who}</span>
-      {f'<span style="font-size: 15px; font-weight: 600; color: {INK};">{dues}</span>'
+      <span style="font-size: 14.5px; font-weight: 600; color: {INK};">{cat}</span>
+      <span style="font-size: 14px; color: {BODY}; line-height: 1.5;">{who}</span>
+      {f'<span style="font-size: 14.5px; font-weight: 600; color: {INK};">{dues}</span>'
          if known else tbc(dues)}
     </div>""" for cat, who, dues, known in FEES)
 
-    step_rows = ''.join(f"""<div style="display: grid;
-         grid-template-columns: 26px minmax(0, 1fr); gap: 14px; padding: 12px 0;
-         border-top: 1px solid {RULE}; align-items: start;">
-      <span style="font-family: Newsreader, serif; font-size: 19px; color: {MAROON};
-            line-height: 1.3;">{k + 1}</span>
-      <span style="font-size: 14.5px; line-height: 1.55; color: {BODY};">{t}</span>
-    </div>""" for k, t in enumerate(STEPS))
+    step_cells = ''.join(f"""<div style="display: flex; flex-direction: column; gap: 8px;
+         padding: 22px 20px; border-left: 1px solid rgba(255,255,255,0.16);">
+      <span style="font-family: Newsreader, serif; font-size: 27px; color: {GREEN};
+            line-height: 1;">{k + 1}</span>
+      <span style="font-size: 15px; font-weight: 600; color: #FFFFFF;">{t}</span>
+      <span style="font-size: 13px; line-height: 1.5; color: #C9B2BB;">{d}</span>
+    </div>""" for k, (t, d) in enumerate(STEPS))
 
-    membership = f"""<div style="background: {BAND}; border-top: 1px solid {RULE};
-         margin-top: 62px;">
-      <div class="wrap" style="padding-top: 54px; padding-bottom: 58px;">
-        <div class="sec"><h2>Membership</h2>{more('Membership in full')}</div>
-        <div style="display: grid; grid-template-columns: minmax(0, 1.62fr) minmax(0, 1fr);
-             gap: 56px; align-items: start;">
-          <div style="display: flex; flex-direction: column; gap: 18px;">
-            <p class="std" style="font-size: 16px; max-width: 62ch;">EF admits qualified
-              engineers of Kerala origin resident in Qatar. Admission is decided by the elected
-              committee against published criteria, and every decision is recorded against the
-              officer who made it.</p>
-            <div>
-              <div style="display: grid; grid-template-columns: 176px minmax(0, 1fr) 168px;
-                   gap: 22px; padding-bottom: 9px;">
-                <span class="kick">Category</span><span class="kick">Who it is for</span>
-                <span class="kick">Dues</span>
-              </div>
-              <div style="border-bottom: 1px solid {RULE};">{fee_rows}</div>
+    apply_sec = f"""<div class="wrap" style="padding-top: 60px;">
+      <div class="sec"><h2>How to apply</h2>{more('Membership in full')}</div>
+      <div style="background: {MAROON}; display: grid;
+           grid-template-columns: repeat(4, minmax(0, 1fr));">{step_cells}</div>
+      <div style="display: grid; grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr);
+           gap: 52px; align-items: start; padding-top: 40px;">
+        <div style="display: flex; flex-direction: column; gap: 16px;">
+          <h3 style="font-size: 22px;">Categories and dues</h3>
+          <div>
+            <div style="display: grid; grid-template-columns: 168px minmax(0, 1fr) 158px;
+                 gap: 20px; padding-bottom: 9px;">
+              <span class="kick">Category</span><span class="kick">Who it is for</span>
+              <span class="kick">Dues</span>
             </div>
-            <p style="font-size: 13.5px; color: {MUTED}; line-height: 1.55;">Dues are set
-              annually by the committee and confirmed at the general meeting. The renewal
-              window runs to 31 March.</p>
+            <div style="border-bottom: 1px solid {RULE};">{fee_rows}</div>
           </div>
-          <div style="display: flex; flex-direction: column; gap: 16px;">
-            <h3 style="font-size: 21px;">How to apply</h3>
-            <div style="border-bottom: 1px solid {RULE};">{step_rows}</div>
-            <div style="display: flex; align-items: center; gap: 14px; padding-top: 4px;">
-              <a href="#" class="btn btn-m">Apply for membership</a>
-              {more('Download the bylaws')}
-            </div>
-          </div>
+          <p style="font-size: 13.5px; color: {MUTED}; line-height: 1.55;">Dues are set
+            annually by the committee and confirmed at the general meeting.</p>
+        </div>
+        <div style="border: 1px solid {RULE}; padding: 26px; display: flex;
+             flex-direction: column; gap: 13px;">
+          <span class="kick kick-g">Registration</span>
+          <h3 style="font-size: 20px; line-height: 1.26;">Start your application</h3>
+          <p style="font-size: 14.5px; line-height: 1.6; color: {BODY};">You will need your
+            qualification, proof of employment, your Qatar ID and a proposer in good standing.
+            The committee decides within five business days.</p>
+          <a href="#" class="btn btn-m" style="margin-top: 4px;">Register and apply</a>
+          <a href="#" class="btn btn-o">Renew an existing membership</a>
         </div>
       </div>
     </div>"""
 
-    register = f"""<div class="wrap" style="padding-top: 62px;">
-      <div class="sec"><h2>The register of members</h2>{more('About the register')}</div>
-      <div style="display: grid; grid-template-columns: minmax(0, 1.62fr) minmax(0, 1fr);
-           gap: 56px; align-items: start;">
-        <div style="display: flex; flex-direction: column; gap: 18px;">
-          <p class="std" style="font-size: 16px; max-width: 62ch;">Eight hundred engineers,
-            searchable by name, employer, discipline and membership category. Each member
-            decides, section by section, what the register discloses — and that decision is
-            enforced on every route, including the mobile application.</p>
-          <div style="display: flex; align-items: center; gap: 12px;">
-            <div class="field" style="width: 330px;">{search_ico()}
-              <span>Name, employer or discipline</span></div>
-            <a href="#" class="btn btn-o">Search the register</a>
+    notice_rows = ''.join(f"""<a href="#" style="display: grid;
+         grid-template-columns: 148px minmax(0, 1fr) 24px; gap: 26px; padding: 20px 0;
+         border-top: 1px solid {HAIR}; align-items: start;">
+      <span class="date" style="padding-top: 3px;">{d}</span>
+      <div style="display: flex; flex-direction: column; gap: 6px;">
+        <h3 style="font-size: 19px; line-height: 1.3;">{t}</h3>
+        <p style="font-size: 14px; line-height: 1.6; color: {BODY};">{b}</p>
+      </div>
+      <span style="padding-top: 6px;">{arrow()}</span>
+    </a>""" for t, d, b in NOTICES)
+
+    notices_sec = f"""<div class="wrap" style="padding-top: 60px;">
+      <div class="sec"><h2>Notices</h2>{more('The notice board')}</div>
+      <div style="border-bottom: 1px solid {HAIR};">{notice_rows}</div>
+    </div>"""
+
+    register_sec = f"""<div style="background: {BAND}; border-top: 1px solid {RULE};
+         margin-top: 60px;">
+      <div class="wrap" style="padding-top: 52px; padding-bottom: 54px;">
+        <div class="sec"><h2>The register of members</h2>{more('About the register')}</div>
+        <div style="display: grid; grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr);
+             gap: 52px; align-items: start;">
+          <div style="display: flex; flex-direction: column; gap: 16px;">
+            <p class="std" style="font-size: 16px; max-width: 60ch;">Eight hundred engineers,
+              searchable by name, employer, discipline and membership category. Each member
+              decides, section by section, what the register discloses — and that decision is
+              enforced on every route, including the mobile application.</p>
+            <div style="display: flex; align-items: center; gap: 12px;">
+              <div class="field" style="width: 320px;">{search_ico()}
+                <span>Name, employer or discipline</span></div>
+              <a href="#" class="btn btn-o">Search the register</a>
+            </div>
+            <p style="font-size: 13.5px; color: {MUTED};">Open to members in good standing.
+              Sign in to search it.</p>
           </div>
-          <p style="font-size: 13.5px; color: {MUTED};">The register is open to members in good
-            standing. Sign in to search it.</p>
-        </div>
-        <div style="border: 1px solid {RULE}; padding: 26px; display: flex;
-             flex-direction: column; gap: 14px;">
-          <span class="kick kick-g">For partners and employers</span>
-          <h3 style="font-size: 20px; line-height: 1.28;">Verify a membership</h3>
-          <p style="font-size: 14.5px; line-height: 1.6; color: {BODY};">Confirm a membership
-            from the member's Digital ID. Only the fields EF has configured for your partner
-            type are returned, and verification fails the day a membership lapses.</p>
-          <div class="field" style="margin-top: 2px;"><span>Membership number</span></div>
-          <a href="#" class="btn btn-o">Verify</a>
+          <div style="border: 1px solid {RULE}; background: #FFFFFF; padding: 26px;
+               display: flex; flex-direction: column; gap: 13px;">
+            <span class="kick kick-g">For partners and employers</span>
+            <h3 style="font-size: 20px; line-height: 1.26;">Verify a membership</h3>
+            <p style="font-size: 14.5px; line-height: 1.6; color: {BODY};">Confirm a membership
+              from the member's Digital ID. Only the fields EF has configured for your partner
+              type are returned, and verification fails the day a membership lapses.</p>
+            <div class="field"><span>Membership number</span></div>
+            <a href="#" class="btn btn-o">Verify</a>
+          </div>
         </div>
       </div>
     </div>"""
 
     off_rows = ''.join(f"""<div style="display: grid;
-         grid-template-columns: minmax(0, 1fr) 190px 74px; gap: 20px; padding: 13px 0;
+         grid-template-columns: minmax(0, 1fr) 176px 62px; gap: 18px; padding: 12px 0;
          border-top: 1px solid {RULE}; align-items: baseline;">
       <span style="font-size: 14.5px; font-weight: 600; color: {INK};">{o}</span>
       {tbc('Name — EF to supply')}
-      <span style="font-size: 13.5px; color: {MUTED};">2027</span>
+      <span style="font-size: 13px; color: {MUTED};">2027</span>
     </div>""" for o in OFFICERS)
 
-    doc_rows = ''.join(f"""<div style="display: grid;
-         grid-template-columns: minmax(0, 1fr) 62px; gap: 18px; padding: 13px 0;
-         border-top: 1px solid {RULE}; align-items: baseline;">
-      <div style="display: flex; flex-direction: column; gap: 4px;">
-        <a href="#" style="font-size: 14.5px; font-weight: 600;">{t}</a>
-        <span style="font-size: 13px; color: {MUTED};">{note}</span>
-      </div>
-      <span style="font-size: 13px; color: {MUTED};
-            font-variant-numeric: tabular-nums;">{v}</span>
-    </div>""" for t, v, note in DOCS)
+    doc_rows = ''.join(f"""<div style="display: flex; align-items: baseline;
+         justify-content: space-between; gap: 18px; padding: 12px 0;
+         border-top: 1px solid {RULE};">
+      <a href="#" style="font-size: 14.5px; font-weight: 600;">{t}</a>
+      <span style="font-size: 13px; color: {MUTED}; font-variant-numeric: tabular-nums;">{v}</span>
+    </div>""" for t, v in DOCS)
 
-    governance = f"""<div class="wrap" style="padding-top: 62px; padding-bottom: 68px;">
-      <div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 56px;
+    gov_sec = f"""<div class="wrap" style="padding-top: 60px; padding-bottom: 66px;">
+      <div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 52px;
            align-items: start;">
         <div>
           <div class="sec"><h2>The committee</h2>{more('Past officers')}</div>
-          <p class="std" style="font-size: 15px; margin-bottom: 14px;">Officers are elected for
-            a single term and carry out EF's administration alongside full-time employment.</p>
           <div style="border-bottom: 1px solid {RULE};">{off_rows}</div>
         </div>
         <div>
           <div class="sec"><h2>Published documents</h2>{more('All publications')}</div>
-          <p class="std" style="font-size: 15px; margin-bottom: 14px;">The rules EF works to,
-            published with their version and the date they were adopted.</p>
           <div style="border-bottom: 1px solid {RULE};">{doc_rows}</div>
         </div>
       </div>
@@ -431,11 +596,11 @@ def home():
                    for i in items)}
         </div>""" for h, items in FOOT)
 
-    footer = f"""<div style="background: {MAROON};">
+    footer = f"""<div style="background: {MAROON_D};">
       <div class="wrap" style="padding-top: 52px; padding-bottom: 30px;">
         <div style="display: grid; grid-template-columns: repeat(5, minmax(0, 1fr));
              gap: 34px;">{fcols}</div>
-        <div style="border-top: 1px solid #6B3040; margin-top: 44px; padding-top: 26px;
+        <div style="border-top: 1px solid #5A2337; margin-top: 44px; padding-top: 26px;
              display: grid; grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr); gap: 40px;">
           <div style="display: flex; flex-direction: column; gap: 13px;">
             {lockup(reversed_=True)}
@@ -452,7 +617,7 @@ def home():
               supply</span>
           </div>
         </div>
-        <div style="border-top: 1px solid #6B3040; margin-top: 26px; padding-top: 20px;
+        <div style="border-top: 1px solid #5A2337; margin-top: 26px; padding-top: 20px;
              display: flex; align-items: center; justify-content: space-between; gap: 24px;">
           <span style="font-size: 12.5px; color: #A98D97;">© 2027 Engineers Forum Qatar.</span>
           <span style="font-size: 12.5px; color: #A98D97;">Personal data held in the State of
@@ -461,9 +626,9 @@ def home():
       </div>
     </div>"""
 
-    body = (utility + masthead + lead + notice + news_sec + events_sec
-            + membership + register + governance + footer)
-    return wrap_dc(body, 1440, 4420)
+    body = (utility + masthead + hero(624, 46, 16.5, 68) + routes_band() + notice_bar
+            + news_sec + cal_sec + apply_sec + notices_sec + register_sec + gov_sec + footer)
+    return wrap_dc(body, 1440, 5300)
 
 
 # ======================================================================== mobile
@@ -471,73 +636,60 @@ def home_mobile():
     burger = ('<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#191013" '
               'stroke-width="2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg>')
 
-    briefs = ''.join(f"""<a href="#" style="display: grid;
-         grid-template-columns: 68px minmax(0, 1fr); gap: 13px; padding: 14px 0;
+    kick, img, title, std, date = NEWS_LEAD
+    small = ''.join(f"""<a href="#" style="display: grid;
+         grid-template-columns: 104px minmax(0, 1fr); gap: 14px; padding: 15px 0;
          border-top: 1px solid {HAIR}; align-items: start;">
-      {photo(img, '1 / 1', badge=False)}
-      <div style="display: flex; flex-direction: column; gap: 4px;">
-        <span class="kick" style="font-size: 10px;">{kick}</span>
-        <h4 style="font-size: 15.5px; line-height: 1.32;">{title}</h4>
-        <span class="date" style="font-size: 12px;">{date}</span>
+      {photo(i, '3 / 2', badge=False)}
+      <div style="display: flex; flex-direction: column; gap: 5px;">
+        <span class="kick" style="font-size: 10px;">{k}</span>
+        <h4 style="font-size: 15.5px; line-height: 1.3;">{t}</h4>
+        <span class="date" style="font-size: 12px;">{d}</span>
       </div>
-    </a>""" for kick, img, title, date in BRIEFS)
+    </a>""" for k, i, t, d in NEWS)
 
-    news = ''.join(f"""<a href="#" style="display: flex; flex-direction: column; gap: 11px;
-         padding-top: 18px; border-top: 1px solid {HAIR};">
-      {photo(img, '3 / 2')}
-      <span class="kick" style="font-size: 10px;">{kick}</span>
-      <h3 style="font-size: 19px; line-height: 1.28;">{title}</h3>
-      <p class="std" style="font-size: 14px;">{std}</p>
-      <span class="date" style="font-size: 12px;">{date}</span>
-    </a>""" for kick, img, title, std, date in NEWS)
-
-    ev_rows = ''.join(f"""<div style="display: grid; grid-template-columns: 60px minmax(0, 1fr);
-         gap: 15px; padding: 16px 0; border-top: 1px solid {HAIR}; align-items: start;">
-      <div style="border-left: 3px solid {MAROON}; padding-left: 11px;">
-        <div style="font-family: Newsreader, serif; font-size: 22px; font-weight: 500;
-             color: {INK}; line-height: 1;">{day}</div>
-        <div class="kick" style="font-size: 10px; padding-top: 3px;">{mon}</div>
-      </div>
-      <div style="display: flex; flex-direction: column; gap: 7px; min-width: 0;">
-        <h3 style="font-size: 17px; line-height: 1.3;">{title}</h3>
-        <span style="font-size: 13px; color: {MUTED};">{time} · {tbc('Venue')} · {cat}</span>
-        <span style="font-size: 13px; color: {MUTED};">{note}</span>
-        <a href="#" class="btn btn-o" style="margin-top: 3px;">Book</a>
-      </div>
-    </div>""" for mon, day, title, time, cat, note in EVENTS)
-
-    fee_rows = ''.join(f"""<div style="padding: 14px 0; border-top: 1px solid {RULE};
-         display: flex; flex-direction: column; gap: 6px;">
+    fee_rows = ''.join(f"""<div style="padding: 13px 0; border-top: 1px solid {RULE};
+         display: flex; flex-direction: column; gap: 5px;">
       <div style="display: flex; align-items: baseline; justify-content: space-between;
-           gap: 14px;">
-        <span style="font-size: 15px; font-weight: 600; color: {INK};">{cat}</span>
-        {f'<span style="font-size: 14.5px; font-weight: 600; color: {INK}; white-space: nowrap;">{dues}</span>'
+           gap: 12px;">
+        <span style="font-size: 14.5px; font-weight: 600; color: {INK};">{cat}</span>
+        {f'<span style="font-size: 14px; font-weight: 600; color: {INK}; white-space: nowrap;">{dues}</span>'
            if known else tbc(dues)}
       </div>
       <span style="font-size: 13.5px; color: {BODY}; line-height: 1.5;">{who}</span>
     </div>""" for cat, who, dues, known in FEES)
 
-    step_rows = ''.join(f"""<div style="display: grid;
-         grid-template-columns: 24px minmax(0, 1fr); gap: 13px; padding: 12px 0;
-         border-top: 1px solid {RULE}; align-items: start;">
-      <span style="font-family: Newsreader, serif; font-size: 18px; color: {MAROON};
-            line-height: 1.3;">{k + 1}</span>
-      <span style="font-size: 14px; line-height: 1.55; color: {BODY};">{t}</span>
-    </div>""" for k, t in enumerate(STEPS))
+    step_rows = ''.join(f"""<div style="display: grid; grid-template-columns: 30px minmax(0, 1fr);
+         gap: 13px; padding: 15px 0; border-top: 1px solid rgba(255,255,255,0.16);
+         align-items: start;">
+      <span style="font-family: Newsreader, serif; font-size: 22px; color: {GREEN};
+            line-height: 1.1;">{k + 1}</span>
+      <div style="display: flex; flex-direction: column; gap: 4px;">
+        <span style="font-size: 14.5px; font-weight: 600; color: #FFFFFF;">{t}</span>
+        <span style="font-size: 13px; line-height: 1.5; color: #C9B2BB;">{d}</span>
+      </div>
+    </div>""" for k, (t, d) in enumerate(STEPS))
+
+    notice_rows = ''.join(f"""<a href="#" style="display: flex; flex-direction: column; gap: 6px;
+         padding: 16px 0; border-top: 1px solid {HAIR};">
+      <span class="date" style="font-size: 12px;">{d}</span>
+      <h3 style="font-size: 17px; line-height: 1.3;">{t}</h3>
+      <p style="font-size: 13.5px; line-height: 1.6; color: {BODY};">{b}</p>
+    </a>""" for t, d, b in NOTICES)
 
     off_rows = ''.join(f"""<div style="display: flex; align-items: baseline;
-         justify-content: space-between; gap: 14px; padding: 12px 0;
+         justify-content: space-between; gap: 14px; padding: 11px 0;
          border-top: 1px solid {RULE};">
       <span style="font-size: 14px; font-weight: 600; color: {INK};">{o}</span>
       {tbc('EF to supply')}
     </div>""" for o in OFFICERS)
 
-    doc_rows = ''.join(f"""<div style="display: flex; flex-direction: column; gap: 4px;
-         padding: 12px 0; border-top: 1px solid {RULE};">
-      <a href="#" style="font-size: 14px; font-weight: 600;">{t}
-        <span style="color: {MUTED}; font-weight: 400;">{v}</span></a>
-      <span style="font-size: 12.5px; color: {MUTED};">{note}</span>
-    </div>""" for t, v, note in DOCS)
+    doc_rows = ''.join(f"""<div style="display: flex; align-items: baseline;
+         justify-content: space-between; gap: 14px; padding: 11px 0;
+         border-top: 1px solid {RULE};">
+      <a href="#" style="font-size: 14px; font-weight: 600;">{t}</a>
+      <span style="font-size: 12.5px; color: {MUTED};">{v}</span>
+    </div>""" for t, v in DOCS)
 
     def sec(title, link, content, band=False, pad=38):
         return f"""<div style="{f'background: {BAND}; border-top: 1px solid {RULE};' if band else ''}">
@@ -554,7 +706,8 @@ def home_mobile():
     </div>""" for h, items in FOOT[:4])
 
     body = f"""
-  <div style="background: {MAROON}; padding: 9px 20px; display: flex; justify-content: center;">
+  <div style="background: {MAROON_D}; padding: 9px 20px; display: flex;
+       justify-content: center;">
     <span style="font-size: 11.5px; color: #C9B2BB; text-align: center; line-height: 1.4;">
       Affiliated to the Indian Business and Professional Council</span>
   </div>
@@ -568,91 +721,91 @@ def home_mobile():
          justify-content: center;">{burger}</a>
     </div>
   </div>
-  <div style="border-bottom: 1px solid {RULE}; padding: 12px 20px; display: flex;
-       align-items: center; gap: 10px;">
-    <a href="#" class="btn btn-m" style="flex-grow: 1;">Apply for membership</a>
-    <a href="#" class="btn btn-o" style="flex-grow: 1;">Member sign in</a>
-  </div>
 
-  <div style="padding: 24px 20px 0; display: flex; flex-direction: column; gap: 14px;">
-    {photo('lead-agm.jpg', '16 / 9')}
-    <span class="kick">Notice</span>
-    <h1 style="font-size: 29px; line-height: 1.18;">Notice of the Annual General Meeting,
-      14 March 2027</h1>
-    <p class="std" style="font-size: 15.5px;">The agenda, the Treasurer's statement and the
-      papers for the meeting are published for members. Nominations for the 2027 committee
-      close on 28 February.</p>
-    <span class="date">Published 12 February 2027 · The Secretary</span>
-    {more('Read the notice')}
-  </div>
+  {hero(430, 27, 14, 30, mobile=True)}
+  {routes_band(mobile=True)}
 
-  <div style="padding: 30px 20px 0;">
-    <div style="border-top: 3px solid {MAROON}; padding-top: 12px;">
-      <h2 style="font-size: 19px;">Also this month</h2>
-    </div>
-    {briefs}
-  </div>
-
-  <div style="background: {BAND}; border-top: 1px solid {RULE}; border-bottom: 1px solid {RULE};
-       margin-top: 30px; padding: 18px 20px; display: flex; flex-direction: column; gap: 10px;">
-    <span class="kick kick-g">Members</span>
+  <div style="background: {BAND}; border-bottom: 1px solid {RULE}; padding: 16px 20px;
+       display: flex; flex-direction: column; gap: 9px;">
+    <span class="kick kick-g">Notice</span>
     <span style="font-size: 14.5px; line-height: 1.55; color: {INK};">Renewal for 2027 is open
-      until <strong style="font-weight: 600;">31 March</strong>. Dues are QAR 500 for the
-      year.</span>
-    {more('Renew your membership')}
+      until <strong style="font-weight: 600;">31 March</strong>. Nominations close on
+      28 February.</span>
+    {more('All notices')}
   </div>
 
   {sec('News', 'All news',
-       '<div style="display: flex; flex-direction: column; gap: 22px;">' + news + '</div>')}
-  {sec('Events', 'All events',
-       f'<div style="border-bottom: 1px solid {HAIR};">' + ev_rows + '</div>')}
+       f'''<a href="#" style="display: flex; flex-direction: column; gap: 12px;">
+         {photo(img, '3 / 2')}
+         <span class="kick" style="font-size: 10px;">{kick}</span>
+         <h3 style="font-size: 23px; line-height: 1.2;">{title}</h3>
+         <p class="std" style="font-size: 14.5px;">{std}</p>
+         <span class="date" style="font-size: 12px;">{date}</span>
+       </a><div style="padding-top: 6px;">{small}</div>''')}
 
-  {sec('Membership', None,
-       '<p class="std" style="font-size: 15px; margin-bottom: 16px;">EF admits qualified '
-       'engineers of Kerala origin resident in Qatar. Admission is decided by the elected '
-       'committee against published criteria.</p>'
-       f'<div style="border-bottom: 1px solid {RULE}; margin-bottom: 24px;">' + fee_rows
-       + '</div><h3 style="font-size: 19px; margin-bottom: 10px;">How to apply</h3>'
-       f'<div style="border-bottom: 1px solid {RULE}; margin-bottom: 18px;">' + step_rows
-       + '</div><a href="#" class="btn btn-m" style="width: 100%;">Apply for membership</a>',
+  {sec('March at EF', 'Full calendar',
+       f'''<div style="display: flex; align-items: baseline; justify-content: space-between;
+            margin-bottom: 12px;"><h3 style="font-size: 19px;">March 2027</h3></div>
+       {calendar_grid(13)}
+       <h3 style="font-size: 19px; padding-top: 26px;">This month's programme</h3>
+       <div style="border-bottom: 1px solid {HAIR}; margin-top: 8px;">{programme_rows(True)}</div>
+       <a href="#" class="btn btn-m" style="width: 100%; margin-top: 18px;">Book a place</a>''',
        band=True)}
 
-  {sec('The register of members', 'About the register',
+  <div style="padding: 38px 20px 0;">
+    <div class="sec" style="margin-bottom: 20px;"><h2 style="font-size: 23px;">How to
+      apply</h2></div>
+    <div style="background: {MAROON}; padding: 6px 20px 20px;">{step_rows}</div>
+    <h3 style="font-size: 19px; padding-top: 26px;">Categories and dues</h3>
+    <div style="border-bottom: 1px solid {RULE}; margin-top: 8px;">{fee_rows}</div>
+    <div style="border: 1px solid {RULE}; padding: 20px; margin-top: 24px; display: flex;
+         flex-direction: column; gap: 12px;">
+      <span class="kick kick-g">Registration</span>
+      <h3 style="font-size: 18px; line-height: 1.26;">Start your application</h3>
+      <p style="font-size: 14px; line-height: 1.6; color: {BODY};">You will need your
+        qualification, proof of employment, your Qatar ID and a proposer in good standing.</p>
+      <a href="#" class="btn btn-m">Register and apply</a>
+      <a href="#" class="btn btn-o">Renew an existing membership</a>
+    </div>
+  </div>
+
+  {sec('Notices', 'Notice board',
+       f'<div style="border-bottom: 1px solid {HAIR};">' + notice_rows + '</div>')}
+
+  {sec('The register of members', 'About it',
        '<p class="std" style="font-size: 15px; margin-bottom: 14px;">Eight hundred engineers, '
        'searchable by name, employer, discipline and category. Each member decides, section by '
        'section, what the register discloses.</p>'
        '<div class="field" style="margin-bottom: 12px;">' + search_ico()
        + '<span>Name, employer or discipline</span></div>'
        '<a href="#" class="btn btn-o" style="width: 100%;">Search the register</a>'
-       f'<p style="font-size: 13px; color: {MUTED}; padding-top: 12px;">Open to members in good '
-       'standing. Sign in to search it.</p>'
-       f'<div style="border: 1px solid {RULE}; padding: 20px; margin-top: 22px; display: flex; '
-       'flex-direction: column; gap: 12px;">'
+       f'<div style="border: 1px solid {RULE}; background: #FFFFFF; padding: 20px; '
+       'margin-top: 22px; display: flex; flex-direction: column; gap: 12px;">'
        '<span class="kick kick-g">For partners and employers</span>'
        '<h3 style="font-size: 18px; line-height: 1.28;">Verify a membership</h3>'
        f'<p style="font-size: 14px; line-height: 1.6; color: {BODY};">Confirm a membership from '
        "the member's Digital ID. Only the fields EF has configured for your partner type are "
        'returned.</p><div class="field"><span>Membership number</span></div>'
-       '<a href="#" class="btn btn-o">Verify</a></div>')}
+       '<a href="#" class="btn btn-o">Verify</a></div>', band=True)}
 
   {sec('The committee', 'Past officers',
        f'<div style="border-bottom: 1px solid {RULE};">' + off_rows + '</div>')}
   {sec('Published documents', 'All publications',
        f'<div style="border-bottom: 1px solid {RULE};">' + doc_rows + '</div>')}
 
-  <div style="background: {MAROON}; margin-top: 40px; padding: 32px 20px 24px; display: flex;
+  <div style="background: {MAROON_D}; margin-top: 40px; padding: 32px 20px 24px; display: flex;
        flex-direction: column; gap: 22px;">
     {lockup(reversed_=True)}
     <p style="font-size: 13.5px; line-height: 1.7; color: #A98D97;">The apex body of engineers
       of Kerala origin working in the State of Qatar.</p>
     <div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr));
          gap: 22px;">{ftop}</div>
-    <span style="font-size: 12px; color: #A98D97; border-top: 1px solid #6B3040;
+    <span style="font-size: 12px; color: #A98D97; border-top: 1px solid #5A2337;
           padding-top: 18px; line-height: 1.6;">© 2027 Engineers Forum Qatar. Personal data
       held in the State of Qatar.</span>
   </div>
 """
-    return wrap_dc(body, 390, 6560)
+    return wrap_dc(body, 390, 6900)
 
 
 def wrap_dc(body, w, h):

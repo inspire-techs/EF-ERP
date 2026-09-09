@@ -10,26 +10,31 @@ Replacing one is a file swap — same filename, same aspect, done.
 Run:  python3 make-placeholders.py
 """
 import math, random, pathlib
-from PIL import Image, ImageDraw, ImageFilter, ImageChops
+from PIL import Image, ImageDraw, ImageEnhance, ImageFilter, ImageChops
 
 OUT = pathlib.Path(__file__).parent / 'images'
 OUT.mkdir(exist_ok=True)
 
 # palettes keyed to what each photograph will eventually show
 PALETTES = {
-    'cultural': [(94, 32, 54), (140, 52, 80), (201, 120, 148), (247, 214, 224), (58, 16, 31)],
-    'cricket':  [(74, 174, 70), (37, 105, 31), (168, 214, 152), (226, 240, 210), (21, 63, 18)],
-    'seminar':  [(150, 112, 126), (92, 56, 68), (206, 176, 186), (240, 226, 231), (61, 34, 44)],
-    'meeting':  [(46, 122, 43), (21, 63, 18), (150, 190, 132), (233, 241, 250), (30, 51, 25)],
-    'portrait': [(140, 52, 80), (94, 32, 54), (206, 176, 186), (247, 240, 242), (58, 16, 31)],
+    'cultural': [(120, 54, 74), (196, 132, 96), (242, 206, 158), (255, 244, 228),
+                 (38, 20, 26), (86, 62, 70)],
+    'cricket':  [(96, 168, 88), (58, 116, 52), (206, 224, 176), (248, 246, 226),
+                 (34, 44, 32), (150, 140, 116)],
+    'seminar':  [(154, 128, 132), (98, 78, 84), (216, 200, 194), (250, 246, 240),
+                 (40, 32, 36), (120, 112, 118)],
+    'meeting':  [(112, 128, 108), (64, 76, 62), (198, 202, 188), (248, 248, 240),
+                 (34, 38, 32), (140, 122, 100)],
+    'portrait': [(150, 104, 104), (104, 66, 70), (222, 198, 190), (252, 246, 242),
+                 (44, 30, 34), (128, 106, 104)],
 }
 
 # scene: (bands, blobs, horizon) — bands give outdoor scenes a ground/sky split
 SCENES = {
-    'cultural': dict(blobs=34, horizon=None, glow=True,  figures=9,  blur=0.040),
-    'cricket':  dict(blobs=24, horizon=0.62, glow=False, figures=7,  blur=0.034),
-    'seminar':  dict(blobs=26, horizon=0.72, glow=False, figures=12, blur=0.036),
-    'meeting':  dict(blobs=28, horizon=0.66, glow=False, figures=14, blur=0.034),
+    'cultural': dict(blobs=44, horizon=None, glow=True,  figures=14, blur=0.026),
+    'cricket':  dict(blobs=32, horizon=0.62, glow=False, figures=11, blur=0.022),
+    'seminar':  dict(blobs=34, horizon=0.72, glow=False, figures=18, blur=0.024),
+    'meeting':  dict(blobs=36, horizon=0.66, glow=False, figures=22, blur=0.022),
     'portrait': dict(blobs=16, horizon=None, glow=True,  figures=1,  blur=0.046),
 }
 
@@ -49,7 +54,7 @@ def vignette(img, strength=0.42):
     return Image.composite(img, Image.blend(img, dark, strength), mask)
 
 
-def make(kind, w, h, seed):
+def make(kind, w, h, seed, desat=0.58):
     rnd = random.Random(seed)
     pal = PALETTES[kind]
     cfg = SCENES[kind]
@@ -103,30 +108,35 @@ def make(kind, w, h, seed):
     img = img.filter(ImageFilter.GaussianBlur(min(w, h) * cfg['blur']))
     # pull most of the saturation out and warm what is left, so these read as
     # photographs rather than as brand-coloured panels
-    img = Image.blend(img, img.convert('L').convert('RGB'), 0.58)
+    img = Image.blend(img, img.convert('L').convert('RGB'), desat)
     warm = Image.new('RGB', img.size, (214, 200, 190))
     img = Image.blend(img, ImageChops.multiply(img, warm), 0.45)
-    img = vignette(img, 0.34)
+    img = vignette(img, 0.26)
     img = grain(img)
+    img = ImageEnhance.Contrast(img).enhance(1.34)
+    img = ImageEnhance.Brightness(img).enhance(1.18)
     return img
 
 
-# named for the editorial position each fills, with the crop that position wants
+# named for the position each fills, with the crop that position wants.
+# Hero slides keep more colour — they carry the whole top of the page.
 SPEC = [
-    ('lead-agm',        'meeting',  1280, 720, 110),   # 16:9 lead story
-    ('brief-renewal',   'seminar',   320, 320,  33),   # square briefs
-    ('brief-seminar',   'seminar',   320, 320,  44),
-    ('brief-register',  'meeting',   320, 320,  55),
-    ('news-committee',  'meeting',   840, 560,  11),   # 3:2 news
-    ('news-tournament', 'cricket',   840, 560,  88),
-    ('news-arts',       'cultural',  840, 560,  66),
+    ('hero-onam',    'cultural', 1600, 900, 210, 0.20),
+    ('hero-cricket', 'cricket',  1600, 900, 220, 0.20),
+    ('hero-seminar', 'seminar',  1600, 900, 230, 0.20),
+    ('hero-agm',     'meeting',  1600, 900, 240, 0.20),
+    ('news-lead',    'meeting',  1040, 694, 110, 0.58),
+    ('news-1',       'cricket',   560, 374,  88, 0.58),
+    ('news-2',       'cultural',  560, 374,  66, 0.58),
+    ('news-3',       'seminar',   560, 374,  44, 0.58),
 ]
 
 if __name__ == '__main__':
     total = 0
-    for name, kind, w, h, seed in SPEC:
+    for name, kind, w, h, seed, desat in SPEC:
         p = OUT / f'{name}.jpg'
-        make(kind, w, h, seed).save(p, 'JPEG', quality=78, optimize=True, progressive=True)
+        make(kind, w, h, seed, desat).save(p, 'JPEG', quality=76, optimize=True,
+                                           progressive=True)
         kb = p.stat().st_size / 1024
         total += kb
         print(f'{name}.jpg  {w}x{h}  {kb:.0f} KB')
